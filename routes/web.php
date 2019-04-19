@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/dotax', function () {
     return view('welcome');
 });
