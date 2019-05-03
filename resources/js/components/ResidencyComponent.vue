@@ -23,11 +23,11 @@
                 <label>Have you been a US citizen, by birth or naturalization, on the last day of 2019? (tax year)</label>
                 <div>
                     <div class="custom-control custom-radio d-inline-block mr-3">
-                        <input v-model="r11" type="radio" id="r11-y" name="r11" value="yes" class="custom-control-input" checked>
+                        <input v-model="r11" type="radio" id="r11-y" name="r11" value="yes" class="custom-control-input">
                         <label class="custom-control-label" for="r11-y">Yes</label>
                     </div>
                     <div class="custom-control custom-radio d-inline-block mr-3">
-                        <input v-model="r11" type="radio" id="r11-n" name="r11" value="no" class="custom-control-input">
+                        <input v-model="r11" type="radio" id="r11-n" name="r11" value="no" class="custom-control-input" checked>
                         <label class="custom-control-label" for="r11-n">No</label>
                     </div>
                 </div>
@@ -203,8 +203,42 @@
                                 </div>
                             </div>
                         </div>
-                        <div>
+                        <div class="form-group">
                             <a href="#" @click.prevent="addOneLine">+ add one line</a>
+                        </div>
+                        <div class="form-group">
+                            <label>Current visa held as of 12/31/2019</label>    
+                            <select class="custom-select">
+                                <option value=""></option>
+                                <option value="F1">F1 Student OPT or CPT</option>
+                                <option value="F2">F2 Spouse and children of student on F1</option>
+                                <option value="J1 student">J1 Student</option>
+                                <option value="">J2 Spouse or dependent of student on J1</option>
+                                <option value="">J1 Teacher or trainee(other than student)</option>
+                                <option value="">J2 Spouse or dependent of J1 Teacher or trainee</option>
+                                <option value="">M1 Student</option>
+                                <option value="">M2 Spouse or dependent of student</option>
+                                <option value="">Q1 Student</option>
+                                <option value="">Q2 Spouse or depedent of student on Q1</option>
+                                <option value="">Q1 Teacher or trainee(other than student)</option>
+                                <option value="">Q2 Spouse or dependent of teacher or trainee</option>
+                                <option value="">H1B Specialty Occupation Worker</option>
+                                <option value="">H4 Spouse or dependent of H-1B</option>
+                                <option value="">other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Have you changed your visa in any year, including the tax year 2019?</label>
+                            <div>
+                                <div class="custom-control custom-radio d-inline-block mr-3">
+                                    <input v-model="r19" type="radio" id="r19-y" name="r19" value="yes" class="custom-control-input">
+                                    <label class="custom-control-label" for="r19-y">Yes</label>
+                                </div>
+                                <div class="custom-control custom-radio d-inline-block mr-3">
+                                    <input v-model="r19" type="radio" id="r19-n" name="r19" value="no" class="custom-control-input">
+                                    <label class="custom-control-label" for="r19-n">No</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -228,14 +262,15 @@
         data() {
             return {
                 residency: 'Resident',
-                r11: 'yes',
-                r12: 'yes',
-                r13: '',
+                r11: 'no',
+                r12: 'no',
+                r13: 'no',
                 r14: '',
-                r15: '',
+                r15: 'no',
                 r16: '',
                 r17: '',
                 r18: '',
+                r19: 'no',
                 travelHistories: [newData()],
                 invalidRowId: ''
             }

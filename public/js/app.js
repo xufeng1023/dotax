@@ -2170,6 +2170,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 function newData() {
   return {
     visaType: '',
@@ -2183,14 +2217,15 @@ function newData() {
   data: function data() {
     return {
       residency: 'Resident',
-      r11: 'yes',
-      r12: 'yes',
-      r13: '',
+      r11: 'no',
+      r12: 'no',
+      r13: 'no',
       r14: '',
-      r15: '',
+      r15: 'no',
       r16: '',
       r17: '',
       r18: '',
+      r19: 'no',
       travelHistories: [newData()],
       invalidRowId: ''
     };
@@ -40429,8 +40464,7 @@ var render = function() {
                     type: "radio",
                     id: "r11-y",
                     name: "r11",
-                    value: "yes",
-                    checked: ""
+                    value: "yes"
                   },
                   domProps: { checked: _vm._q(_vm.r11, "yes") },
                   on: {
@@ -40471,7 +40505,8 @@ var render = function() {
                     type: "radio",
                     id: "r11-n",
                     name: "r11",
-                    value: "no"
+                    value: "no",
+                    checked: ""
                   },
                   domProps: { checked: _vm._q(_vm.r11, "no") },
                   on: {
@@ -41792,7 +41827,7 @@ var render = function() {
                       )
                     }),
                     _vm._v(" "),
-                    _c("div", [
+                    _c("div", { staticClass: "form-group" }, [
                       _c(
                         "a",
                         {
@@ -41806,6 +41841,102 @@ var render = function() {
                         },
                         [_vm._v("+ add one line")]
                       )
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", [
+                        _vm._v(
+                          "Have you changed your visa in any year, including the tax year 2019?"
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "custom-control custom-radio d-inline-block mr-3"
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.r19,
+                                  expression: "r19"
+                                }
+                              ],
+                              staticClass: "custom-control-input",
+                              attrs: {
+                                type: "radio",
+                                id: "r19-y",
+                                name: "r19",
+                                value: "yes"
+                              },
+                              domProps: { checked: _vm._q(_vm.r19, "yes") },
+                              on: {
+                                change: function($event) {
+                                  _vm.r19 = "yes"
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "label",
+                              {
+                                staticClass: "custom-control-label",
+                                attrs: { for: "r19-y" }
+                              },
+                              [_vm._v("Yes")]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "custom-control custom-radio d-inline-block mr-3"
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.r19,
+                                  expression: "r19"
+                                }
+                              ],
+                              staticClass: "custom-control-input",
+                              attrs: {
+                                type: "radio",
+                                id: "r19-n",
+                                name: "r19",
+                                value: "no"
+                              },
+                              domProps: { checked: _vm._q(_vm.r19, "no") },
+                              on: {
+                                change: function($event) {
+                                  _vm.r19 = "no"
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "label",
+                              {
+                                staticClass: "custom-control-label",
+                                attrs: { for: "r19-n" }
+                              },
+                              [_vm._v("No")]
+                            )
+                          ]
+                        )
+                      ])
                     ])
                   ],
                   2
@@ -41838,6 +41969,72 @@ var staticRenderFns = [
         _vm._v(
           "Please enter the visa type and period each time you enter and left the U.S."
         )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", [_vm._v("Current visa held as of 12/31/2019")]),
+      _vm._v(" "),
+      _c("select", { staticClass: "custom-select" }, [
+        _c("option", { attrs: { value: "" } }),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "F1" } }, [
+          _vm._v("F1 Student OPT or CPT")
+        ]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "F2" } }, [
+          _vm._v("F2 Spouse and children of student on F1")
+        ]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "J1 student" } }, [
+          _vm._v("J1 Student")
+        ]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "" } }, [
+          _vm._v("J2 Spouse or dependent of student on J1")
+        ]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "" } }, [
+          _vm._v("J1 Teacher or trainee(other than student)")
+        ]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "" } }, [
+          _vm._v("J2 Spouse or dependent of J1 Teacher or trainee")
+        ]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "" } }, [_vm._v("M1 Student")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "" } }, [
+          _vm._v("M2 Spouse or dependent of student")
+        ]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "" } }, [_vm._v("Q1 Student")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "" } }, [
+          _vm._v("Q2 Spouse or depedent of student on Q1")
+        ]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "" } }, [
+          _vm._v("Q1 Teacher or trainee(other than student)")
+        ]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "" } }, [
+          _vm._v("Q2 Spouse or dependent of teacher or trainee")
+        ]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "" } }, [
+          _vm._v("H1B Specialty Occupation Worker")
+        ]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "" } }, [
+          _vm._v("H4 Spouse or dependent of H-1B")
+        ]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "" } }, [_vm._v("other")])
       ])
     ])
   }
@@ -56848,6 +57045,7 @@ var map = {
 	"./components/LoginComponent.vue": "./resources/js/components/LoginComponent.vue",
 	"./components/PersonalInfo.vue": "./resources/js/components/PersonalInfo.vue",
 	"./components/ResidencyComponent.vue": "./resources/js/components/ResidencyComponent.vue",
+	"./components/ResidencyComponent2.vue": "./resources/js/components/ResidencyComponent2.vue",
 	"./components/parts/TypeDateDate.vue": "./resources/js/components/parts/TypeDateDate.vue"
 };
 
@@ -57183,6 +57381,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ResidencyComponent_vue_vue_type_template_id_77496f2e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/components/ResidencyComponent2.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/ResidencyComponent2.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
+  script,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+component.options.__file = "resources/js/components/ResidencyComponent2.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
