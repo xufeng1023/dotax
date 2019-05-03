@@ -81,19 +81,15 @@
                     </div>
                     <div v-show="r13 == 'no'">
                         <div class="form-group">
-                            <label>Do you current hold a F/J/H-1B visa?</label>
+                            <label>I am currently a</label>
                             <div>
                                 <div class="custom-control custom-radio d-inline-block mr-3">
-                                    <input v-model="r15" type="radio" id="r15-f" name="r15" value="f1" class="custom-control-input">
-                                    <label class="custom-control-label" for="r15-f">F-1</label>
+                                    <input v-model="r15" type="radio" id="r15-f" name="r15" value="student" class="custom-control-input">
+                                    <label class="custom-control-label" for="r15-f">Student</label>
                                 </div>
                                 <div class="custom-control custom-radio d-inline-block mr-3">
-                                    <input v-model="r15" type="radio" id="r15-j" name="r15" value="j1" class="custom-control-input">
-                                    <label class="custom-control-label" for="r15-j">J-1</label>
-                                </div>
-                                <div class="custom-control custom-radio d-inline-block mr-3">
-                                    <input v-model="r15" type="radio" id="r15-h" name="r15" value="h1b" class="custom-control-input">
-                                    <label class="custom-control-label" for="r15-h">H-1B</label>
+                                    <input v-model="r15" type="radio" id="r15-j" name="r15" value="teacher" class="custom-control-input">
+                                    <label class="custom-control-label" for="r15-j">Teacher or Trainee</label>
                                 </div>
                                 <div class="custom-control custom-radio d-inline-block mr-3">
                                     <input v-model="r15" type="radio" id="r15-n" name="r15" value="no" class="custom-control-input">
@@ -101,9 +97,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div v-show="r15 == 'f1'">
+                        <div v-show="r15 == 'student'">
                             <div class="form-group">
-                                <label>Have you been a F-1 student in the U.S. for the past 5 years? Hence, 2019 tax year is your 6th year in the U.S.</label>
+                                <label>Have you been a student in the U.S. for 5 years prior to current tax year?</label>
                                 <div>
                                     <div class="custom-control custom-radio d-inline-block mr-3">
                                         <input v-model="r16" type="radio" id="r16-y" name="r16" value="yes" class="custom-control-input">
@@ -120,9 +116,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div v-show="r15 == 'j1'">
+                        <div v-show="r15 == 'teacher'">
                             <div class="form-group">
-                                <label>Have you been a J-1 student in the U.S. for the past 2 years? Hence, 2019 tax year is your 3rd year in the U.S.</label>
+                                <label>Have you been a teacher or trainee in the U.S. for 2 out of the past 6 years prior to current tax year?</label>
                                 <div>
                                     <div class="custom-control custom-radio d-inline-block mr-3">
                                         <input v-model="r17" type="radio" id="r17-y" name="r17" value="yes" class="custom-control-input">
@@ -139,30 +135,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div v-show="r15 == 'h1b'">
-                            <div class="form-group">
-                                <label>Have you been a H-1B visa holder in the U.S. for more than 183 days in 2019? </label>
-                                <div>
-                                    <div class="custom-control custom-radio d-inline-block mr-3">
-                                        <input v-model="r18" type="radio" id="r18-y" name="r18" value="yes" class="custom-control-input">
-                                        <label class="custom-control-label" for="r18-y">Yes</label>
-                                    </div>
-                                    <div class="custom-control custom-radio d-inline-block mr-3">
-                                        <input v-model="r18" type="radio" id="r18-n" name="r18" value="no" class="custom-control-input">
-                                        <label class="custom-control-label" for="r18-n">No</label>
-                                    </div>
-                                    <div class="custom-control custom-radio d-inline-block mr-3">
-                                        <input v-model="r18" type="radio" id="r18-d" name="r18" value="dontknow" class="custom-control-input">
-                                        <label class="custom-control-label" for="r18-d">I don't know</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div v-show="
-                    (r15 == 'no' && r13 == 'no')
-                    || ((r14 == 'pending' || r14 == 'denied') && r13 == 'yes')
-                    || (r13 == 'no' && (r15 == 'j1' || r15 == 'f1' || r15 == 'h1b') && ((r16 && r16 != 'yes' && r15 == 'f1') || (r17 && r17 != 'yes' && r15 == 'j1') || (r18 && r18 != 'yes' && r15 =='h1b')))
+                    r15 == 'no' || 
+                    ((r14 == 'pending' || r14 == 'denied') && r13 == 'yes')
+                    || (r15 == 'student' && r16 != 'yes') || (r15 == 'teacher' && r17 != 'yes')
                     ">
                         <div>
                             <label>Please enter the visa type and period each time you enter and left the U.S.</label>
@@ -240,6 +217,33 @@
                                 </div>
                             </div>
                         </div>
+                        <div v-if="r19 == 'yes'" class="form-row">
+                            <div class="form-group col-12 col-sm">
+                                <label>Previous visa type</label>
+                                <select class="custom-select">
+                                    <option value=""></option>
+                                    <option value="F1">F1 Student OPT or CPT</option>
+                                    <option value="F2">F2 Spouse and children of student on F1</option>
+                                    <option value="J1 student">J1 Student</option>
+                                    <option value="">J2 Spouse or dependent of student on J1</option>
+                                    <option value="">J1 Teacher or trainee(other than student)</option>
+                                    <option value="">J2 Spouse or dependent of J1 Teacher or trainee</option>
+                                    <option value="">M1 Student</option>
+                                    <option value="">M2 Spouse or dependent of student</option>
+                                    <option value="">Q1 Student</option>
+                                    <option value="">Q2 Spouse or depedent of student on Q1</option>
+                                    <option value="">Q1 Teacher or trainee(other than student)</option>
+                                    <option value="">Q2 Spouse or dependent of teacher or trainee</option>
+                                    <option value="">H1B Specialty Occupation Worker</option>
+                                    <option value="">H4 Spouse or dependent of H-1B</option>
+                                    <option value="">other</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-12 col-sm">
+                                <label>On what date was it changed?</label>
+                                <input type="text" class="form-control datepicker">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -266,10 +270,9 @@
                 r12: 'no',
                 r13: 'no',
                 r14: '',
-                r15: 'no',
-                r16: '',
-                r17: '',
-                r18: '',
+                r15: 'student',
+                r16: 'dontknow',
+                r17: 'dontknow',
                 r19: 'no',
                 travelHistories: [newData()],
                 invalidRowId: ''
@@ -291,6 +294,7 @@
             nextPage() {
                 if(!this.checkDays()) return;
                 this.invalidRowId = '';
+                console.log(2)
                 // axios.post(this.saveUrl, $('form#tax').serialize())
                 // this.$router.push('personal')
             },
@@ -310,6 +314,7 @@
                         return item.enterDate <= value.leaveDate || item.leaveDate >= value.enterDate
                     })
                     if(invalid === undefined) return true; 
+                    console.log(3)
                     this.invalidRowId = index
                     return false;
                 });
