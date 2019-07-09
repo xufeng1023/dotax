@@ -145,33 +145,16 @@
                             <label>Please enter the visa type and period each time you enter and left the U.S.</label>
                         </div>
                         <div class="form-row" v-for="(item, index) in travelHistories" :key="index">
-                            <div class="form-group col-12 col-sm">
+                            <div class="form-group col-12 col-sm-6">
                                 <label :for="'visaType-'+index">Visa Type</label>
-                                <select v-model="item.visaType" class="custom-select" :index="'visaType-'+index" :name="'visaType-'+index">
-                                    <option value=""></option>
-                                    <option value="F1">F1 Student OPT or CPT</option>
-                                    <option value="F2">F2 Spouse and children of student on F1</option>
-                                    <option value="J1 student">J1 Student</option>
-                                    <option value="">J2 Spouse or dependent of student on J1</option>
-                                    <option value="">J1 Teacher or trainee(other than student)</option>
-                                    <option value="">J2 Spouse or dependent of J1 Teacher or trainee</option>
-                                    <option value="">M1 Student</option>
-                                    <option value="">M2 Spouse or dependent of student</option>
-                                    <option value="">Q1 Student</option>
-                                    <option value="">Q2 Spouse or depedent of student on Q1</option>
-                                    <option value="">Q1 Teacher or trainee(other than student)</option>
-                                    <option value="">Q2 Spouse or dependent of teacher or trainee</option>
-                                    <option value="">H1B Specialty Occupation Worker</option>
-                                    <option value="">H4 Spouse or dependent of H-1B</option>
-                                    <option value="">other</option>
-                                </select>
+                                <visa v-model="item.visaType"></visa>
                             </div>
                             <div class="form-group col-12 col-sm">
-                                <label :for="'enterDate-'+index">Date Entered US on</label>
+                                <label :for="'enterDate-'+index">Date Entered US</label>
                                 <input v-model="item.enterDate" type="text" class="form-control datepicker" :class="index===invalidRowId? 'is-invalid' : ''" :id="'enterDate-'+index" :index="'enterDate-'+index" :name="'enterDate-'+index">
                             </div>
                             <div class="col-12 col-sm">
-                                <label :for="'leaveDate-'+index">Date Left US on</label>
+                                <label :for="'leaveDate-'+index">Date Left US</label>
                                 <input v-model="item.leaveDate" type="text" class="form-control datepicker" :class="index===invalidRowId? 'is-invalid' : ''" :id="'leaveDate-'+index" :index="'leaveDate-'+index" :name="'leaveDate-'+index">
                             </div>
                             <div class="form-group col-12 col-sm">
@@ -183,26 +166,11 @@
                         <div class="form-group">
                             <a href="#" @click.prevent="addOneLine">+ add one line</a>
                         </div>
-                        <div class="form-group">
-                            <label>Current visa held as of 12/31/2019</label>    
-                            <select class="custom-select">
-                                <option value=""></option>
-                                <option value="F1">F1 Student OPT or CPT</option>
-                                <option value="F2">F2 Spouse and children of student on F1</option>
-                                <option value="J1 student">J1 Student</option>
-                                <option value="">J2 Spouse or dependent of student on J1</option>
-                                <option value="">J1 Teacher or trainee(other than student)</option>
-                                <option value="">J2 Spouse or dependent of J1 Teacher or trainee</option>
-                                <option value="">M1 Student</option>
-                                <option value="">M2 Spouse or dependent of student</option>
-                                <option value="">Q1 Student</option>
-                                <option value="">Q2 Spouse or depedent of student on Q1</option>
-                                <option value="">Q1 Teacher or trainee(other than student)</option>
-                                <option value="">Q2 Spouse or dependent of teacher or trainee</option>
-                                <option value="">H1B Specialty Occupation Worker</option>
-                                <option value="">H4 Spouse or dependent of H-1B</option>
-                                <option value="">other</option>
-                            </select>
+                        <div class="form-row">
+                            <div class="form-group col-12 col-sm-6">
+                                <label>Current visa held as of 12/31/2019</label>    
+                                <visa v-model="currentVisa"></visa>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Have you changed your visa in any year, including the tax year 2019?</label>
@@ -217,31 +185,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div v-if="r19 == 'yes'" class="form-row">
+                        <div v-show="r19 == 'yes'" class="form-row">
                             <div class="form-group col-12 col-sm">
                                 <label>Previous visa type</label>
-                                <select class="custom-select">
-                                    <option value=""></option>
-                                    <option value="F1">F1 Student OPT or CPT</option>
-                                    <option value="F2">F2 Spouse and children of student on F1</option>
-                                    <option value="J1 student">J1 Student</option>
-                                    <option value="">J2 Spouse or dependent of student on J1</option>
-                                    <option value="">J1 Teacher or trainee(other than student)</option>
-                                    <option value="">J2 Spouse or dependent of J1 Teacher or trainee</option>
-                                    <option value="">M1 Student</option>
-                                    <option value="">M2 Spouse or dependent of student</option>
-                                    <option value="">Q1 Student</option>
-                                    <option value="">Q2 Spouse or depedent of student on Q1</option>
-                                    <option value="">Q1 Teacher or trainee(other than student)</option>
-                                    <option value="">Q2 Spouse or dependent of teacher or trainee</option>
-                                    <option value="">H1B Specialty Occupation Worker</option>
-                                    <option value="">H4 Spouse or dependent of H-1B</option>
-                                    <option value="">other</option>
-                                </select>
+                                <visa v-model="preVisa"></visa>
                             </div>
                             <div class="form-group col-12 col-sm">
                                 <label>On what date was it changed?</label>
-                                <input type="text" class="form-control datepicker">
+                                <input v-model="visaChangeDate" type="text" class="form-control datepicker">
                             </div>
                         </div>
                     </div>
@@ -253,7 +204,7 @@
 </template>
 
 <script>
-    function newData () {
+    function newData() {
         return {
             visaType: '',
             enterDate: '',
@@ -275,28 +226,134 @@
                 r17: 'dontknow',
                 r19: 'no',
                 travelHistories: [newData()],
-                invalidRowId: ''
+                invalidRowId: '',
+                currentVisa: '',
+                preVisa: '',
+                visaChangeDate: '',
+                daysInYear:{}
             }
+        },
+        mounted() {
+            let that = this;
+            $('.datepicker').datepicker({
+                changeMonth:true,
+                changeYear:true,
+                yearRange: "-100:"+((new Date()).getFullYear()),
+                onSelect: function(dateText, el) {
+                    let keys = el.id.split('-')
+                    try {
+                        that.travelHistories[keys[1]][keys[0]] = dateText
+                    } catch(error) {
+                        that.visaChangeDate = dateText
+                    }
+                }
+            })
         },
         updated: function () {
             let that = this;
             $('.datepicker').datepicker({
-                onSelect: function(dateText, el) { 
+                changeMonth:true,
+                changeYear:true,
+                yearRange: "-100:"+((new Date()).getFullYear()),
+                onSelect: function(dateText, el) {
                     let keys = el.id.split('-')
-                    that.travelHistories[keys[1]][keys[0]] = dateText
+                    try {
+                        that.travelHistories[keys[1]][keys[0]] = dateText
+                    } catch(error) {
+                        that.visaChangeDate = dateText
+                    }
                 }
             });
-            this.$nextTick(function () {
-                $('.datepicker').datepicker()
-            })
         },
         methods: {
             nextPage() {
-                if(!this.checkDays()) return;
+                if(!this.validDays()) return;
                 this.invalidRowId = '';
-                console.log(2)
+                this.ifVisaChanged();
+                this.calcDays();
+                console.log(this.daysInYear,this.preVisa,this.visaChangeDate)
+                this.determineResidency()
                 // axios.post(this.saveUrl, $('form#tax').serialize())
                 // this.$router.push('personal')
+            },
+            determineResidency() {
+                for(let prop in this.daysInYear) {
+                    if(['f1'].includes(prop)) {
+                        let daysPerYearAry = Object.values(this.daysInYear[prop])
+                        if(daysPerYearAry.length > 5) {
+                            let validDays = daysPerYearAry.slice(5).reduce((total, item) => total + item)
+                            if(validDays >= 183) alert('Resident! ' + validDays + ' days')
+                        }
+                    }
+                }
+            },
+            validDays() {
+                return this.travelHistories.every((value, index) => {
+                    let invalid;
+                    if(!value.leaveDate) value.leaveDate = '12/31/'+(new Date).getFullYear();
+
+                    if(!value.enterDate) {invalid = false;}
+                    else invalid = this.travelHistories.find((item, ind) => { //if find, not valid
+                        if(index === ind) {return new Date(value.leaveDate) < new Date(value.enterDate);}
+                        return (new Date(item.enterDate) <= new Date(value.enterDate) && new Date(item.leaveDate) >= new Date(value.enterDate))
+                        || (new Date(item.enterDate) <= new Date(value.leaveDate) && new Date(item.leaveDate) >= new Date(value.leaveDate))
+                    })
+
+                    if(invalid === undefined) return true; 
+                    this.invalidRowId = index
+                    return false;
+                });
+            },
+            ifVisaChanged() {
+                if(this.preVisa && this.visaChangeDate) {
+                    let changeDate = new Date(this.visaChangeDate)
+                    let changeDateYear = changeDate.getFullYear()
+                    this.travelHistories.forEach((item, index) => {
+                        let enter = new Date(item.enterDate);
+                        let leave = new Date(item.leaveDate);
+                        if(changeDateYear >= enter.getFullYear() && changeDateYear <= leave.getFullYear()) {
+                            console.log(this.preVisa)
+                            this.travelHistories.push({
+                                visaType: this.preVisa,
+                                enterDate: this.visaChangeDate,
+                                leaveDate: item.leaveDate
+                            })
+                            item.leaveDate = this.visaChangeDate
+                        }
+                    })
+                }
+            },
+            calcDays() {
+                this.daysInYear = {};
+                this.travelHistories.forEach((item, index) => {
+                    let enter = new Date(item.enterDate);
+                    let leave = new Date(item.leaveDate);
+
+                    let enterYear = enter.getFullYear()
+                    let leaveYear = leave.getFullYear()
+                    let countingYear = enterYear
+
+                    let yearType
+                    let from = enter
+                    let to = leave
+
+                    while(leaveYear >= countingYear) {
+                        if(countingYear >= enterYear && countingYear < leaveYear) {
+                            to = new Date('12/31/'+countingYear)
+                        }
+                        if(countingYear > enterYear && countingYear <= leaveYear) {
+                            from = new Date('1/1/'+countingYear)
+                            if(countingYear == leaveYear) to = leave
+                        }
+                        // yearType = countingYear + '-' + item.visaType
+                        if(this.daysInYear[item.visaType] === undefined) this.daysInYear[item.visaType] = [];
+                        if(this.daysInYear[item.visaType][countingYear] === undefined) this.daysInYear[item.visaType][countingYear] = 0
+                        this.daysInYear[item.visaType][countingYear] += this.daysBetweenDays(from, to);
+                        // if(this.daysInYear[yearType] === undefined) this.daysInYear[yearType] = 0;
+                        // this.daysInYear[yearType] += this.daysBetweenDays(from, to);
+                        countingYear++;
+                    }
+                })
             },
             addOneLine() {
                 this.travelHistories.push(newData())
@@ -305,19 +362,9 @@
                 this.travelHistories.splice(index, 1)
                 // console.log(JSON.parse(JSON.stringify(this.travelHistories)))
             },
-            checkDays() {
-                return this.travelHistories.every((value, index) => {
-                    let invalid;
-                    if(!value.leaveDate || !value.enterDate) {invalid = false;}
-                    else invalid = this.travelHistories.find((value, ind) => { //if find, not valid
-                        if(index === ind) return value.leaveDate < value.enterDate;
-                        return item.enterDate <= value.leaveDate || item.leaveDate >= value.enterDate
-                    })
-                    if(invalid === undefined) return true; 
-                    console.log(3)
-                    this.invalidRowId = index
-                    return false;
-                });
+            daysBetweenDays(enter, leave) {
+                let oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+                return Math.round(Math.abs((leave.getTime() - enter.getTime()) / oneDay)) + 1
             }
         }
     }

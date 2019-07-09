@@ -13,7 +13,7 @@
                 <div class="card-header h5 bg-transparent border-primary">Your Return</div>
 
                 <div class="card-body">
-                    $$
+                    $
                 </div>
             </div>
         </div>

@@ -2159,55 +2159,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 function newData() {
   return {
     visaType: '',
@@ -2230,27 +2181,151 @@ function newData() {
       r17: 'dontknow',
       r19: 'no',
       travelHistories: [newData()],
-      invalidRowId: ''
+      invalidRowId: '',
+      currentVisa: '',
+      preVisa: '',
+      visaChangeDate: '',
+      daysInYear: {}
     };
+  },
+  mounted: function mounted() {
+    var that = this;
+    $('.datepicker').datepicker({
+      changeMonth: true,
+      changeYear: true,
+      yearRange: "-100:" + new Date().getFullYear(),
+      onSelect: function onSelect(dateText, el) {
+        var keys = el.id.split('-');
+
+        try {
+          that.travelHistories[keys[1]][keys[0]] = dateText;
+        } catch (error) {
+          that.visaChangeDate = dateText;
+        }
+      }
+    });
   },
   updated: function updated() {
     var that = this;
     $('.datepicker').datepicker({
+      changeMonth: true,
+      changeYear: true,
+      yearRange: "-100:" + new Date().getFullYear(),
       onSelect: function onSelect(dateText, el) {
         var keys = el.id.split('-');
-        that.travelHistories[keys[1]][keys[0]] = dateText;
+
+        try {
+          that.travelHistories[keys[1]][keys[0]] = dateText;
+        } catch (error) {
+          that.visaChangeDate = dateText;
+        }
       }
-    });
-    this.$nextTick(function () {
-      $('.datepicker').datepicker();
     });
   },
   methods: {
     nextPage: function nextPage() {
-      if (!this.checkDays()) return;
+      if (!this.validDays()) return;
       this.invalidRowId = '';
-      console.log(2); // axios.post(this.saveUrl, $('form#tax').serialize())
+      this.ifVisaChanged();
+      this.calcDays();
+      console.log(this.daysInYear, this.preVisa, this.visaChangeDate);
+      this.determineResidency(); // axios.post(this.saveUrl, $('form#tax').serialize())
       // this.$router.push('personal')
+    },
+    determineResidency: function determineResidency() {
+      for (var prop in this.daysInYear) {
+        if (['f1'].includes(prop)) {
+          var daysPerYearAry = Object.values(this.daysInYear[prop]);
+
+          if (daysPerYearAry.length > 5) {
+            var validDays = daysPerYearAry.slice(5).reduce(function (total, item) {
+              return total + item;
+            });
+            if (validDays >= 183) alert('Resident! ' + validDays + ' days');
+          }
+        }
+      }
+    },
+    validDays: function validDays() {
+      var _this = this;
+
+      return this.travelHistories.every(function (value, index) {
+        var invalid;
+        if (!value.leaveDate) value.leaveDate = '12/31/' + new Date().getFullYear();
+
+        if (!value.enterDate) {
+          invalid = false;
+        } else invalid = _this.travelHistories.find(function (item, ind) {
+          //if find, not valid
+          if (index === ind) {
+            return new Date(value.leaveDate) < new Date(value.enterDate);
+          }
+
+          return new Date(item.enterDate) <= new Date(value.enterDate) && new Date(item.leaveDate) >= new Date(value.enterDate) || new Date(item.enterDate) <= new Date(value.leaveDate) && new Date(item.leaveDate) >= new Date(value.leaveDate);
+        });
+
+        if (invalid === undefined) return true;
+        _this.invalidRowId = index;
+        return false;
+      });
+    },
+    ifVisaChanged: function ifVisaChanged() {
+      var _this2 = this;
+
+      if (this.preVisa && this.visaChangeDate) {
+        var changeDate = new Date(this.visaChangeDate);
+        var changeDateYear = changeDate.getFullYear();
+        this.travelHistories.forEach(function (item, index) {
+          var enter = new Date(item.enterDate);
+          var leave = new Date(item.leaveDate);
+
+          if (changeDateYear >= enter.getFullYear() && changeDateYear <= leave.getFullYear()) {
+            console.log(_this2.preVisa);
+
+            _this2.travelHistories.push({
+              visaType: _this2.preVisa,
+              enterDate: _this2.visaChangeDate,
+              leaveDate: item.leaveDate
+            });
+
+            item.leaveDate = _this2.visaChangeDate;
+          }
+        });
+      }
+    },
+    calcDays: function calcDays() {
+      var _this3 = this;
+
+      this.daysInYear = {};
+      this.travelHistories.forEach(function (item, index) {
+        var enter = new Date(item.enterDate);
+        var leave = new Date(item.leaveDate);
+        var enterYear = enter.getFullYear();
+        var leaveYear = leave.getFullYear();
+        var countingYear = enterYear;
+        var yearType;
+        var from = enter;
+        var to = leave;
+
+        while (leaveYear >= countingYear) {
+          if (countingYear >= enterYear && countingYear < leaveYear) {
+            to = new Date('12/31/' + countingYear);
+          }
+
+          if (countingYear > enterYear && countingYear <= leaveYear) {
+            from = new Date('1/1/' + countingYear);
+            if (countingYear == leaveYear) to = leave;
+          } // yearType = countingYear + '-' + item.visaType
+
+
+          if (_this3.daysInYear[item.visaType] === undefined) _this3.daysInYear[item.visaType] = [];
+          if (_this3.daysInYear[item.visaType][countingYear] === undefined) _this3.daysInYear[item.visaType][countingYear] = 0;
+          _this3.daysInYear[item.visaType][countingYear] += _this3.daysBetweenDays(from, to); // if(this.daysInYear[yearType] === undefined) this.daysInYear[yearType] = 0;
+          // this.daysInYear[yearType] += this.daysBetweenDays(from, to);
+
+          countingYear++;
+        }
+      });
     },
     addOneLine: function addOneLine() {
       this.travelHistories.push(newData());
@@ -2258,35 +2333,89 @@ function newData() {
     remove: function remove(index) {
       this.travelHistories.splice(index, 1); // console.log(JSON.parse(JSON.stringify(this.travelHistories)))
     },
-    checkDays: function checkDays() {
-      var _this = this;
+    daysBetweenDays: function daysBetweenDays(enter, leave) {
+      var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
 
-      return this.travelHistories.every(function (value, index) {
-        var invalid;
-
-        if (!value.leaveDate || !value.enterDate) {
-          invalid = false;
-        } else invalid = _this.travelHistories.find(function (value, ind) {
-          //if find, not valid
-          if (index === ind) return value.leaveDate < value.enterDate;
-          return item.enterDate <= value.leaveDate || item.leaveDate >= value.enterDate;
-        });
-
-        if (invalid === undefined) return true;
-        console.log(3);
-        _this.invalidRowId = index;
-        return false;
-      });
+      return Math.round(Math.abs((leave.getTime() - enter.getTime()) / oneDay)) + 1;
     }
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/parts/TypeDateDate.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/parts/TypeDateDate.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/parts/Visa.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/parts/Visa.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['visa'],
+  methods: {
+    updateVisa: function updateVisa(visa) {
+      this.$emit('input', visa);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/parts/VisaEnterLeave.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/parts/VisaEnterLeave.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -41381,7 +41510,7 @@ var render = function() {
                         [
                           _c(
                             "div",
-                            { staticClass: "form-group col-12 col-sm" },
+                            { staticClass: "form-group col-12 col-sm-6" },
                             [
                               _c(
                                 "label",
@@ -41389,126 +41518,17 @@ var render = function() {
                                 [_vm._v("Visa Type")]
                               ),
                               _vm._v(" "),
-                              _c(
-                                "select",
-                                {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: item.visaType,
-                                      expression: "item.visaType"
-                                    }
-                                  ],
-                                  staticClass: "custom-select",
-                                  attrs: {
-                                    index: "visaType-" + index,
-                                    name: "visaType-" + index
+                              _c("visa", {
+                                model: {
+                                  value: item.visaType,
+                                  callback: function($$v) {
+                                    _vm.$set(item, "visaType", $$v)
                                   },
-                                  on: {
-                                    change: function($event) {
-                                      var $$selectedVal = Array.prototype.filter
-                                        .call($event.target.options, function(
-                                          o
-                                        ) {
-                                          return o.selected
-                                        })
-                                        .map(function(o) {
-                                          var val =
-                                            "_value" in o ? o._value : o.value
-                                          return val
-                                        })
-                                      _vm.$set(
-                                        item,
-                                        "visaType",
-                                        $event.target.multiple
-                                          ? $$selectedVal
-                                          : $$selectedVal[0]
-                                      )
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("option", { attrs: { value: "" } }),
-                                  _vm._v(" "),
-                                  _c("option", { attrs: { value: "F1" } }, [
-                                    _vm._v("F1 Student OPT or CPT")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("option", { attrs: { value: "F2" } }, [
-                                    _vm._v(
-                                      "F2 Spouse and children of student on F1"
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "option",
-                                    { attrs: { value: "J1 student" } },
-                                    [_vm._v("J1 Student")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("option", { attrs: { value: "" } }, [
-                                    _vm._v(
-                                      "J2 Spouse or dependent of student on J1"
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("option", { attrs: { value: "" } }, [
-                                    _vm._v(
-                                      "J1 Teacher or trainee(other than student)"
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("option", { attrs: { value: "" } }, [
-                                    _vm._v(
-                                      "J2 Spouse or dependent of J1 Teacher or trainee"
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("option", { attrs: { value: "" } }, [
-                                    _vm._v("M1 Student")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("option", { attrs: { value: "" } }, [
-                                    _vm._v("M2 Spouse or dependent of student")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("option", { attrs: { value: "" } }, [
-                                    _vm._v("Q1 Student")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("option", { attrs: { value: "" } }, [
-                                    _vm._v(
-                                      "Q2 Spouse or depedent of student on Q1"
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("option", { attrs: { value: "" } }, [
-                                    _vm._v(
-                                      "Q1 Teacher or trainee(other than student)"
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("option", { attrs: { value: "" } }, [
-                                    _vm._v(
-                                      "Q2 Spouse or dependent of teacher or trainee"
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("option", { attrs: { value: "" } }, [
-                                    _vm._v("H1B Specialty Occupation Worker")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("option", { attrs: { value: "" } }, [
-                                    _vm._v("H4 Spouse or dependent of H-1B")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("option", { attrs: { value: "" } }, [
-                                    _vm._v("other")
-                                  ])
-                                ]
-                              )
-                            ]
+                                  expression: "item.visaType"
+                                }
+                              })
+                            ],
+                            1
                           ),
                           _vm._v(" "),
                           _c(
@@ -41518,7 +41538,7 @@ var render = function() {
                               _c(
                                 "label",
                                 { attrs: { for: "enterDate-" + index } },
-                                [_vm._v("Date Entered US on")]
+                                [_vm._v("Date Entered US")]
                               ),
                               _vm._v(" "),
                               _c("input", {
@@ -41562,7 +41582,7 @@ var render = function() {
                             _c(
                               "label",
                               { attrs: { for: "leaveDate-" + index } },
-                              [_vm._v("Date Left US on")]
+                              [_vm._v("Date Left US")]
                             ),
                             _vm._v(" "),
                             _c("input", {
@@ -41642,7 +41662,28 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _vm._m(1),
+                    _c("div", { staticClass: "form-row" }, [
+                      _c(
+                        "div",
+                        { staticClass: "form-group col-12 col-sm-6" },
+                        [
+                          _c("label", [
+                            _vm._v("Current visa held as of 12/31/2019")
+                          ]),
+                          _vm._v(" "),
+                          _c("visa", {
+                            model: {
+                              value: _vm.currentVisa,
+                              callback: function($$v) {
+                                _vm.currentVisa = $$v
+                              },
+                              expression: "currentVisa"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", [
@@ -41738,13 +41779,66 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _vm.r19 == "yes"
-                      ? _c("div", { staticClass: "form-row" }, [
-                          _vm._m(2),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.r19 == "yes",
+                            expression: "r19 == 'yes'"
+                          }
+                        ],
+                        staticClass: "form-row"
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "form-group col-12 col-sm" },
+                          [
+                            _c("label", [_vm._v("Previous visa type")]),
+                            _vm._v(" "),
+                            _c("visa", {
+                              model: {
+                                value: _vm.preVisa,
+                                callback: function($$v) {
+                                  _vm.preVisa = $$v
+                                },
+                                expression: "preVisa"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group col-12 col-sm" }, [
+                          _c("label", [_vm._v("On what date was it changed?")]),
                           _vm._v(" "),
-                          _vm._m(3)
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.visaChangeDate,
+                                expression: "visaChangeDate"
+                              }
+                            ],
+                            staticClass: "form-control datepicker",
+                            attrs: { type: "text" },
+                            domProps: { value: _vm.visaChangeDate },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.visaChangeDate = $event.target.value
+                              }
+                            }
+                          })
                         ])
-                      : _vm._e()
+                      ]
+                    )
                   ],
                   2
                 )
@@ -41778,151 +41872,6 @@ var staticRenderFns = [
         )
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", [_vm._v("Current visa held as of 12/31/2019")]),
-      _vm._v(" "),
-      _c("select", { staticClass: "custom-select" }, [
-        _c("option", { attrs: { value: "" } }),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "F1" } }, [
-          _vm._v("F1 Student OPT or CPT")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "F2" } }, [
-          _vm._v("F2 Spouse and children of student on F1")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "J1 student" } }, [
-          _vm._v("J1 Student")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "" } }, [
-          _vm._v("J2 Spouse or dependent of student on J1")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "" } }, [
-          _vm._v("J1 Teacher or trainee(other than student)")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "" } }, [
-          _vm._v("J2 Spouse or dependent of J1 Teacher or trainee")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "" } }, [_vm._v("M1 Student")]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "" } }, [
-          _vm._v("M2 Spouse or dependent of student")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "" } }, [_vm._v("Q1 Student")]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "" } }, [
-          _vm._v("Q2 Spouse or depedent of student on Q1")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "" } }, [
-          _vm._v("Q1 Teacher or trainee(other than student)")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "" } }, [
-          _vm._v("Q2 Spouse or dependent of teacher or trainee")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "" } }, [
-          _vm._v("H1B Specialty Occupation Worker")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "" } }, [
-          _vm._v("H4 Spouse or dependent of H-1B")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "" } }, [_vm._v("other")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group col-12 col-sm" }, [
-      _c("label", [_vm._v("Previous visa type")]),
-      _vm._v(" "),
-      _c("select", { staticClass: "custom-select" }, [
-        _c("option", { attrs: { value: "" } }),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "F1" } }, [
-          _vm._v("F1 Student OPT or CPT")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "F2" } }, [
-          _vm._v("F2 Spouse and children of student on F1")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "J1 student" } }, [
-          _vm._v("J1 Student")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "" } }, [
-          _vm._v("J2 Spouse or dependent of student on J1")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "" } }, [
-          _vm._v("J1 Teacher or trainee(other than student)")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "" } }, [
-          _vm._v("J2 Spouse or dependent of J1 Teacher or trainee")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "" } }, [_vm._v("M1 Student")]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "" } }, [
-          _vm._v("M2 Spouse or dependent of student")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "" } }, [_vm._v("Q1 Student")]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "" } }, [
-          _vm._v("Q2 Spouse or depedent of student on Q1")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "" } }, [
-          _vm._v("Q1 Teacher or trainee(other than student)")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "" } }, [
-          _vm._v("Q2 Spouse or dependent of teacher or trainee")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "" } }, [
-          _vm._v("H1B Specialty Occupation Worker")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "" } }, [
-          _vm._v("H4 Spouse or dependent of H-1B")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "" } }, [_vm._v("other")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group col-12 col-sm" }, [
-      _c("label", [_vm._v("On what date was it changed?")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control datepicker",
-        attrs: { type: "text" }
-      })
-    ])
   }
 ]
 render._withStripped = true
@@ -41931,10 +41880,208 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/parts/TypeDateDate.vue?vue&type=template&id=1f2f6060&":
-/*!*********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/parts/TypeDateDate.vue?vue&type=template&id=1f2f6060& ***!
-  \*********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/parts/Visa.vue?vue&type=template&id=3422fabb&":
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/parts/Visa.vue?vue&type=template&id=3422fabb& ***!
+  \*************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "select",
+    {
+      staticClass: "custom-select",
+      domProps: { value: _vm.visa },
+      on: {
+        change: function($event) {
+          return _vm.updateVisa($event.target.value)
+        }
+      }
+    },
+    [
+      _c("option", { attrs: { value: "" } }),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "f1" } }, [_vm._v("F1 Student")]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "f2" } }, [
+        _vm._v("F2 Spouse and children of student on F1")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "j1_stu" } }, [_vm._v("J1 Student")]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "j2_stu" } }, [
+        _vm._v("J2 Spouse or dependent of student on J1")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "j1_tea" } }, [
+        _vm._v("J1 Teacher or trainee(other than student)")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "j2_tea" } }, [
+        _vm._v("J2 Spouse or dependent of J1 Teacher or trainee")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "m1" } }, [_vm._v("M1 Student")]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "m2" } }, [
+        _vm._v("M2 Spouse or dependent of student")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "q1_stu" } }, [_vm._v("Q1 Student")]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "q2_stu" } }, [
+        _vm._v("Q2 Spouse or depedent of student on Q1")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "q1_tea" } }, [
+        _vm._v("Q1 Teacher or trainee(other than student)")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "q2_tea" } }, [
+        _vm._v("Q2 Spouse or dependent of teacher or trainee")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "h1b" } }, [
+        _vm._v("H1B Specialty Occupation Worker")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "h4" } }, [
+        _vm._v("H4 Spouse or dependent of H_1B")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "a1" } }, [
+        _vm._v("A1 Employees of foreign governments")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "a2" } }, [
+        _vm._v("A2 Employees of foreign governments")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "a3" } }, [
+        _vm._v("A3 Personal Employee for a foreign govt or intl org official")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "b1_vfb" } }, [
+        _vm._v("B1 Visitor for business")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "b1_aoe" } }, [
+        _vm._v("B1 Athlete or entertainer")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "b1_pro" } }, [
+        _vm._v("B1 Professional Athlete compete in a charitable sport ")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "b2" } }, [_vm._v("B2 Tourist Visa")]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "c" } }, [
+        _vm._v("C _ Transiting the United States")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "d" } }, [_vm._v("D _ Crewmember")]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "e" } }, [
+        _vm._v("E – Treaty Traders and Treaty Investors")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "g1" } }, [
+        _vm._v("G1 _ Employees of International Organizations and NATO")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "g2" } }, [
+        _vm._v("G2 _ Employees of International Organizations and NATO")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "g3" } }, [
+        _vm._v("G3 _ Employees of International Organizations and NATO")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "g4" } }, [
+        _vm._v("G4 _ Employees of International Organizations and NATO")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "g5" } }, [
+        _vm._v("G5 _ Personal Employee for a foreign govt or intl org official")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "h2" } }, [
+        _vm._v("H2_ Temporary worker. Skilled and Unskilled")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "h3" } }, [
+        _vm._v("H3 _ Nonimmigrant Trainee")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "l" } }, [
+        _vm._v("L – Intracompany Transferees")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "i" } }, [
+        _vm._v("I – Members of the Foreign Press (Media, Journalist)")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "o" } }, [
+        _vm._v("O _ Foreign national with extraordinary ability")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "p" } }, [
+        _vm._v("P _ Foreign athlete, artist, and entertainer")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "r" } }, [
+        _vm._v("R – Religious Workers")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "s" } }, [
+        _vm._v("S _Aliens supplying critical information on criminal activity")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "t" } }, [
+        _vm._v("T_ Victims of Trafficking in Persons")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "u" } }, [
+        _vm._v("U_ Victims of Criminal Activity")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "v" } }, [
+        _vm._v("V_ Parent of Lawful Permanent Resident")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "tn" } }, [
+        _vm._v("TN – Professional businessperson from Canada or Mexico")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "tc" } }, [
+        _vm._v("TC – Professional businessperson from Canada or Mexico")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "td" } }, [
+        _vm._v("TD – Professional businessperson from Canada or Mexico")
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/parts/VisaEnterLeave.vue?vue&type=template&id=7d7e9e5a&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/parts/VisaEnterLeave.vue?vue&type=template&id=7d7e9e5a& ***!
+  \***********************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -56932,7 +57079,8 @@ var map = {
 	"./components/PersonalInfo.vue": "./resources/js/components/PersonalInfo.vue",
 	"./components/ResidencyComponent.vue": "./resources/js/components/ResidencyComponent.vue",
 	"./components/ResidencyComponent2.vue": "./resources/js/components/ResidencyComponent2.vue",
-	"./components/parts/TypeDateDate.vue": "./resources/js/components/parts/TypeDateDate.vue"
+	"./components/parts/Visa.vue": "./resources/js/components/parts/Visa.vue",
+	"./components/parts/VisaEnterLeave.vue": "./resources/js/components/parts/VisaEnterLeave.vue"
 };
 
 
@@ -57302,17 +57450,17 @@ component.options.__file = "resources/js/components/ResidencyComponent2.vue"
 
 /***/ }),
 
-/***/ "./resources/js/components/parts/TypeDateDate.vue":
-/*!********************************************************!*\
-  !*** ./resources/js/components/parts/TypeDateDate.vue ***!
-  \********************************************************/
+/***/ "./resources/js/components/parts/Visa.vue":
+/*!************************************************!*\
+  !*** ./resources/js/components/parts/Visa.vue ***!
+  \************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _TypeDateDate_vue_vue_type_template_id_1f2f6060___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TypeDateDate.vue?vue&type=template&id=1f2f6060& */ "./resources/js/components/parts/TypeDateDate.vue?vue&type=template&id=1f2f6060&");
-/* harmony import */ var _TypeDateDate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TypeDateDate.vue?vue&type=script&lang=js& */ "./resources/js/components/parts/TypeDateDate.vue?vue&type=script&lang=js&");
+/* harmony import */ var _Visa_vue_vue_type_template_id_3422fabb___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Visa.vue?vue&type=template&id=3422fabb& */ "./resources/js/components/parts/Visa.vue?vue&type=template&id=3422fabb&");
+/* harmony import */ var _Visa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Visa.vue?vue&type=script&lang=js& */ "./resources/js/components/parts/Visa.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -57322,9 +57470,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _TypeDateDate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _TypeDateDate_vue_vue_type_template_id_1f2f6060___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _TypeDateDate_vue_vue_type_template_id_1f2f6060___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _Visa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Visa_vue_vue_type_template_id_3422fabb___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Visa_vue_vue_type_template_id_3422fabb___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -57334,38 +57482,107 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/parts/TypeDateDate.vue"
+component.options.__file = "resources/js/components/parts/Visa.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/parts/TypeDateDate.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************!*\
-  !*** ./resources/js/components/parts/TypeDateDate.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************/
+/***/ "./resources/js/components/parts/Visa.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/parts/Visa.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TypeDateDate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./TypeDateDate.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/parts/TypeDateDate.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TypeDateDate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Visa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Visa.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/parts/Visa.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Visa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/parts/TypeDateDate.vue?vue&type=template&id=1f2f6060&":
-/*!***************************************************************************************!*\
-  !*** ./resources/js/components/parts/TypeDateDate.vue?vue&type=template&id=1f2f6060& ***!
-  \***************************************************************************************/
+/***/ "./resources/js/components/parts/Visa.vue?vue&type=template&id=3422fabb&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/parts/Visa.vue?vue&type=template&id=3422fabb& ***!
+  \*******************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TypeDateDate_vue_vue_type_template_id_1f2f6060___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./TypeDateDate.vue?vue&type=template&id=1f2f6060& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/parts/TypeDateDate.vue?vue&type=template&id=1f2f6060&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TypeDateDate_vue_vue_type_template_id_1f2f6060___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Visa_vue_vue_type_template_id_3422fabb___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Visa.vue?vue&type=template&id=3422fabb& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/parts/Visa.vue?vue&type=template&id=3422fabb&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Visa_vue_vue_type_template_id_3422fabb___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TypeDateDate_vue_vue_type_template_id_1f2f6060___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Visa_vue_vue_type_template_id_3422fabb___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/parts/VisaEnterLeave.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/parts/VisaEnterLeave.vue ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _VisaEnterLeave_vue_vue_type_template_id_7d7e9e5a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./VisaEnterLeave.vue?vue&type=template&id=7d7e9e5a& */ "./resources/js/components/parts/VisaEnterLeave.vue?vue&type=template&id=7d7e9e5a&");
+/* harmony import */ var _VisaEnterLeave_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./VisaEnterLeave.vue?vue&type=script&lang=js& */ "./resources/js/components/parts/VisaEnterLeave.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _VisaEnterLeave_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _VisaEnterLeave_vue_vue_type_template_id_7d7e9e5a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _VisaEnterLeave_vue_vue_type_template_id_7d7e9e5a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/parts/VisaEnterLeave.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/parts/VisaEnterLeave.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/parts/VisaEnterLeave.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaEnterLeave_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./VisaEnterLeave.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/parts/VisaEnterLeave.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaEnterLeave_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/parts/VisaEnterLeave.vue?vue&type=template&id=7d7e9e5a&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/parts/VisaEnterLeave.vue?vue&type=template&id=7d7e9e5a& ***!
+  \*****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaEnterLeave_vue_vue_type_template_id_7d7e9e5a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./VisaEnterLeave.vue?vue&type=template&id=7d7e9e5a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/parts/VisaEnterLeave.vue?vue&type=template&id=7d7e9e5a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaEnterLeave_vue_vue_type_template_id_7d7e9e5a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaEnterLeave_vue_vue_type_template_id_7d7e9e5a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
