@@ -278,7 +278,8 @@
             },
             determineResidency() {
                 for(let prop in this.daysInYear) {
-                    if(['f1'].includes(prop)) {
+                    if(['f1'].includes(prop)) { 
+                        if(this.daysInYear[prop][(new Date).getFullYear()] < 31) return alert('less than 31 days this year.')
                         let daysPerYearAry = Object.values(this.daysInYear[prop])
                         if(daysPerYearAry.length > 5) {
                             let validDays = daysPerYearAry.slice(5).reduce((total, item) => total + item)

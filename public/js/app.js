@@ -2235,6 +2235,7 @@ function newData() {
     determineResidency: function determineResidency() {
       for (var prop in this.daysInYear) {
         if (['f1'].includes(prop)) {
+          if (this.daysInYear[prop][new Date().getFullYear()] < 31) return alert('less than 31 days this year.');
           var daysPerYearAry = Object.values(this.daysInYear[prop]);
 
           if (daysPerYearAry.length > 5) {
