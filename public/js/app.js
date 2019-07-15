@@ -1928,6 +1928,262 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NoneResidentProgram.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NoneResidentProgram.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      tab: ''
+    };
+  },
+  mounted: function mounted() {
+    $('.datepicker').datepicker({
+      changeMonth: true,
+      changeYear: true,
+      yearRange: "-100:" + this.$parent.year
+    });
+  },
+  methods: {
+    nextPage: function nextPage() {
+      this.$router.push('personal');
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalInfo.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PersonalInfo.vue?vue&type=script&lang=js& ***!
@@ -1941,7 +2197,108 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {}
+});
 
 /***/ }),
 
@@ -2159,6 +2516,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var currentYear = new Date().getFullYear();
+
 function newData() {
   return {
     visaType: '',
@@ -2171,7 +2540,9 @@ function newData() {
   props: ['saveUrl'],
   data: function data() {
     return {
-      residency: 'Resident',
+      showResult: false,
+      isResident: 1,
+      nextUrl: 'personal',
       r11: 'no',
       r12: 'no',
       r13: 'no',
@@ -2185,7 +2556,8 @@ function newData() {
       currentVisa: '',
       preVisa: '',
       visaChangeDate: '',
-      daysInYear: {}
+      yearDays: {},
+      visaYearDays: {}
     };
   },
   mounted: function mounted() {
@@ -2224,35 +2596,68 @@ function newData() {
   },
   methods: {
     nextPage: function nextPage() {
-      if (!this.validDays()) return;
-      this.invalidRowId = '';
-      this.ifVisaChanged();
-      this.calcDays();
-      console.log(this.daysInYear, this.preVisa, this.visaChangeDate);
-      this.determineResidency(); // axios.post(this.saveUrl, $('form#tax').serialize())
-      // this.$router.push('personal')
+      if (this.isResident == 1) {
+        return this.$router.push(this.nextUrl);
+      }
+
+      if (!this.currentVisa) return alert('invalid current visa');
+      if (!this.validDays()) return alert('invalid days');
+      this.invalidRowId = ''; //this.ifVisaChanged();
+
+      this.calcDays(); // console.log(this.visaYearDays,this.yearDays)
+
+      this.determineResidency();
+      this.showResult = true; // axios.post(this.saveUrl, $('form#tax').serialize())
+      // this.$router.push('residency-result')
     },
     determineResidency: function determineResidency() {
-      for (var prop in this.daysInYear) {
-        if (['f1'].includes(prop)) {
-          if (this.daysInYear[prop][new Date().getFullYear()] < 31) return alert('less than 31 days this year.');
-          var daysPerYearAry = Object.values(this.daysInYear[prop]);
+      var validDays = 0;
+      var totalYears = 0;
+
+      if (this.yearDays[currentYear] < 31) {
+        return this.nextUrl = 'none-resident-program';
+      }
+
+      for (var prop in this.visaYearDays) {
+        if (['f1', 'f2', 'j1s', 'j2s', 'm1', 'q1s', 'q2s'].includes(prop)) {
+          var daysPerYearAry = Object.values(this.visaYearDays[prop]);
+          totalYears += daysPerYearAry.length;
 
           if (daysPerYearAry.length > 5) {
-            var validDays = daysPerYearAry.slice(5).reduce(function (total, item) {
-              return total + item;
-            });
-            if (validDays >= 183) alert('Resident! ' + validDays + ' days');
+            validDays = this.get183Days(prop);
+            if (validDays >= 183) return this.isResident = true;
           }
         }
+
+        if (['j1t', 'j2t', 'q1t', 'q2t'].includes(prop)) {
+          var yearsIn6years = 0;
+          var minYear = currentYear - 6;
+
+          for (var year in this.visaYearDays[prop]) {
+            totalYears++;
+            if (year >= minYear) yearsIn6years++;
+          }
+
+          if (yearsIn6years > 2) {
+            validDays = this.get183Days(prop);
+          }
+
+          if (validDays >= 183) return this.isResident = true;
+        }
       }
+
+      if (totalYears > 5) return this.isResident = true;
+      return this.nextUrl = 'none-resident-program';
+    },
+    get183Days: function get183Days(visa) {
+      return (this.visaYearDays[visa][currentYear] || 0) + (this.visaYearDays[visa][currentYear - 1] || 0) / 3 + (this.visaYearDays[visa][currentYear - 2] || 0) / 6;
     },
     validDays: function validDays() {
       var _this = this;
 
       return this.travelHistories.every(function (value, index) {
         var invalid;
-        if (!value.leaveDate) value.leaveDate = '12/31/' + new Date().getFullYear();
+        if (!value.leaveDate) value.leaveDate = '12/31/' + currentYear;
 
         if (!value.enterDate) {
           invalid = false;
@@ -2281,8 +2686,6 @@ function newData() {
           var leave = new Date(item.leaveDate);
 
           if (changeDateYear >= enter.getFullYear() && changeDateYear <= leave.getFullYear()) {
-            console.log(_this2.preVisa);
-
             _this2.travelHistories.push({
               visaType: _this2.preVisa,
               enterDate: _this2.visaChangeDate,
@@ -2297,7 +2700,8 @@ function newData() {
     calcDays: function calcDays() {
       var _this3 = this;
 
-      this.daysInYear = {};
+      this.visaYearDays = {};
+      this.yearDays = {};
       this.travelHistories.forEach(function (item, index) {
         var enter = new Date(item.enterDate);
         var leave = new Date(item.leaveDate);
@@ -2316,14 +2720,17 @@ function newData() {
           if (countingYear > enterYear && countingYear <= leaveYear) {
             from = new Date('1/1/' + countingYear);
             if (countingYear == leaveYear) to = leave;
-          } // yearType = countingYear + '-' + item.visaType
+          }
 
+          if (_this3.yearDays[countingYear] === undefined) _this3.yearDays[countingYear] = 0;
+          if (_this3.visaYearDays[item.visaType] === undefined) _this3.visaYearDays[item.visaType] = [];
 
-          if (_this3.daysInYear[item.visaType] === undefined) _this3.daysInYear[item.visaType] = [];
-          if (_this3.daysInYear[item.visaType][countingYear] === undefined) _this3.daysInYear[item.visaType][countingYear] = 0;
-          _this3.daysInYear[item.visaType][countingYear] += _this3.daysBetweenDays(from, to); // if(this.daysInYear[yearType] === undefined) this.daysInYear[yearType] = 0;
-          // this.daysInYear[yearType] += this.daysBetweenDays(from, to);
+          if (_this3.visaYearDays[item.visaType][countingYear] === undefined) {
+            _this3.visaYearDays[item.visaType][countingYear] = 0;
+          }
 
+          _this3.yearDays[countingYear] += _this3.daysBetweenDays(from, to);
+          _this3.visaYearDays[item.visaType][countingYear] += _this3.daysBetweenDays(from, to);
           countingYear++;
         }
       });
@@ -2407,92 +2814,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     updateVisa: function updateVisa(visa) {
       this.$emit('input', visa);
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/parts/VisaEnterLeave.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/parts/VisaEnterLeave.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['item', 'index'],
-  data: function data() {
-    return {
-      row: this.item // visaType: this.item.visaType,
-      // enterDate: this.item.enterDate,
-      // leaveDate: this.item.leaveDate,
-
-    };
-  },
-  created: function created() {
-    var _this = this;
-
-    window.events.$on('collect', function () {
-      window.events.$emit('startCollecting', {
-        index: _this.index,
-        data: _this.row
-      });
-    });
-  },
-  mounted: function mounted() {
-    var that = this;
-    $('.datepicker').datepicker({
-      onSelect: function onSelect(dateText, el) {
-        var key = el.id.split('-').shift();
-        that.row[key] = dateText;
-      }
-    });
-  },
-  methods: {
-    remove: function remove() {
-      window.events.$emit('remove', this.index);
     }
   }
 });
@@ -40389,6 +40710,625 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NoneResidentProgram.vue?vue&type=template&id=563320a1&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NoneResidentProgram.vue?vue&type=template&id=563320a1& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "a",
+      {
+        attrs: { href: "#" },
+        on: {
+          click: function($event) {
+            $event.preventDefault()
+            return _vm.$router.go(-1)
+          }
+        }
+      },
+      [_vm._v("Back")]
+    ),
+    _vm._v(" "),
+    _c("h3", { staticClass: "my-4" }, [_vm._v("College / Program")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [
+          _vm._v(
+            "Are you a student / teacher / trainee / professional athletes / individual with a medical condition or medical problem?"
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.tab,
+                expression: "tab"
+              }
+            ],
+            staticClass: "form-control",
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.tab = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              }
+            }
+          },
+          [
+            _c("option", { attrs: { value: "" } }, [_vm._v("I'm a...")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "student" } }, [_vm._v("Student")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "teacher" } }, [_vm._v("Teacher")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "trainee" } }, [_vm._v("Trainee")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "athletes" } }, [
+              _vm._v("Professional athletes")
+            ]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "individual" } }, [
+              _vm._v(
+                "Athletes/ individual with a medical condition or medical problem"
+              )
+            ])
+          ]
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _vm.tab == "student"
+      ? _c("div", [
+          _vm._m(0),
+          _vm._v(" "),
+          _vm._m(1),
+          _vm._v(" "),
+          _vm._m(2),
+          _vm._v(" "),
+          _vm._m(3),
+          _vm._v(" "),
+          _vm._m(4),
+          _vm._v(" "),
+          _vm._m(5),
+          _vm._v(" "),
+          _vm._m(6),
+          _vm._v(" "),
+          _vm._m(7),
+          _vm._v(" "),
+          _vm._m(8)
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.tab == "teacher"
+      ? _c("div", [
+          _vm._m(9),
+          _vm._v(" "),
+          _vm._m(10),
+          _vm._v(" "),
+          _vm._m(11),
+          _vm._v(" "),
+          _vm._m(12),
+          _vm._v(" "),
+          _vm._m(13),
+          _vm._v(" "),
+          _vm._m(14)
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.tab == "trainee"
+      ? _c("div", [
+          _vm._m(15),
+          _vm._v(" "),
+          _vm._m(16),
+          _vm._v(" "),
+          _vm._m(17),
+          _vm._v(" "),
+          _vm._m(18),
+          _vm._v(" "),
+          _vm._m(19),
+          _vm._v(" "),
+          _vm._m(20),
+          _vm._v(" "),
+          _vm._m(21)
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.tab == "athletes",
+            expression: "tab == 'athletes'"
+          }
+        ]
+      },
+      [_vm._m(22), _vm._v(" "), _vm._m(23), _vm._v(" "), _vm._m(24)]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.tab == "individual",
+            expression: "tab == 'individual'"
+          }
+        ]
+      },
+      [
+        _vm._m(25),
+        _vm._v(" "),
+        _vm._m(26),
+        _vm._v(" "),
+        _vm._m(27),
+        _vm._v(" "),
+        _vm._m(28),
+        _vm._v(" "),
+        _vm._m(29),
+        _vm._v(" "),
+        _vm._m(30)
+      ]
+    ),
+    _vm._v(" "),
+    _vm.tab
+      ? _c(
+          "button",
+          {
+            staticClass: "btn btn-primary",
+            attrs: { type: "button" },
+            on: { click: _vm.nextPage }
+          },
+          [_vm._v("Next")]
+        )
+      : _vm._e()
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("Name of Advisor")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("Major")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-4" }, [
+        _c("label", [_vm._v("Course type")]),
+        _vm._v(" "),
+        _c("select", { staticClass: "form-control" }, [
+          _c("option", { attrs: { value: "Bacholar Degree" } }, [
+            _vm._v("Bacholar Degree")
+          ]),
+          _vm._v(" "),
+          _c("option", { attrs: { value: "Master Degree" } }, [
+            _vm._v("Master Degree")
+          ]),
+          _vm._v(" "),
+          _c("option", { attrs: { value: "Doctorate" } }, [_vm._v("Doctorate")])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12 col-sm-4" }, [
+        _c("label", [_vm._v("or other type")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("Name of University")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("Address")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("City")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("State")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("Zip Code")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("Phone")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("Institution Name")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("Address")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("City")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("State")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("Zip Code")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("Phone")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("Program Name")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("Program Co-ordinator name")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("Address")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("City")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("State")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("Zip Code")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("Phone")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("Name of the charitable events is the U.S.")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("Dates of competition")]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control datepicker",
+          attrs: { type: "text" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [
+          _vm._v(
+            "Employer identification numbers of the charitable organization that benefited from the sports event"
+          )
+        ]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [
+          _vm._v(
+            "Describe the medicial condition or medical problem that prevented you from leaving the U.S."
+          )
+        ]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [
+          _vm._v(
+            "Enter the date you intended to leave the U.S. before the illness"
+          )
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control datepicker",
+          attrs: { type: "text" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("enter the date  you actually left the U.S.")]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control datepicker",
+          attrs: { type: "text" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("Physician's name")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("Physician's office address")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-8" }, [
+        _c("label", [_vm._v("Physician's phone number")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalInfo.vue?vue&type=template&id=797dc80e&":
 /*!***************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PersonalInfo.vue?vue&type=template&id=797dc80e& ***!
@@ -40404,9 +41344,277 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("ddd")])
+  return _c("div", [
+    _c(
+      "a",
+      {
+        attrs: { href: "#" },
+        on: {
+          click: function($event) {
+            $event.preventDefault()
+            return _vm.$router.go(-1)
+          }
+        }
+      },
+      [_vm._v("Back")]
+    ),
+    _vm._v(" "),
+    _c("h3", { staticClass: "my-4" }, [_vm._v("Personal Information")]),
+    _vm._v(" "),
+    _vm._m(0),
+    _vm._v(" "),
+    _vm._m(1),
+    _vm._v(" "),
+    _vm._m(2),
+    _vm._v(" "),
+    _vm._m(3),
+    _vm._v(" "),
+    _c("h3", { staticClass: "my-4" }, [_vm._v("Address in the United States")]),
+    _vm._v(" "),
+    _vm._m(4),
+    _vm._v(" "),
+    _vm._m(5),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [
+          _vm._v(
+            "Were you in the U.S. during the " +
+              _vm._s(_vm.$parent.year) +
+              " tax year?"
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _vm._m(6)
+    ]),
+    _vm._v(" "),
+    _vm._m(7),
+    _vm._v(" "),
+    _c(
+      "button",
+      { staticClass: "btn btn-primary", attrs: { type: "button" } },
+      [_vm._v("Next")]
+    )
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("First Name")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("Last Name")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("Date of Birth")]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control datepicker",
+          attrs: { type: "text" }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("Occupation")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("Phone")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("SSN / ITIN")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [
+          _vm._v("Passport Issuance Country/Country of Citizenship")
+        ]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("Passport No.")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("Street Address")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("City")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("State")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("Zip Code")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12 col-sm" }, [
+      _c("div", [
+        _c(
+          "div",
+          { staticClass: "custom-control custom-radio d-inline-block mr-3" },
+          [
+            _c("input", {
+              staticClass: "custom-control-input",
+              attrs: { type: "radio", id: "filling-ind", value: "yes" }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "custom-control-label",
+                attrs: { for: "filling-ind" }
+              },
+              [_vm._v("Yes")]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "custom-control custom-radio d-inline-block mr-3" },
+          [
+            _c("input", {
+              staticClass: "custom-control-input",
+              attrs: { type: "radio", id: "filling-trust", value: "no" }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "custom-control-label",
+                attrs: { for: "filling-trust" }
+              },
+              [_vm._v("No")]
+            )
+          ]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("Are you filling as an individual or trust?")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("div", [
+          _c(
+            "div",
+            { staticClass: "custom-control custom-radio d-inline-block mr-3" },
+            [
+              _c("input", {
+                staticClass: "custom-control-input",
+                attrs: { type: "radio", id: "filling-ind", value: "yes" }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "custom-control-label",
+                  attrs: { for: "filling-ind" }
+                },
+                [_vm._v("Individual")]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "custom-control custom-radio d-inline-block mr-3" },
+            [
+              _c("input", {
+                staticClass: "custom-control-input",
+                attrs: { type: "radio", id: "filling-trust", value: "no" }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "custom-control-label",
+                  attrs: { for: "filling-trust" }
+                },
+                [_vm._v("Trust")]
+              )
+            ]
+          )
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -40429,132 +41637,8 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h1", { staticClass: "my-4" }, [
+    _c("h3", { staticClass: "my-4" }, [
       _vm._v("Determine Your Residency Status")
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", [_vm._v("Do you know your tax filing status?")]),
-      _vm._v(" "),
-      _c("div", [
-        _c(
-          "div",
-          { staticClass: "custom-control custom-radio d-inline-block mr-3" },
-          [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.residency,
-                  expression: "residency"
-                }
-              ],
-              staticClass: "custom-control-input",
-              attrs: {
-                type: "radio",
-                name: "filingStatus",
-                id: "Resident",
-                value: "Resident",
-                checked: ""
-              },
-              domProps: { checked: _vm._q(_vm.residency, "Resident") },
-              on: {
-                change: function($event) {
-                  _vm.residency = "Resident"
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "custom-control-label",
-                attrs: { for: "Resident" }
-              },
-              [_vm._v("Resident")]
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "custom-control custom-radio d-inline-block mr-3" },
-          [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.residency,
-                  expression: "residency"
-                }
-              ],
-              staticClass: "custom-control-input",
-              attrs: {
-                type: "radio",
-                name: "filingStatus",
-                id: "Non-resident",
-                value: "Non Resident"
-              },
-              domProps: { checked: _vm._q(_vm.residency, "Non Resident") },
-              on: {
-                change: function($event) {
-                  _vm.residency = "Non Resident"
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "custom-control-label",
-                attrs: { for: "Non-resident" }
-              },
-              [_vm._v("Non Resident")]
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "custom-control custom-radio d-inline-block mr-3" },
-          [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.residency,
-                  expression: "residency"
-                }
-              ],
-              staticClass: "custom-control-input",
-              attrs: {
-                type: "radio",
-                name: "filingStatus",
-                id: "dontknow",
-                value: "dontknow"
-              },
-              domProps: { checked: _vm._q(_vm.residency, "dontknow") },
-              on: {
-                change: function($event) {
-                  _vm.residency = "dontknow"
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "custom-control-label",
-                attrs: { for: "dontknow" }
-              },
-              [_vm._v("I don't know")]
-            )
-          ]
-        )
-      ])
     ]),
     _vm._v(" "),
     _c(
@@ -40564,19 +41648,68 @@ var render = function() {
           {
             name: "show",
             rawName: "v-show",
-            value:
-              _vm.residency == "dontknow" || _vm.residency == "Non Resident",
-            expression: "residency == 'dontknow' || residency == 'Non Resident'"
+            value: _vm.showResult,
+            expression: "showResult"
+          }
+        ],
+        staticClass: "card text-center"
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "card-body" },
+          [
+            _c("p", { staticClass: "card-text" }, [
+              _vm._v("Based on the information you provided")
+            ]),
+            _vm._v(" "),
+            _c("h5", { staticClass: "card-title" }, [
+              _vm._v("You are "),
+              _vm.isResident != 1 ? _c("span", [_vm._v("not ")]) : _vm._e(),
+              _vm._v("a resident!")
+            ]),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              { staticClass: "btn btn-primary", attrs: { to: _vm.nextUrl } },
+              [_vm._v("Continue")]
+            ),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-secondary",
+                attrs: { href: "" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.showResult = false
+                  }
+                }
+              },
+              [_vm._v("Edit")]
+            )
+          ],
+          1
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: !_vm.showResult,
+            expression: "!showResult"
           }
         ]
       },
       [
         _c("div", { staticClass: "form-group" }, [
-          _c("label", [
-            _vm._v(
-              "Have you been a US citizen, by birth or naturalization, on the last day of 2019? (tax year)"
-            )
-          ]),
+          _c("label", [_vm._v("Do you know your tax filing status?")]),
           _vm._v(" "),
           _c("div", [
             _c(
@@ -40590,21 +41723,22 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.r11,
-                      expression: "r11"
+                      value: _vm.isResident,
+                      expression: "isResident"
                     }
                   ],
                   staticClass: "custom-control-input",
                   attrs: {
                     type: "radio",
-                    id: "r11-y",
-                    name: "r11",
-                    value: "yes"
+                    name: "filingStatus",
+                    id: "Resident",
+                    value: "1",
+                    checked: ""
                   },
-                  domProps: { checked: _vm._q(_vm.r11, "yes") },
+                  domProps: { checked: _vm._q(_vm.isResident, "1") },
                   on: {
                     change: function($event) {
-                      _vm.r11 = "yes"
+                      _vm.isResident = "1"
                     }
                   }
                 }),
@@ -40613,9 +41747,9 @@ var render = function() {
                   "label",
                   {
                     staticClass: "custom-control-label",
-                    attrs: { for: "r11-y" }
+                    attrs: { for: "Resident" }
                   },
-                  [_vm._v("Yes")]
+                  [_vm._v("Resident")]
                 )
               ]
             ),
@@ -40631,22 +41765,21 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.r11,
-                      expression: "r11"
+                      value: _vm.isResident,
+                      expression: "isResident"
                     }
                   ],
                   staticClass: "custom-control-input",
                   attrs: {
                     type: "radio",
-                    id: "r11-n",
-                    name: "r11",
-                    value: "no",
-                    checked: ""
+                    name: "filingStatus",
+                    id: "Non-resident",
+                    value: "0"
                   },
-                  domProps: { checked: _vm._q(_vm.r11, "no") },
+                  domProps: { checked: _vm._q(_vm.isResident, "0") },
                   on: {
                     change: function($event) {
-                      _vm.r11 = "no"
+                      _vm.isResident = "0"
                     }
                   }
                 }),
@@ -40655,9 +41788,50 @@ var render = function() {
                   "label",
                   {
                     staticClass: "custom-control-label",
-                    attrs: { for: "r11-n" }
+                    attrs: { for: "Non-resident" }
                   },
-                  [_vm._v("No")]
+                  [_vm._v("Non Resident")]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "custom-control custom-radio d-inline-block mr-3"
+              },
+              [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.isResident,
+                      expression: "isResident"
+                    }
+                  ],
+                  staticClass: "custom-control-input",
+                  attrs: {
+                    type: "radio",
+                    name: "filingStatus",
+                    id: "dontknow",
+                    value: ""
+                  },
+                  domProps: { checked: _vm._q(_vm.isResident, "") },
+                  on: {
+                    change: function($event) {
+                      _vm.isResident = ""
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "custom-control-label",
+                    attrs: { for: "dontknow" }
+                  },
+                  [_vm._v("I don't know")]
                 )
               ]
             )
@@ -40671,8 +41845,8 @@ var render = function() {
               {
                 name: "show",
                 rawName: "v-show",
-                value: _vm.r11 == "no",
-                expression: "r11 == 'no'"
+                value: this.isResident != 1,
+                expression: "this.isResident != 1"
               }
             ]
           },
@@ -40680,7 +41854,7 @@ var render = function() {
             _c("div", { staticClass: "form-group" }, [
               _c("label", [
                 _vm._v(
-                  "Have you been a green card holder, on the last day of 2019? (tax year)"
+                  "Have you been a US citizen, by birth or naturalization, on the last day of 2019? (tax year)"
                 )
               ]),
               _vm._v(" "),
@@ -40697,22 +41871,21 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.r12,
-                          expression: "r12"
+                          value: _vm.r11,
+                          expression: "r11"
                         }
                       ],
                       staticClass: "custom-control-input",
                       attrs: {
                         type: "radio",
-                        id: "r12-y",
-                        name: "r12",
-                        value: "yes",
-                        checked: ""
+                        id: "r11-y",
+                        name: "r11",
+                        value: "yes"
                       },
-                      domProps: { checked: _vm._q(_vm.r12, "yes") },
+                      domProps: { checked: _vm._q(_vm.r11, "yes") },
                       on: {
                         change: function($event) {
-                          _vm.r12 = "yes"
+                          _vm.r11 = "yes"
                         }
                       }
                     }),
@@ -40721,7 +41894,7 @@ var render = function() {
                       "label",
                       {
                         staticClass: "custom-control-label",
-                        attrs: { for: "r12-y" }
+                        attrs: { for: "r11-y" }
                       },
                       [_vm._v("Yes")]
                     )
@@ -40740,21 +41913,22 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.r12,
-                          expression: "r12"
+                          value: _vm.r11,
+                          expression: "r11"
                         }
                       ],
                       staticClass: "custom-control-input",
                       attrs: {
                         type: "radio",
-                        id: "r12-n",
-                        name: "r12",
-                        value: "no"
+                        id: "r11-n",
+                        name: "r11",
+                        value: "no",
+                        checked: ""
                       },
-                      domProps: { checked: _vm._q(_vm.r12, "no") },
+                      domProps: { checked: _vm._q(_vm.r11, "no") },
                       on: {
                         change: function($event) {
-                          _vm.r12 = "no"
+                          _vm.r11 = "no"
                         }
                       }
                     }),
@@ -40763,7 +41937,7 @@ var render = function() {
                       "label",
                       {
                         staticClass: "custom-control-label",
-                        attrs: { for: "r12-n" }
+                        attrs: { for: "r11-n" }
                       },
                       [_vm._v("No")]
                     )
@@ -40779,8 +41953,8 @@ var render = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: _vm.r12 == "no",
-                    expression: "r12 == 'no'"
+                    value: _vm.r11 == "no",
+                    expression: "r11 == 'no'"
                   }
                 ]
               },
@@ -40788,7 +41962,7 @@ var render = function() {
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", [
                     _vm._v(
-                      "Have you ever applied for US citizenship/ lawful residence?"
+                      "Have you been a green card holder, on the last day of 2019? (tax year)"
                     )
                   ]),
                   _vm._v(" "),
@@ -40805,21 +41979,22 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.r13,
-                              expression: "r13"
+                              value: _vm.r12,
+                              expression: "r12"
                             }
                           ],
                           staticClass: "custom-control-input",
                           attrs: {
                             type: "radio",
-                            id: "r13-y",
-                            name: "r13",
-                            value: "yes"
+                            id: "r12-y",
+                            name: "r12",
+                            value: "yes",
+                            checked: ""
                           },
-                          domProps: { checked: _vm._q(_vm.r13, "yes") },
+                          domProps: { checked: _vm._q(_vm.r12, "yes") },
                           on: {
                             change: function($event) {
-                              _vm.r13 = "yes"
+                              _vm.r12 = "yes"
                             }
                           }
                         }),
@@ -40828,7 +42003,7 @@ var render = function() {
                           "label",
                           {
                             staticClass: "custom-control-label",
-                            attrs: { for: "r13-y" }
+                            attrs: { for: "r12-y" }
                           },
                           [_vm._v("Yes")]
                         )
@@ -40847,21 +42022,21 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.r13,
-                              expression: "r13"
+                              value: _vm.r12,
+                              expression: "r12"
                             }
                           ],
                           staticClass: "custom-control-input",
                           attrs: {
                             type: "radio",
-                            id: "r13-n",
-                            name: "r13",
+                            id: "r12-n",
+                            name: "r12",
                             value: "no"
                           },
-                          domProps: { checked: _vm._q(_vm.r13, "no") },
+                          domProps: { checked: _vm._q(_vm.r12, "no") },
                           on: {
                             change: function($event) {
-                              _vm.r13 = "no"
+                              _vm.r12 = "no"
                             }
                           }
                         }),
@@ -40870,7 +42045,7 @@ var render = function() {
                           "label",
                           {
                             staticClass: "custom-control-label",
-                            attrs: { for: "r13-n" }
+                            attrs: { for: "r12-n" }
                           },
                           [_vm._v("No")]
                         )
@@ -40886,810 +42061,16 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.r13 == "yes",
-                        expression: "r13 == 'yes'"
+                        value: _vm.r12 == "no",
+                        expression: "r12 == 'no'"
                       }
                     ]
                   },
                   [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", [
-                        _vm._v("What is the status of your application?")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "custom-control custom-radio d-inline-block mr-3"
-                          },
-                          [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.r14,
-                                  expression: "r14"
-                                }
-                              ],
-                              staticClass: "custom-control-input",
-                              attrs: {
-                                type: "radio",
-                                id: "r14-a",
-                                name: "r14",
-                                value: "approved"
-                              },
-                              domProps: {
-                                checked: _vm._q(_vm.r14, "approved")
-                              },
-                              on: {
-                                change: function($event) {
-                                  _vm.r14 = "approved"
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "label",
-                              {
-                                staticClass: "custom-control-label",
-                                attrs: { for: "r14-a" }
-                              },
-                              [_vm._v("Approved")]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "custom-control custom-radio d-inline-block mr-3"
-                          },
-                          [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.r14,
-                                  expression: "r14"
-                                }
-                              ],
-                              staticClass: "custom-control-input",
-                              attrs: {
-                                type: "radio",
-                                id: "r14-p",
-                                name: "r14",
-                                value: "pending"
-                              },
-                              domProps: { checked: _vm._q(_vm.r14, "pending") },
-                              on: {
-                                change: function($event) {
-                                  _vm.r14 = "pending"
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "label",
-                              {
-                                staticClass: "custom-control-label",
-                                attrs: { for: "r14-p" }
-                              },
-                              [_vm._v("Pending")]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "custom-control custom-radio d-inline-block mr-3"
-                          },
-                          [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.r14,
-                                  expression: "r14"
-                                }
-                              ],
-                              staticClass: "custom-control-input",
-                              attrs: {
-                                type: "radio",
-                                id: "r14-d",
-                                name: "r14",
-                                value: "denied"
-                              },
-                              domProps: { checked: _vm._q(_vm.r14, "denied") },
-                              on: {
-                                change: function($event) {
-                                  _vm.r14 = "denied"
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "label",
-                              {
-                                staticClass: "custom-control-label",
-                                attrs: { for: "r14-d" }
-                              },
-                              [_vm._v("Denied")]
-                            )
-                          ]
-                        )
-                      ])
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.r13 == "no",
-                        expression: "r13 == 'no'"
-                      }
-                    ]
-                  },
-                  [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", [_vm._v("I am currently a")]),
-                      _vm._v(" "),
-                      _c("div", [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "custom-control custom-radio d-inline-block mr-3"
-                          },
-                          [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.r15,
-                                  expression: "r15"
-                                }
-                              ],
-                              staticClass: "custom-control-input",
-                              attrs: {
-                                type: "radio",
-                                id: "r15-f",
-                                name: "r15",
-                                value: "student"
-                              },
-                              domProps: { checked: _vm._q(_vm.r15, "student") },
-                              on: {
-                                change: function($event) {
-                                  _vm.r15 = "student"
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "label",
-                              {
-                                staticClass: "custom-control-label",
-                                attrs: { for: "r15-f" }
-                              },
-                              [_vm._v("Student")]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "custom-control custom-radio d-inline-block mr-3"
-                          },
-                          [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.r15,
-                                  expression: "r15"
-                                }
-                              ],
-                              staticClass: "custom-control-input",
-                              attrs: {
-                                type: "radio",
-                                id: "r15-j",
-                                name: "r15",
-                                value: "teacher"
-                              },
-                              domProps: { checked: _vm._q(_vm.r15, "teacher") },
-                              on: {
-                                change: function($event) {
-                                  _vm.r15 = "teacher"
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "label",
-                              {
-                                staticClass: "custom-control-label",
-                                attrs: { for: "r15-j" }
-                              },
-                              [_vm._v("Teacher or Trainee")]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "custom-control custom-radio d-inline-block mr-3"
-                          },
-                          [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.r15,
-                                  expression: "r15"
-                                }
-                              ],
-                              staticClass: "custom-control-input",
-                              attrs: {
-                                type: "radio",
-                                id: "r15-n",
-                                name: "r15",
-                                value: "no"
-                              },
-                              domProps: { checked: _vm._q(_vm.r15, "no") },
-                              on: {
-                                change: function($event) {
-                                  _vm.r15 = "no"
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "label",
-                              {
-                                staticClass: "custom-control-label",
-                                attrs: { for: "r15-n" }
-                              },
-                              [_vm._v("None of the above")]
-                            )
-                          ]
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.r15 == "student",
-                            expression: "r15 == 'student'"
-                          }
-                        ]
-                      },
-                      [
-                        _c("div", { staticClass: "form-group" }, [
-                          _c("label", [
-                            _vm._v(
-                              "Have you been a student in the U.S. for 5 years prior to current tax year?"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", [
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "custom-control custom-radio d-inline-block mr-3"
-                              },
-                              [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.r16,
-                                      expression: "r16"
-                                    }
-                                  ],
-                                  staticClass: "custom-control-input",
-                                  attrs: {
-                                    type: "radio",
-                                    id: "r16-y",
-                                    name: "r16",
-                                    value: "yes"
-                                  },
-                                  domProps: { checked: _vm._q(_vm.r16, "yes") },
-                                  on: {
-                                    change: function($event) {
-                                      _vm.r16 = "yes"
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "label",
-                                  {
-                                    staticClass: "custom-control-label",
-                                    attrs: { for: "r16-y" }
-                                  },
-                                  [_vm._v("Yes")]
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "custom-control custom-radio d-inline-block mr-3"
-                              },
-                              [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.r16,
-                                      expression: "r16"
-                                    }
-                                  ],
-                                  staticClass: "custom-control-input",
-                                  attrs: {
-                                    type: "radio",
-                                    id: "r16-n",
-                                    name: "r16",
-                                    value: "no"
-                                  },
-                                  domProps: { checked: _vm._q(_vm.r16, "no") },
-                                  on: {
-                                    change: function($event) {
-                                      _vm.r16 = "no"
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "label",
-                                  {
-                                    staticClass: "custom-control-label",
-                                    attrs: { for: "r16-n" }
-                                  },
-                                  [_vm._v("No")]
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "custom-control custom-radio d-inline-block mr-3"
-                              },
-                              [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.r16,
-                                      expression: "r16"
-                                    }
-                                  ],
-                                  staticClass: "custom-control-input",
-                                  attrs: {
-                                    type: "radio",
-                                    id: "r16-d",
-                                    name: "r16",
-                                    value: "dontknow"
-                                  },
-                                  domProps: {
-                                    checked: _vm._q(_vm.r16, "dontknow")
-                                  },
-                                  on: {
-                                    change: function($event) {
-                                      _vm.r16 = "dontknow"
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "label",
-                                  {
-                                    staticClass: "custom-control-label",
-                                    attrs: { for: "r16-d" }
-                                  },
-                                  [_vm._v("I don't know")]
-                                )
-                              ]
-                            )
-                          ])
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.r15 == "teacher",
-                            expression: "r15 == 'teacher'"
-                          }
-                        ]
-                      },
-                      [
-                        _c("div", { staticClass: "form-group" }, [
-                          _c("label", [
-                            _vm._v(
-                              "Have you been a teacher or trainee in the U.S. for 2 out of the past 6 years prior to current tax year?"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", [
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "custom-control custom-radio d-inline-block mr-3"
-                              },
-                              [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.r17,
-                                      expression: "r17"
-                                    }
-                                  ],
-                                  staticClass: "custom-control-input",
-                                  attrs: {
-                                    type: "radio",
-                                    id: "r17-y",
-                                    name: "r17",
-                                    value: "yes"
-                                  },
-                                  domProps: { checked: _vm._q(_vm.r17, "yes") },
-                                  on: {
-                                    change: function($event) {
-                                      _vm.r17 = "yes"
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "label",
-                                  {
-                                    staticClass: "custom-control-label",
-                                    attrs: { for: "r17-y" }
-                                  },
-                                  [_vm._v("Yes")]
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "custom-control custom-radio d-inline-block mr-3"
-                              },
-                              [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.r17,
-                                      expression: "r17"
-                                    }
-                                  ],
-                                  staticClass: "custom-control-input",
-                                  attrs: {
-                                    type: "radio",
-                                    id: "r17-n",
-                                    name: "r17",
-                                    value: "no"
-                                  },
-                                  domProps: { checked: _vm._q(_vm.r17, "no") },
-                                  on: {
-                                    change: function($event) {
-                                      _vm.r17 = "no"
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "label",
-                                  {
-                                    staticClass: "custom-control-label",
-                                    attrs: { for: "r17-n" }
-                                  },
-                                  [_vm._v("No")]
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "custom-control custom-radio d-inline-block mr-3"
-                              },
-                              [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.r17,
-                                      expression: "r17"
-                                    }
-                                  ],
-                                  staticClass: "custom-control-input",
-                                  attrs: {
-                                    type: "radio",
-                                    id: "r17-d",
-                                    name: "r17",
-                                    value: "dontknow"
-                                  },
-                                  domProps: {
-                                    checked: _vm._q(_vm.r17, "dontknow")
-                                  },
-                                  on: {
-                                    change: function($event) {
-                                      _vm.r17 = "dontknow"
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "label",
-                                  {
-                                    staticClass: "custom-control-label",
-                                    attrs: { for: "r17-d" }
-                                  },
-                                  [_vm._v("I don't know")]
-                                )
-                              ]
-                            )
-                          ])
-                        ])
-                      ]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value:
-                          _vm.r15 == "no" ||
-                          ((_vm.r14 == "pending" || _vm.r14 == "denied") &&
-                            _vm.r13 == "yes") ||
-                          (_vm.r15 == "student" && _vm.r16 != "yes") ||
-                          (_vm.r15 == "teacher" && _vm.r17 != "yes"),
-                        expression:
-                          "\n                r15 == 'no' || \n                ((r14 == 'pending' || r14 == 'denied') && r13 == 'yes')\n                || (r15 == 'student' && r16 != 'yes') || (r15 == 'teacher' && r17 != 'yes')\n                "
-                      }
-                    ]
-                  },
-                  [
-                    _vm._m(0),
-                    _vm._v(" "),
-                    _vm._l(_vm.travelHistories, function(item, index) {
-                      return _c(
-                        "div",
-                        { key: index, staticClass: "form-row" },
-                        [
-                          _c(
-                            "div",
-                            { staticClass: "form-group col-12 col-sm-6" },
-                            [
-                              _c(
-                                "label",
-                                { attrs: { for: "visaType-" + index } },
-                                [_vm._v("Visa Type")]
-                              ),
-                              _vm._v(" "),
-                              _c("visa", {
-                                model: {
-                                  value: item.visaType,
-                                  callback: function($$v) {
-                                    _vm.$set(item, "visaType", $$v)
-                                  },
-                                  expression: "item.visaType"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "form-group col-12 col-sm" },
-                            [
-                              _c(
-                                "label",
-                                { attrs: { for: "enterDate-" + index } },
-                                [_vm._v("Date Entered US")]
-                              ),
-                              _vm._v(" "),
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: item.enterDate,
-                                    expression: "item.enterDate"
-                                  }
-                                ],
-                                staticClass: "form-control datepicker",
-                                class:
-                                  index === _vm.invalidRowId
-                                    ? "is-invalid"
-                                    : "",
-                                attrs: {
-                                  type: "text",
-                                  id: "enterDate-" + index,
-                                  index: "enterDate-" + index,
-                                  name: "enterDate-" + index
-                                },
-                                domProps: { value: item.enterDate },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      item,
-                                      "enterDate",
-                                      $event.target.value
-                                    )
-                                  }
-                                }
-                              })
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-12 col-sm" }, [
-                            _c(
-                              "label",
-                              { attrs: { for: "leaveDate-" + index } },
-                              [_vm._v("Date Left US")]
-                            ),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: item.leaveDate,
-                                  expression: "item.leaveDate"
-                                }
-                              ],
-                              staticClass: "form-control datepicker",
-                              class:
-                                index === _vm.invalidRowId ? "is-invalid" : "",
-                              attrs: {
-                                type: "text",
-                                id: "leaveDate-" + index,
-                                index: "leaveDate-" + index,
-                                name: "leaveDate-" + index
-                              },
-                              domProps: { value: item.leaveDate },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    item,
-                                    "leaveDate",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "form-group col-12 col-sm" },
-                            [
-                              _c("div", { staticClass: "pt-sm-4 mt-sm-3" }, [
-                                index !== 0
-                                  ? _c(
-                                      "a",
-                                      {
-                                        attrs: { href: "#" },
-                                        on: {
-                                          click: function($event) {
-                                            $event.preventDefault()
-                                            return _vm.remove(index)
-                                          }
-                                        }
-                                      },
-                                      [_vm._v("- remove line")]
-                                    )
-                                  : _vm._e()
-                              ])
-                            ]
-                          )
-                        ]
-                      )
-                    }),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c(
-                        "a",
-                        {
-                          attrs: { href: "#" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.addOneLine($event)
-                            }
-                          }
-                        },
-                        [_vm._v("+ add one line")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-row" }, [
-                      _c(
-                        "div",
-                        { staticClass: "form-group col-12 col-sm-6" },
-                        [
-                          _c("label", [
-                            _vm._v("Current visa held as of 12/31/2019")
-                          ]),
-                          _vm._v(" "),
-                          _c("visa", {
-                            model: {
-                              value: _vm.currentVisa,
-                              callback: function($$v) {
-                                _vm.currentVisa = $$v
-                              },
-                              expression: "currentVisa"
-                            }
-                          })
-                        ],
-                        1
-                      )
-                    ]),
-                    _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", [
                         _vm._v(
-                          "Have you changed your visa in any year, including the tax year 2019?"
+                          "Have you ever applied for US citizenship/ lawful residence?"
                         )
                       ]),
                       _vm._v(" "),
@@ -41706,21 +42087,21 @@ var render = function() {
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: _vm.r19,
-                                  expression: "r19"
+                                  value: _vm.r13,
+                                  expression: "r13"
                                 }
                               ],
                               staticClass: "custom-control-input",
                               attrs: {
                                 type: "radio",
-                                id: "r19-y",
-                                name: "r19",
+                                id: "r13-y",
+                                name: "r13",
                                 value: "yes"
                               },
-                              domProps: { checked: _vm._q(_vm.r19, "yes") },
+                              domProps: { checked: _vm._q(_vm.r13, "yes") },
                               on: {
                                 change: function($event) {
-                                  _vm.r19 = "yes"
+                                  _vm.r13 = "yes"
                                 }
                               }
                             }),
@@ -41729,7 +42110,7 @@ var render = function() {
                               "label",
                               {
                                 staticClass: "custom-control-label",
-                                attrs: { for: "r19-y" }
+                                attrs: { for: "r13-y" }
                               },
                               [_vm._v("Yes")]
                             )
@@ -41748,21 +42129,21 @@ var render = function() {
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: _vm.r19,
-                                  expression: "r19"
+                                  value: _vm.r13,
+                                  expression: "r13"
                                 }
                               ],
                               staticClass: "custom-control-input",
                               attrs: {
                                 type: "radio",
-                                id: "r19-n",
-                                name: "r19",
+                                id: "r13-n",
+                                name: "r13",
                                 value: "no"
                               },
-                              domProps: { checked: _vm._q(_vm.r19, "no") },
+                              domProps: { checked: _vm._q(_vm.r13, "no") },
                               on: {
                                 change: function($event) {
-                                  _vm.r19 = "no"
+                                  _vm.r13 = "no"
                                 }
                               }
                             }),
@@ -41771,7 +42152,7 @@ var render = function() {
                               "label",
                               {
                                 staticClass: "custom-control-label",
-                                attrs: { for: "r19-n" }
+                                attrs: { for: "r13-n" }
                               },
                               [_vm._v("No")]
                             )
@@ -41787,77 +42168,1008 @@ var render = function() {
                           {
                             name: "show",
                             rawName: "v-show",
-                            value: _vm.r19 == "yes",
-                            expression: "r19 == 'yes'"
+                            value: _vm.r13 == "yes",
+                            expression: "r13 == 'yes'"
                           }
-                        ],
-                        staticClass: "form-row"
+                        ]
                       },
                       [
-                        _c(
-                          "div",
-                          { staticClass: "form-group col-12 col-sm" },
-                          [
-                            _c("label", [_vm._v("Previous visa type")]),
-                            _vm._v(" "),
-                            _c("visa", {
-                              model: {
-                                value: _vm.preVisa,
-                                callback: function($$v) {
-                                  _vm.preVisa = $$v
-                                },
-                                expression: "preVisa"
-                              }
-                            })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-group col-12 col-sm" }, [
-                          _c("label", [_vm._v("On what date was it changed?")]),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", [
+                            _vm._v("What is the status of your application?")
+                          ]),
                           _vm._v(" "),
-                          _c("input", {
-                            directives: [
+                          _c("div", [
+                            _c(
+                              "div",
                               {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.visaChangeDate,
-                                expression: "visaChangeDate"
-                              }
-                            ],
-                            staticClass: "form-control datepicker",
-                            attrs: { type: "text" },
-                            domProps: { value: _vm.visaChangeDate },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.visaChangeDate = $event.target.value
-                              }
-                            }
-                          })
+                                staticClass:
+                                  "custom-control custom-radio d-inline-block mr-3"
+                              },
+                              [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.r14,
+                                      expression: "r14"
+                                    }
+                                  ],
+                                  staticClass: "custom-control-input",
+                                  attrs: {
+                                    type: "radio",
+                                    id: "r14-a",
+                                    name: "r14",
+                                    value: "approved"
+                                  },
+                                  domProps: {
+                                    checked: _vm._q(_vm.r14, "approved")
+                                  },
+                                  on: {
+                                    change: function($event) {
+                                      _vm.r14 = "approved"
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "custom-control-label",
+                                    attrs: { for: "r14-a" }
+                                  },
+                                  [_vm._v("Approved")]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "custom-control custom-radio d-inline-block mr-3"
+                              },
+                              [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.r14,
+                                      expression: "r14"
+                                    }
+                                  ],
+                                  staticClass: "custom-control-input",
+                                  attrs: {
+                                    type: "radio",
+                                    id: "r14-p",
+                                    name: "r14",
+                                    value: "pending"
+                                  },
+                                  domProps: {
+                                    checked: _vm._q(_vm.r14, "pending")
+                                  },
+                                  on: {
+                                    change: function($event) {
+                                      _vm.r14 = "pending"
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "custom-control-label",
+                                    attrs: { for: "r14-p" }
+                                  },
+                                  [_vm._v("Pending")]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "custom-control custom-radio d-inline-block mr-3"
+                              },
+                              [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.r14,
+                                      expression: "r14"
+                                    }
+                                  ],
+                                  staticClass: "custom-control-input",
+                                  attrs: {
+                                    type: "radio",
+                                    id: "r14-d",
+                                    name: "r14",
+                                    value: "denied"
+                                  },
+                                  domProps: {
+                                    checked: _vm._q(_vm.r14, "denied")
+                                  },
+                                  on: {
+                                    change: function($event) {
+                                      _vm.r14 = "denied"
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "custom-control-label",
+                                    attrs: { for: "r14-d" }
+                                  },
+                                  [_vm._v("Denied")]
+                                )
+                              ]
+                            )
+                          ])
                         ])
                       ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.r13 == "no",
+                            expression: "r13 == 'no'"
+                          }
+                        ]
+                      },
+                      [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", [_vm._v("I am currently a")]),
+                          _vm._v(" "),
+                          _c("div", [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "custom-control custom-radio d-inline-block mr-3"
+                              },
+                              [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.r15,
+                                      expression: "r15"
+                                    }
+                                  ],
+                                  staticClass: "custom-control-input",
+                                  attrs: {
+                                    type: "radio",
+                                    id: "r15-f",
+                                    name: "r15",
+                                    value: "student"
+                                  },
+                                  domProps: {
+                                    checked: _vm._q(_vm.r15, "student")
+                                  },
+                                  on: {
+                                    change: function($event) {
+                                      _vm.r15 = "student"
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "custom-control-label",
+                                    attrs: { for: "r15-f" }
+                                  },
+                                  [_vm._v("Student")]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "custom-control custom-radio d-inline-block mr-3"
+                              },
+                              [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.r15,
+                                      expression: "r15"
+                                    }
+                                  ],
+                                  staticClass: "custom-control-input",
+                                  attrs: {
+                                    type: "radio",
+                                    id: "r15-j",
+                                    name: "r15",
+                                    value: "teacher"
+                                  },
+                                  domProps: {
+                                    checked: _vm._q(_vm.r15, "teacher")
+                                  },
+                                  on: {
+                                    change: function($event) {
+                                      _vm.r15 = "teacher"
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "custom-control-label",
+                                    attrs: { for: "r15-j" }
+                                  },
+                                  [_vm._v("Teacher or Trainee")]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "custom-control custom-radio d-inline-block mr-3"
+                              },
+                              [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.r15,
+                                      expression: "r15"
+                                    }
+                                  ],
+                                  staticClass: "custom-control-input",
+                                  attrs: {
+                                    type: "radio",
+                                    id: "r15-n",
+                                    name: "r15",
+                                    value: "no"
+                                  },
+                                  domProps: { checked: _vm._q(_vm.r15, "no") },
+                                  on: {
+                                    change: function($event) {
+                                      _vm.r15 = "no"
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "custom-control-label",
+                                    attrs: { for: "r15-n" }
+                                  },
+                                  [_vm._v("None of the above")]
+                                )
+                              ]
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.r15 == "student",
+                                expression: "r15 == 'student'"
+                              }
+                            ]
+                          },
+                          [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", [
+                                _vm._v(
+                                  "Have you been a student in the U.S. for 5 years prior to current tax year?"
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("div", [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "custom-control custom-radio d-inline-block mr-3"
+                                  },
+                                  [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.r16,
+                                          expression: "r16"
+                                        }
+                                      ],
+                                      staticClass: "custom-control-input",
+                                      attrs: {
+                                        type: "radio",
+                                        id: "r16-y",
+                                        name: "r16",
+                                        value: "yes"
+                                      },
+                                      domProps: {
+                                        checked: _vm._q(_vm.r16, "yes")
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          _vm.r16 = "yes"
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "custom-control-label",
+                                        attrs: { for: "r16-y" }
+                                      },
+                                      [_vm._v("Yes")]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "custom-control custom-radio d-inline-block mr-3"
+                                  },
+                                  [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.r16,
+                                          expression: "r16"
+                                        }
+                                      ],
+                                      staticClass: "custom-control-input",
+                                      attrs: {
+                                        type: "radio",
+                                        id: "r16-n",
+                                        name: "r16",
+                                        value: "no"
+                                      },
+                                      domProps: {
+                                        checked: _vm._q(_vm.r16, "no")
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          _vm.r16 = "no"
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "custom-control-label",
+                                        attrs: { for: "r16-n" }
+                                      },
+                                      [_vm._v("No")]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "custom-control custom-radio d-inline-block mr-3"
+                                  },
+                                  [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.r16,
+                                          expression: "r16"
+                                        }
+                                      ],
+                                      staticClass: "custom-control-input",
+                                      attrs: {
+                                        type: "radio",
+                                        id: "r16-d",
+                                        name: "r16",
+                                        value: "dontknow"
+                                      },
+                                      domProps: {
+                                        checked: _vm._q(_vm.r16, "dontknow")
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          _vm.r16 = "dontknow"
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "custom-control-label",
+                                        attrs: { for: "r16-d" }
+                                      },
+                                      [_vm._v("I don't know")]
+                                    )
+                                  ]
+                                )
+                              ])
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.r15 == "teacher",
+                                expression: "r15 == 'teacher'"
+                              }
+                            ]
+                          },
+                          [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", [
+                                _vm._v(
+                                  "Have you been a teacher or trainee in the U.S. for 2 out of the past 6 years prior to current tax year?"
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("div", [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "custom-control custom-radio d-inline-block mr-3"
+                                  },
+                                  [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.r17,
+                                          expression: "r17"
+                                        }
+                                      ],
+                                      staticClass: "custom-control-input",
+                                      attrs: {
+                                        type: "radio",
+                                        id: "r17-y",
+                                        name: "r17",
+                                        value: "yes"
+                                      },
+                                      domProps: {
+                                        checked: _vm._q(_vm.r17, "yes")
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          _vm.r17 = "yes"
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "custom-control-label",
+                                        attrs: { for: "r17-y" }
+                                      },
+                                      [_vm._v("Yes")]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "custom-control custom-radio d-inline-block mr-3"
+                                  },
+                                  [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.r17,
+                                          expression: "r17"
+                                        }
+                                      ],
+                                      staticClass: "custom-control-input",
+                                      attrs: {
+                                        type: "radio",
+                                        id: "r17-n",
+                                        name: "r17",
+                                        value: "no"
+                                      },
+                                      domProps: {
+                                        checked: _vm._q(_vm.r17, "no")
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          _vm.r17 = "no"
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "custom-control-label",
+                                        attrs: { for: "r17-n" }
+                                      },
+                                      [_vm._v("No")]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "custom-control custom-radio d-inline-block mr-3"
+                                  },
+                                  [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.r17,
+                                          expression: "r17"
+                                        }
+                                      ],
+                                      staticClass: "custom-control-input",
+                                      attrs: {
+                                        type: "radio",
+                                        id: "r17-d",
+                                        name: "r17",
+                                        value: "dontknow"
+                                      },
+                                      domProps: {
+                                        checked: _vm._q(_vm.r17, "dontknow")
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          _vm.r17 = "dontknow"
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "custom-control-label",
+                                        attrs: { for: "r17-d" }
+                                      },
+                                      [_vm._v("I don't know")]
+                                    )
+                                  ]
+                                )
+                              ])
+                            ])
+                          ]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value:
+                              _vm.r15 == "no" ||
+                              ((_vm.r14 == "pending" || _vm.r14 == "denied") &&
+                                _vm.r13 == "yes") ||
+                              (_vm.r15 == "student" && _vm.r16 != "yes") ||
+                              (_vm.r15 == "teacher" && _vm.r17 != "yes"),
+                            expression:
+                              "\n                    r15 == 'no' || \n                    ((r14 == 'pending' || r14 == 'denied') && r13 == 'yes')\n                    || (r15 == 'student' && r16 != 'yes') || (r15 == 'teacher' && r17 != 'yes')\n                    "
+                          }
+                        ]
+                      },
+                      [
+                        _vm._m(0),
+                        _vm._v(" "),
+                        _vm._l(_vm.travelHistories, function(item, index) {
+                          return _c(
+                            "div",
+                            { key: index, staticClass: "form-row" },
+                            [
+                              _c(
+                                "div",
+                                { staticClass: "form-group col-12 col-sm-6" },
+                                [
+                                  _c(
+                                    "label",
+                                    { attrs: { for: "visaType-" + index } },
+                                    [_vm._v("Visa Type")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("visa", {
+                                    model: {
+                                      value: item.visaType,
+                                      callback: function($$v) {
+                                        _vm.$set(item, "visaType", $$v)
+                                      },
+                                      expression: "item.visaType"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "form-group col-12 col-sm" },
+                                [
+                                  _c(
+                                    "label",
+                                    { attrs: { for: "enterDate-" + index } },
+                                    [_vm._v("Date Entered US")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: item.enterDate,
+                                        expression: "item.enterDate"
+                                      }
+                                    ],
+                                    staticClass: "form-control datepicker",
+                                    class:
+                                      index === _vm.invalidRowId
+                                        ? "is-invalid"
+                                        : "",
+                                    attrs: {
+                                      type: "text",
+                                      id: "enterDate-" + index,
+                                      index: "enterDate-" + index,
+                                      name: "enterDate-" + index
+                                    },
+                                    domProps: { value: item.enterDate },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          item,
+                                          "enterDate",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  })
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-12 col-sm" }, [
+                                _c(
+                                  "label",
+                                  { attrs: { for: "leaveDate-" + index } },
+                                  [_vm._v("Date Left US")]
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: item.leaveDate,
+                                      expression: "item.leaveDate"
+                                    }
+                                  ],
+                                  staticClass: "form-control datepicker",
+                                  class:
+                                    index === _vm.invalidRowId
+                                      ? "is-invalid"
+                                      : "",
+                                  attrs: {
+                                    type: "text",
+                                    id: "leaveDate-" + index,
+                                    index: "leaveDate-" + index,
+                                    name: "leaveDate-" + index
+                                  },
+                                  domProps: { value: item.leaveDate },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        item,
+                                        "leaveDate",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "form-group col-12 col-sm" },
+                                [
+                                  _c(
+                                    "div",
+                                    { staticClass: "pt-sm-4 mt-sm-3" },
+                                    [
+                                      index !== 0
+                                        ? _c(
+                                            "a",
+                                            {
+                                              attrs: { href: "#" },
+                                              on: {
+                                                click: function($event) {
+                                                  $event.preventDefault()
+                                                  return _vm.remove(index)
+                                                }
+                                              }
+                                            },
+                                            [_vm._v("- remove line")]
+                                          )
+                                        : _vm._e()
+                                    ]
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        }),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.addOneLine($event)
+                                }
+                              }
+                            },
+                            [_vm._v("+ add one line")]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-row" }, [
+                          _c(
+                            "div",
+                            { staticClass: "form-group col-12 col-sm-6" },
+                            [
+                              _c("label", [
+                                _vm._v("Current visa held as of 12/31/2019")
+                              ]),
+                              _vm._v(" "),
+                              _c("visa", {
+                                model: {
+                                  value: _vm.currentVisa,
+                                  callback: function($$v) {
+                                    _vm.currentVisa = $$v
+                                  },
+                                  expression: "currentVisa"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", [
+                            _vm._v(
+                              "Have you changed your visa within the U.S. in any year, including the tax year 2019?"
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "custom-control custom-radio d-inline-block mr-3"
+                              },
+                              [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.r19,
+                                      expression: "r19"
+                                    }
+                                  ],
+                                  staticClass: "custom-control-input",
+                                  attrs: {
+                                    type: "radio",
+                                    id: "r19-y",
+                                    name: "r19",
+                                    value: "yes"
+                                  },
+                                  domProps: { checked: _vm._q(_vm.r19, "yes") },
+                                  on: {
+                                    change: function($event) {
+                                      _vm.r19 = "yes"
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "custom-control-label",
+                                    attrs: { for: "r19-y" }
+                                  },
+                                  [_vm._v("Yes")]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "custom-control custom-radio d-inline-block mr-3"
+                              },
+                              [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.r19,
+                                      expression: "r19"
+                                    }
+                                  ],
+                                  staticClass: "custom-control-input",
+                                  attrs: {
+                                    type: "radio",
+                                    id: "r19-n",
+                                    name: "r19",
+                                    value: "no"
+                                  },
+                                  domProps: { checked: _vm._q(_vm.r19, "no") },
+                                  on: {
+                                    change: function($event) {
+                                      _vm.r19 = "no"
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "custom-control-label",
+                                    attrs: { for: "r19-n" }
+                                  },
+                                  [_vm._v("No")]
+                                )
+                              ]
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.r19 == "yes",
+                                expression: "r19 == 'yes'"
+                              }
+                            ],
+                            staticClass: "form-row"
+                          },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "form-group col-12 col-sm" },
+                              [
+                                _c("label", [
+                                  _vm._v("Which visa did you change to?")
+                                ]),
+                                _vm._v(" "),
+                                _c("visa", {
+                                  model: {
+                                    value: _vm.preVisa,
+                                    callback: function($$v) {
+                                      _vm.preVisa = $$v
+                                    },
+                                    expression: "preVisa"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "form-group col-12 col-sm" },
+                              [
+                                _c("label", [_vm._v("When did it happen?")]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.visaChangeDate,
+                                      expression: "visaChangeDate"
+                                    }
+                                  ],
+                                  staticClass: "form-control datepicker",
+                                  attrs: { type: "text" },
+                                  domProps: { value: _vm.visaChangeDate },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.visaChangeDate = $event.target.value
+                                    }
+                                  }
+                                })
+                              ]
+                            )
+                          ]
+                        )
+                      ],
+                      2
                     )
-                  ],
-                  2
+                  ]
                 )
               ]
             )
           ]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary",
+            attrs: { type: "button" },
+            on: { click: _vm.nextPage }
+          },
+          [_vm._v("Next")]
         )
       ]
-    ),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-primary",
-        attrs: { type: "button" },
-        on: { click: _vm.nextPage }
-      },
-      [_vm._v("Next")]
     )
   ])
 }
@@ -41916,17 +43228,17 @@ var render = function() {
         _vm._v("F2 Spouse and children of student on F1")
       ]),
       _vm._v(" "),
-      _c("option", { attrs: { value: "j1_stu" } }, [_vm._v("J1 Student")]),
+      _c("option", { attrs: { value: "j1s" } }, [_vm._v("J1 Student")]),
       _vm._v(" "),
-      _c("option", { attrs: { value: "j2_stu" } }, [
+      _c("option", { attrs: { value: "j2s" } }, [
         _vm._v("J2 Spouse or dependent of student on J1")
       ]),
       _vm._v(" "),
-      _c("option", { attrs: { value: "j1_tea" } }, [
+      _c("option", { attrs: { value: "j1t" } }, [
         _vm._v("J1 Teacher or trainee(other than student)")
       ]),
       _vm._v(" "),
-      _c("option", { attrs: { value: "j2_tea" } }, [
+      _c("option", { attrs: { value: "j2t" } }, [
         _vm._v("J2 Spouse or dependent of J1 Teacher or trainee")
       ]),
       _vm._v(" "),
@@ -41936,17 +43248,17 @@ var render = function() {
         _vm._v("M2 Spouse or dependent of student")
       ]),
       _vm._v(" "),
-      _c("option", { attrs: { value: "q1_stu" } }, [_vm._v("Q1 Student")]),
+      _c("option", { attrs: { value: "q1s" } }, [_vm._v("Q1 Student")]),
       _vm._v(" "),
-      _c("option", { attrs: { value: "q2_stu" } }, [
+      _c("option", { attrs: { value: "q2s" } }, [
         _vm._v("Q2 Spouse or depedent of student on Q1")
       ]),
       _vm._v(" "),
-      _c("option", { attrs: { value: "q1_tea" } }, [
+      _c("option", { attrs: { value: "q1t" } }, [
         _vm._v("Q1 Teacher or trainee(other than student)")
       ]),
       _vm._v(" "),
-      _c("option", { attrs: { value: "q2_tea" } }, [
+      _c("option", { attrs: { value: "q2t" } }, [
         _vm._v("Q2 Spouse or dependent of teacher or trainee")
       ]),
       _vm._v(" "),
@@ -41970,15 +43282,15 @@ var render = function() {
         _vm._v("A3 Personal Employee for a foreign govt or intl org official")
       ]),
       _vm._v(" "),
-      _c("option", { attrs: { value: "b1_vfb" } }, [
+      _c("option", { attrs: { value: "b1v" } }, [
         _vm._v("B1 Visitor for business")
       ]),
       _vm._v(" "),
-      _c("option", { attrs: { value: "b1_aoe" } }, [
+      _c("option", { attrs: { value: "b1a" } }, [
         _vm._v("B1 Athlete or entertainer")
       ]),
       _vm._v(" "),
-      _c("option", { attrs: { value: "b1_pro" } }, [
+      _c("option", { attrs: { value: "b1p" } }, [
         _vm._v("B1 Professional Athlete compete in a charitable sport ")
       ]),
       _vm._v(" "),
@@ -42071,175 +43383,6 @@ var render = function() {
       ])
     ]
   )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/parts/VisaEnterLeave.vue?vue&type=template&id=7d7e9e5a&":
-/*!***********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/parts/VisaEnterLeave.vue?vue&type=template&id=7d7e9e5a& ***!
-  \***********************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "form-row" }, [
-    _c("div", { staticClass: "form-group col-12 col-sm" }, [
-      _c("label", { attrs: { for: "visaType-" + _vm.index } }, [
-        _vm._v("Visa Type")
-      ]),
-      _vm._v(" "),
-      _c(
-        "select",
-        {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.row.visaType,
-              expression: "row.visaType"
-            }
-          ],
-          staticClass: "custom-select",
-          attrs: {
-            index: "visaType-" + _vm.index,
-            name: "visaType-" + _vm.index
-          },
-          on: {
-            change: function($event) {
-              var $$selectedVal = Array.prototype.filter
-                .call($event.target.options, function(o) {
-                  return o.selected
-                })
-                .map(function(o) {
-                  var val = "_value" in o ? o._value : o.value
-                  return val
-                })
-              _vm.$set(
-                _vm.row,
-                "visaType",
-                $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-              )
-            }
-          }
-        },
-        [
-          _c("option", { attrs: { value: "" } }),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "F1" } }, [
-            _vm._v("F1 Student OPT or CPT")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "F2" } }, [
-            _vm._v("F2 Spouse and children of student on F1")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "" } }, [_vm._v("J1 Student")]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "" } }, [
-            _vm._v("J2 Spouse or dependent of student on J1")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "" } }, [
-            _vm._v("J1 Teacher or trainee(other than student)")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "" } }, [
-            _vm._v("J2 Spouse or dependent of J1 Teacher or trainee")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "" } }, [_vm._v("M1 Student")]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "" } }, [
-            _vm._v("M2 Spouse or dependent of student")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "" } }, [_vm._v("Q1 Student")]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "" } }, [
-            _vm._v("Q2 Spouse or depedent of student on Q1")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "" } }, [
-            _vm._v("Q1 Teacher or trainee(other than student)")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "" } }, [
-            _vm._v("Q2 Spouse or dependent of teacher or trainee")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "" } }, [
-            _vm._v("H1B Specialty Occupation Worker")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "" } }, [
-            _vm._v("H4 Spouse or dependent of H-1B")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "" } }, [_vm._v("other")])
-        ]
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group col-12 col-sm" }, [
-      _c("label", { attrs: { for: "enterDate-" + _vm.index } }, [
-        _vm._v("Date Entered US on")
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control datepicker",
-        attrs: {
-          type: "text",
-          index: "enterDate-" + _vm.index,
-          name: "enterDate-" + _vm.index
-        }
-      })
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-12 col-sm" }, [
-      _c("label", { attrs: { for: "leaveDate-" + _vm.index } }, [
-        _vm._v("Date Left US on")
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control datepicker",
-        attrs: {
-          type: "text",
-          index: "leaveDate-" + _vm.index,
-          name: "leaveDate-" + _vm.index
-        }
-      })
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group col-12 col-sm" }, [
-      _c("div", { staticClass: "pt-sm-4 mt-sm-3" }, [
-        _c(
-          "a",
-          {
-            attrs: { href: "#" },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                return _vm.remove($event)
-              }
-            }
-          },
-          [_vm._v("- remove line")]
-        )
-      ])
-    ])
-  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -57077,11 +58220,10 @@ module.exports = function(module) {
 
 var map = {
 	"./components/LoginComponent.vue": "./resources/js/components/LoginComponent.vue",
+	"./components/NoneResidentProgram.vue": "./resources/js/components/NoneResidentProgram.vue",
 	"./components/PersonalInfo.vue": "./resources/js/components/PersonalInfo.vue",
 	"./components/ResidencyComponent.vue": "./resources/js/components/ResidencyComponent.vue",
-	"./components/ResidencyComponent2.vue": "./resources/js/components/ResidencyComponent2.vue",
-	"./components/parts/Visa.vue": "./resources/js/components/parts/Visa.vue",
-	"./components/parts/VisaEnterLeave.vue": "./resources/js/components/parts/VisaEnterLeave.vue"
+	"./components/parts/Visa.vue": "./resources/js/components/parts/Visa.vue"
 };
 
 
@@ -57150,6 +58292,9 @@ Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
 window.events = new Vue();
 var app = new Vue({
   el: '#app',
+  data: {
+    year: new Date().getFullYear()
+  },
   router: new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"](_routes__WEBPACK_IMPORTED_MODULE_1__["default"])
 });
 
@@ -57276,6 +58421,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LoginComponent_vue_vue_type_template_id_4d2414bf___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LoginComponent_vue_vue_type_template_id_4d2414bf___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/NoneResidentProgram.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/NoneResidentProgram.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _NoneResidentProgram_vue_vue_type_template_id_563320a1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NoneResidentProgram.vue?vue&type=template&id=563320a1& */ "./resources/js/components/NoneResidentProgram.vue?vue&type=template&id=563320a1&");
+/* harmony import */ var _NoneResidentProgram_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NoneResidentProgram.vue?vue&type=script&lang=js& */ "./resources/js/components/NoneResidentProgram.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _NoneResidentProgram_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _NoneResidentProgram_vue_vue_type_template_id_563320a1___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _NoneResidentProgram_vue_vue_type_template_id_563320a1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/NoneResidentProgram.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/NoneResidentProgram.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/NoneResidentProgram.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NoneResidentProgram_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./NoneResidentProgram.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NoneResidentProgram.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NoneResidentProgram_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/NoneResidentProgram.vue?vue&type=template&id=563320a1&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/NoneResidentProgram.vue?vue&type=template&id=563320a1& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NoneResidentProgram_vue_vue_type_template_id_563320a1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./NoneResidentProgram.vue?vue&type=template&id=563320a1& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NoneResidentProgram.vue?vue&type=template&id=563320a1&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NoneResidentProgram_vue_vue_type_template_id_563320a1___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NoneResidentProgram_vue_vue_type_template_id_563320a1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -57419,38 +58633,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/ResidencyComponent2.vue":
-/*!*********************************************************!*\
-  !*** ./resources/js/components/ResidencyComponent2.vue ***!
-  \*********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-var render, staticRenderFns
-var script = {}
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
-  script,
-  render,
-  staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-component.options.__file = "resources/js/components/ResidencyComponent2.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
 /***/ "./resources/js/components/parts/Visa.vue":
 /*!************************************************!*\
   !*** ./resources/js/components/parts/Visa.vue ***!
@@ -57520,75 +58702,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/parts/VisaEnterLeave.vue":
-/*!**********************************************************!*\
-  !*** ./resources/js/components/parts/VisaEnterLeave.vue ***!
-  \**********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _VisaEnterLeave_vue_vue_type_template_id_7d7e9e5a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./VisaEnterLeave.vue?vue&type=template&id=7d7e9e5a& */ "./resources/js/components/parts/VisaEnterLeave.vue?vue&type=template&id=7d7e9e5a&");
-/* harmony import */ var _VisaEnterLeave_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./VisaEnterLeave.vue?vue&type=script&lang=js& */ "./resources/js/components/parts/VisaEnterLeave.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _VisaEnterLeave_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _VisaEnterLeave_vue_vue_type_template_id_7d7e9e5a___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _VisaEnterLeave_vue_vue_type_template_id_7d7e9e5a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/parts/VisaEnterLeave.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/parts/VisaEnterLeave.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************!*\
-  !*** ./resources/js/components/parts/VisaEnterLeave.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaEnterLeave_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./VisaEnterLeave.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/parts/VisaEnterLeave.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaEnterLeave_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/parts/VisaEnterLeave.vue?vue&type=template&id=7d7e9e5a&":
-/*!*****************************************************************************************!*\
-  !*** ./resources/js/components/parts/VisaEnterLeave.vue?vue&type=template&id=7d7e9e5a& ***!
-  \*****************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaEnterLeave_vue_vue_type_template_id_7d7e9e5a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./VisaEnterLeave.vue?vue&type=template&id=7d7e9e5a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/parts/VisaEnterLeave.vue?vue&type=template&id=7d7e9e5a&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaEnterLeave_vue_vue_type_template_id_7d7e9e5a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VisaEnterLeave_vue_vue_type_template_id_7d7e9e5a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
 /***/ "./resources/js/routes.js":
 /*!********************************!*\
   !*** ./resources/js/routes.js ***!
@@ -57600,6 +58713,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_ResidencyComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/ResidencyComponent */ "./resources/js/components/ResidencyComponent.vue");
 /* harmony import */ var _components_PersonalInfo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/PersonalInfo */ "./resources/js/components/PersonalInfo.vue");
+/* harmony import */ var _components_NoneResidentProgram__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/NoneResidentProgram */ "./resources/js/components/NoneResidentProgram.vue");
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -57608,6 +58723,9 @@ __webpack_require__.r(__webpack_exports__);
   routes: [{
     path: '/',
     component: _components_ResidencyComponent__WEBPACK_IMPORTED_MODULE_0__["default"]
+  }, {
+    path: '/none-resident-program',
+    component: _components_NoneResidentProgram__WEBPACK_IMPORTED_MODULE_2__["default"]
   }, {
     path: '/personal',
     component: _components_PersonalInfo__WEBPACK_IMPORTED_MODULE_1__["default"]

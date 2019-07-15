@@ -1,5 +1,6 @@
 import FormResidency from './components/ResidencyComponent';
 import PersonalInfo from './components/PersonalInfo';
+import NoneResidentProgram from './components/NoneResidentProgram'
 
 export default {
     base: '/dotax',
@@ -8,6 +9,10 @@ export default {
         {
             path: '/',
             component: FormResidency
+        },
+        {
+            path: '/none-resident-program',
+            component: NoneResidentProgram
         },
         {
             path: '/personal',

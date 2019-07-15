@@ -29,5 +29,8 @@ Vue.use(VueRouter);
 window.events = new Vue();
 const app = new Vue({
     el: '#app',
+    data: {
+    	year: (new Date()).getFullYear()
+    },
     router: new VueRouter(routes)
 });
