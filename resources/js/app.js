@@ -27,10 +27,40 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
  */
 Vue.use(VueRouter);
 window.events = new Vue();
-const app = new Vue({
+new Vue({
     el: '#app',
+    router: new VueRouter(routes),
     data: {
-    	year: (new Date()).getFullYear()
+    	year: (new Date()).getFullYear(),
+    	personal: {
+    		firstName: '',
+    		lastName: '',
+    		passport: '',
+    		citizen: '',
+    		phone: '',
+    		ssn: '',
+    		birthday: ''
+    	},
+    	address: {
+    		street: '',
+    		city: '',
+    		state: '',
+    		zip: ''
+    	}
     },
-    router: new VueRouter(routes)
+    mounted() {
+    	this.registerDatepicker()
+    },
+    updated() {
+    	this.registerDatepicker()
+    },
+    methods: {
+    	registerDatepicker() {
+    		$('.datepicker').datepicker({
+	            changeMonth:true,
+	            changeYear:true,
+	            yearRange: "-100:"+this.year,
+	        })
+    	}
+    }
 });
