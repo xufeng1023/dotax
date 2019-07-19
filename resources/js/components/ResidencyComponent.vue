@@ -190,7 +190,7 @@
                             </div>
                             <div v-show="r19 == 'yes'" class="form-row">
                                 <div class="form-group col-12 col-sm">
-                                    <label>Which visa did you change to?</label>
+                                    <label>What was the previous visa?</label>
                                     <visa v-model="preVisa"></visa>
                                 </div>
                                 <div class="form-group col-12 col-sm">
@@ -266,7 +266,19 @@
                 this.calcDays();
                 this.determineResidency()
                 this.showResult = true
-                this.$root.$data.form8843 = {}
+                this.form8843()
+            },
+            form8843() {
+                let visa = Object.keys(this.visaYearDays)[0]
+                this.$root.$data.form8843 = {
+                    currentVisa: this.currentVisa,
+                    previousVisa: this.preVisa,
+                    changeDate: this.visaChangeDate,
+                    firstEnter: {
+                        visa: visa,
+                        date: Object.keys(this.visaYearDays[visa])[0]
+                    }
+                }
             },
             determineResidency() {
                 let validDays = 0

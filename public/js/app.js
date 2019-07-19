@@ -2664,7 +2664,19 @@ function newData() {
       this.calcDays();
       this.determineResidency();
       this.showResult = true;
-      this.$root.$data.form8843 = {};
+      this.form8843();
+    },
+    form8843: function form8843() {
+      var visa = Object.keys(this.visaYearDays)[0];
+      this.$root.$data.form8843 = {
+        currentVisa: this.currentVisa,
+        previousVisa: this.preVisa,
+        changeDate: this.visaChangeDate,
+        firstEnter: {
+          visa: visa,
+          date: Object.keys(this.visaYearDays[visa])[0]
+        }
+      };
     },
     determineResidency: function determineResidency() {
       var validDays = 0;
@@ -43586,7 +43598,7 @@ var render = function() {
                               { staticClass: "form-group col-12 col-sm" },
                               [
                                 _c("label", [
-                                  _vm._v("Which visa did you change to?")
+                                  _vm._v("What was the previous visa?")
                                 ]),
                                 _vm._v(" "),
                                 _c("visa", {
