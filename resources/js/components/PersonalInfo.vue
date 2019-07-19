@@ -141,10 +141,11 @@ export default {
         }
     },
     mounted() {
+        console.log(this.$root.$data)
         $('.datepicker').datepicker({
             changeMonth:true,
             changeYear:true,
-            yearRange: "-100:" + that.currentYear,
+            yearRange: "-100:" + this.currentYear,
             onSelect: (dateText, el) => {
                 this.$root.personal[el.id] = dateText
             }
@@ -152,7 +153,10 @@ export default {
     },
     methods: {
         nextPage() {
-            // axios.post(this.saveUrl, $('form#tax').serialize())
+            axios.post('/8843', this.$root.$data)
+                .then(data => {
+                    console.log(data)
+                })
         }
     }
 }

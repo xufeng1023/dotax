@@ -26,6 +26,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "npm": "^6.9.0"
+        "npm": "^6.9.0",
+        "npm-upgrade": "^2.0.0"
     }
 }

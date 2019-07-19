@@ -2196,7 +2196,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     nextPage: function nextPage() {
-      console.log(this.$data[this.tab]); // this.$router.push('personal')
+      if (!this.isFormValid()) return alert('form not filled');
+      this.$root.$data.form8843.type = this.tab;
+      this.$root.$data.form8843.data = this.$data[this.tab];
+      this.$router.push('personal');
+    },
+    isFormValid: function isFormValid() {
+      for (var prop in this.$data[this.tab]) {
+        if (!this.$data[this.tab][prop]) return false;
+      }
+
+      return true;
     }
   }
 });
@@ -2356,17 +2366,21 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
+    console.log(this.$root.$data);
     $('.datepicker').datepicker({
       changeMonth: true,
       changeYear: true,
-      yearRange: "-100:" + that.currentYear,
+      yearRange: "-100:" + this.currentYear,
       onSelect: function onSelect(dateText, el) {
         _this.$root.personal[el.id] = dateText;
       }
     });
   },
   methods: {
-    nextPage: function nextPage() {// axios.post(this.saveUrl, $('form#tax').serialize())
+    nextPage: function nextPage() {
+      axios.post('/8843', this.$root.$data).then(function (data) {
+        console.log(data);
+      });
     }
   }
 });
@@ -2650,6 +2664,7 @@ function newData() {
       this.calcDays();
       this.determineResidency();
       this.showResult = true;
+      this.$root.$data.form8843 = {};
     },
     determineResidency: function determineResidency() {
       var validDays = 0;
@@ -2671,7 +2686,6 @@ function newData() {
 
           if (daysPerYearAry.length > 5) {
             validDays = this.get183Days(prop);
-            console.log(validDays);
             if (validDays >= 183) return this.isResident = 'yes';
           }
         }
@@ -58826,7 +58840,9 @@ try {
  */
 
 
-window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js").create({
+  baseURL: '/dotax/'
+});
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
@@ -58929,14 +58945,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************************************!*\
   !*** ./resources/js/components/NoneResidentProgram.vue ***!
   \*********************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _NoneResidentProgram_vue_vue_type_template_id_563320a1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NoneResidentProgram.vue?vue&type=template&id=563320a1& */ "./resources/js/components/NoneResidentProgram.vue?vue&type=template&id=563320a1&");
 /* harmony import */ var _NoneResidentProgram_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NoneResidentProgram.vue?vue&type=script&lang=js& */ "./resources/js/components/NoneResidentProgram.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _NoneResidentProgram_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _NoneResidentProgram_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -58966,7 +58983,7 @@ component.options.__file = "resources/js/components/NoneResidentProgram.vue"
 /*!**********************************************************************************!*\
   !*** ./resources/js/components/NoneResidentProgram.vue?vue&type=script&lang=js& ***!
   \**********************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

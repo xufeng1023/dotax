@@ -256,8 +256,16 @@
 		},
 		methods: {
 			nextPage() {
-				console.log(this.$data[this.tab])
-				// this.$router.push('personal')
+				if(!this.isFormValid()) return alert('form not filled')
+				this.$root.$data.form8843.type = this.tab
+				this.$root.$data.form8843.data = this.$data[this.tab]
+				this.$router.push('personal')
+			},
+			isFormValid() {
+				for(let prop in this.$data[this.tab]) {
+					if(!this.$data[this.tab][prop]) return false
+				}
+				return true
 			}
 		}
 	}

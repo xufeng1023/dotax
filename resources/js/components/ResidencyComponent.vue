@@ -266,6 +266,7 @@
                 this.calcDays();
                 this.determineResidency()
                 this.showResult = true
+                this.$root.$data.form8843 = {}
             },
             determineResidency() {
                 let validDays = 0
@@ -283,7 +284,6 @@
                         totalYears += daysPerYearAry.length
                         if(daysPerYearAry.length > 5) {
                             validDays = this.get183Days(prop)
-                            console.log(validDays)
                             if(validDays >= 183) return this.isResident = 'yes'
                         }
                     }
