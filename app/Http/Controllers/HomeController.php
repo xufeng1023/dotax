@@ -36,7 +36,7 @@ class HomeController extends Controller
             'topmostSubform[0].Page1[0].f1_05[0]' => request('personal.lastName'),
             'topmostSubform[0].Page1[0].f1_06[0]' => request('personal.ssn'),
             'topmostSubform[0].Page1[0].f1_07[0]' => 'resident address',
-            'topmostSubform[0].Page1[0].f1_08[0]' => 'usa address',
+            'topmostSubform[0].Page1[0].f1_08[0]' => request('address.street').'<br>'.request('address.city'),
             'topmostSubform[0].Page1[0].f1_09[0]' => 'first tiem',
             'topmostSubform[0].Page1[0].f1_11[0]' => '',
             'topmostSubform[0].Page1[0].f1_12[0]' => '',
