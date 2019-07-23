@@ -381,6 +381,7 @@
                             if(countingYear == leaveYear) to = leave
                         }
                         if(this.yearDays[countingYear] === undefined) {
+                            this.yearDays[countingYear] = {}
                             this.yearDays[countingYear]['number'] = 0;
                             this.yearDays[countingYear]['type'] = item.visaType;
                         }
