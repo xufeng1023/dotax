@@ -274,6 +274,7 @@
                     currentVisa: this.currentVisa,
                     previousVisa: this.preVisa,
                     changeDate: this.visaChangeDate,
+                    yearDays: this.yearDays,
                     firstEnter: {
                         visa: visa,
                         date: Object.keys(this.visaYearDays[visa])[0]
