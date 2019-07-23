@@ -256,9 +256,10 @@
 		},
 		methods: {
 			nextPage() {
+				this.$root.$data.form8843.typeData = {}
 				if(!this.isFormValid()) return alert('form not filled')
 				this.$root.$data.form8843.type = this.tab
-				this.$root.$data.form8843[this.tab] = this.$data[this.tab]
+				this.$root.$data.form8843.typeData[this.tab] = this.$data[this.tab]
 				this.$router.push('personal')
 			},
 			isFormValid() {
