@@ -274,6 +274,7 @@
                     currentVisa: this.currentVisa,
                     previousVisa: this.preVisa,
                     changeDate: this.visaChangeDate,
+                    visaYearDays: this.visaYearDays,
                     yearDays: this.yearDays,
                     firstEnter: {
                         visa: visa,
@@ -389,6 +390,8 @@
                         this.visaYearDays[item.visaType][countingYear] += this.daysBetweenDays(from, to);
                         countingYear++;
                     }
+
+                    console.log(this.visaYearDays)
                 })
             },
             addOneLine() {

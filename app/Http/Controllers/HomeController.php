@@ -45,7 +45,7 @@ class HomeController extends Controller
             'topmostSubform[0].Page1[0].f1_15[0]' => request('form8843.yearDays')[date('Y')] ?? 0,
             'topmostSubform[0].Page1[0].f1_16[0]' => request('form8843.yearDays')[date('Y') - 1] ?? 0,
             'topmostSubform[0].Page1[0].f1_17[0]' => request('form8843.yearDays')[date('Y') - 2] ?? 0,
-            'topmostSubform[0].Page1[0].f1_18[0]' => '',
+            'topmostSubform[0].Page1[0].f1_18[0]' => request('form8843.visaYearDays')[0][0],
             'topmostSubform[0].Page1[0].f1_19[0]' => '',
             'topmostSubform[0].Page1[0].f1_20[0]' => '',
             'topmostSubform[0].Page1[0].f1_21[0]' => '',
