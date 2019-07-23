@@ -141,7 +141,6 @@ export default {
         }
     },
     mounted() {
-        console.log(this.$root.$data)
         $('.datepicker').datepicker({
             changeMonth:true,
             changeYear:true,
@@ -153,6 +152,7 @@ export default {
     },
     methods: {
         nextPage() {
+            this.$root.$data.addressOfResidence = this.addressOfResidence
             axios.post('/8843', this.$root.$data)
                 .then(data => {
                     console.log(data)

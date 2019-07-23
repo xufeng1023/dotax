@@ -35,7 +35,7 @@ class HomeController extends Controller
             'topmostSubform[0].Page1[0].f1_04[0]' => request('personal.firstName'),
             'topmostSubform[0].Page1[0].f1_05[0]' => request('personal.lastName'),
             'topmostSubform[0].Page1[0].f1_06[0]' => request('personal.ssn'),
-            'topmostSubform[0].Page1[0].f1_07[0]' => 'resident address',
+            'topmostSubform[0].Page1[0].f1_07[0]' => request('addressOfResidence.street').'\n'.request('addressOfResidence.city').'\n'.request('addressOfResidence.state').','.request('addressOfResidence.zip').'\n'.request('addressOfResidence.country'),
             'topmostSubform[0].Page1[0].f1_08[0]' => request('address.street').'\n'.request('address.city').'\n'.request('address.state').','.request('address.zip'),
             'topmostSubform[0].Page1[0].f1_09[0]' => request('form8843.firstEnter.visa').' '.request('form8843.firstEnter.date'),
             'topmostSubform[0].Page1[0].f1_11[0]' => request('form8843.currentVisa').' '.request('form8843.changeDate').' '.request('form8843.previousVisa'),
@@ -95,7 +95,6 @@ class HomeController extends Controller
             'topmostSubform[0].Page2[0].f2_14[0]' => '',
             'topmostSubform[0].Page2[0].f2_15[0]' => '',
             'topmostSubform[0]' => ''
-
         ];
 
         $pdf = new PdfForm(public_path('pdf/f8843.pdf'), $data);
