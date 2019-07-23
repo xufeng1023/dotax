@@ -380,12 +380,15 @@
                             from = new Date('1/1/'+countingYear)
                             if(countingYear == leaveYear) to = leave
                         }
-                        if(this.yearDays[countingYear] === undefined) this.yearDays[countingYear] = 0;
+                        if(this.yearDays[countingYear] === undefined) {
+                            this.yearDays[countingYear]['number'] = 0;
+                            this.yearDays[countingYear]['type'] = item.visaType;
+                        }
                         if(this.visaYearDays[item.visaType] === undefined) this.visaYearDays[item.visaType] = [];
                         if(this.visaYearDays[item.visaType][countingYear] === undefined) {
                             this.visaYearDays[item.visaType][countingYear] = 0
                         }
-                        this.yearDays[countingYear] += this.daysBetweenDays(from, to);
+                        this.yearDays[countingYear]['number'] += this.daysBetweenDays(from, to);
                         this.visaYearDays[item.visaType][countingYear] += this.daysBetweenDays(from, to);
                         countingYear++;
                     }

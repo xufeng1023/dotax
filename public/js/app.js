@@ -2799,14 +2799,18 @@ function newData() {
             if (countingYear == leaveYear) to = leave;
           }
 
-          if (_this3.yearDays[countingYear] === undefined) _this3.yearDays[countingYear] = 0;
+          if (_this3.yearDays[countingYear] === undefined) {
+            _this3.yearDays[countingYear]['number'] = 0;
+            _this3.yearDays[countingYear]['type'] = item.visaType;
+          }
+
           if (_this3.visaYearDays[item.visaType] === undefined) _this3.visaYearDays[item.visaType] = [];
 
           if (_this3.visaYearDays[item.visaType][countingYear] === undefined) {
             _this3.visaYearDays[item.visaType][countingYear] = 0;
           }
 
-          _this3.yearDays[countingYear] += _this3.daysBetweenDays(from, to);
+          _this3.yearDays[countingYear]['number'] += _this3.daysBetweenDays(from, to);
           _this3.visaYearDays[item.visaType][countingYear] += _this3.daysBetweenDays(from, to);
           countingYear++;
         }
