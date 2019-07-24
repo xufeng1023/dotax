@@ -237,7 +237,8 @@
                 preVisa: '',
                 visaChangeDate: '',
                 yearDays: {},
-                visaYearDays: {}
+                visaYearDays: {},
+                firstEnter: {}
             }
         },
         mounted() {
@@ -261,24 +262,21 @@
                 }
                 if(!this.currentVisa) return alert('invalid current visa')
                 if(!this.validDays()) return alert('invalid days')
-                this.invalidRowId = '';
+                this.invalidRowId = ''
                 //this.ifVisaChanged();
-                this.calcDays();
+                this.getFirstEnter()
+                this.calcDays()
                 this.determineResidency()
                 this.showResult = true
                 this.form8843()
             },
             form8843() {
-                let visa = Object.keys(this.visaYearDays)[0]
                 this.$root.$data.form8843 = {
                     currentVisa: this.currentVisa,
                     previousVisa: this.preVisa,
                     changeDate: this.visaChangeDate,
                     yearDays: this.yearDays,
-                    firstEnter: {
-                        visa: visa,
-                        date: Object.keys(this.visaYearDays[visa])[0]
-                    }
+                    firstEnter: this.firstEnter
                 }
             },
             determineResidency() {
@@ -338,6 +336,17 @@
                     this.invalidRowId = index
                     return false;
                 });
+            },
+            getFirstEnter() {
+                let now = (new Date).getTime()
+                for(let prop in this.travelHistories) {
+                    let timestamp = (new Date(this.travelHistories[prop]['enterDate'])).getTime()
+                    if(timestamp < now) {
+                        now = timestamp
+                        this.firstEnter.date = this.travelHistories[prop]['enterDate']
+                        this.firstEnter.visa = this.travelHistories[prop]['visaType']
+                    }
+                }
             },
             ifVisaChanged() {
                 if(this.preVisa && this.visaChangeDate) {

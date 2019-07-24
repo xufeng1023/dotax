@@ -29,7 +29,7 @@
     		</div>
     		<div class="col-12 col-sm">
 				<label>SSN / ITIN</label>
-	    		<input type="text" class="form-control" v-model="$root.personal.ssn">
+	    		<input type="text" class="form-control" v-model="$root.personal.ssn" @input="formatSSN">
     		</div>
     	</div>
     	<div class="form-group row">
@@ -151,6 +151,23 @@ export default {
         });
     },
     methods: {
+        formatSSN(e) {
+            let last
+            let len = this.$root.personal.ssn.length
+            this.$root.personal.ssn = this.$root.personal.ssn.slice(0, 11)
+            if(len === 4) {
+                last = this.$root.personal.ssn.slice(3)
+                if(last !== '-') {
+                    this.$root.personal.ssn = this.$root.personal.ssn.slice(0, 3) + '-' + last
+                }
+            }
+            if(len === 7) {
+                last = this.$root.personal.ssn.slice(6)
+                if(last !== '-') {
+                    this.$root.personal.ssn = this.$root.personal.ssn.slice(0, 6) + '-' + last
+                }
+            }
+        },  
         nextPage() {
             this.$root.$data.addressOfResidence = this.addressOfResidence
             axios.post('/8843', this.$root.$data)

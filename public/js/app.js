@@ -2377,6 +2377,27 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
+    formatSSN: function formatSSN(e) {
+      var last;
+      var len = this.$root.personal.ssn.length;
+      this.$root.personal.ssn = this.$root.personal.ssn.slice(0, 11);
+
+      if (len === 4) {
+        last = this.$root.personal.ssn.slice(3);
+
+        if (last !== '-') {
+          this.$root.personal.ssn = this.$root.personal.ssn.slice(0, 3) + '-' + last;
+        }
+      }
+
+      if (len === 7) {
+        last = this.$root.personal.ssn.slice(6);
+
+        if (last !== '-') {
+          this.$root.personal.ssn = this.$root.personal.ssn.slice(0, 6) + '-' + last;
+        }
+      }
+    },
     nextPage: function nextPage() {
       this.$root.$data.addressOfResidence = this.addressOfResidence;
       axios.post('/8843', this.$root.$data).then(function (data) {
@@ -2635,7 +2656,8 @@ function newData() {
       preVisa: '',
       visaChangeDate: '',
       yearDays: {},
-      visaYearDays: {}
+      visaYearDays: {},
+      firstEnter: {}
     };
   },
   mounted: function mounted() {
@@ -2662,22 +2684,19 @@ function newData() {
       if (!this.validDays()) return alert('invalid days');
       this.invalidRowId = ''; //this.ifVisaChanged();
 
+      this.getFirstEnter();
       this.calcDays();
       this.determineResidency();
       this.showResult = true;
       this.form8843();
     },
     form8843: function form8843() {
-      var visa = Object.keys(this.visaYearDays)[0];
       this.$root.$data.form8843 = {
         currentVisa: this.currentVisa,
         previousVisa: this.preVisa,
         changeDate: this.visaChangeDate,
         yearDays: this.yearDays,
-        firstEnter: {
-          visa: visa,
-          date: Object.keys(this.visaYearDays[visa])[0]
-        }
+        firstEnter: this.firstEnter
       };
     },
     determineResidency: function determineResidency() {
@@ -2751,6 +2770,19 @@ function newData() {
         _this.invalidRowId = index;
         return false;
       });
+    },
+    getFirstEnter: function getFirstEnter() {
+      var now = new Date().getTime();
+
+      for (var prop in this.travelHistories) {
+        var timestamp = new Date(this.travelHistories[prop]['enterDate']).getTime();
+
+        if (timestamp < now) {
+          now = timestamp;
+          this.firstEnter.date = this.travelHistories[prop]['enterDate'];
+          this.firstEnter.visa = this.travelHistories[prop]['visaType'];
+        }
+      }
     },
     ifVisaChanged: function ifVisaChanged() {
       var _this2 = this;
@@ -41682,12 +41714,15 @@ var render = function() {
           attrs: { type: "text" },
           domProps: { value: _vm.$root.personal.ssn },
           on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.$root.personal, "ssn", $event.target.value)
-            }
+            input: [
+              function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.$root.personal, "ssn", $event.target.value)
+              },
+              _vm.formatSSN
+            ]
           }
         })
       ])
