@@ -2692,8 +2692,8 @@ function newData() {
     },
     form8843: function form8843() {
       this.$root.$data.form8843 = {
-        currentVisa: this.currentVisa,
-        previousVisa: this.preVisa,
+        currentVisa: this.currentVisa.slice(0, 2),
+        previousVisa: this.preVisa.slice(0, 2),
         changeDate: this.visaChangeDate,
         yearDays: this.yearDays,
         firstEnter: this.firstEnter
