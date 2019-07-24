@@ -65,10 +65,10 @@ class HomeController extends Controller
             $data['topmostSubform[0].Page1[0].f1_31[0]'] = '';
         }
         if(request('form8843.type') == 'student') {
-            $data['topmostSubform[0].Page1[0].f1_32[0]'] = request('form8843.typeData.student.name1').' '.request('form8843.typeData.student.address1').' '.request('form8843.typeData.student.phone1');
+            $data['topmostSubform[0].Page1[0].f1_32[0]'] = strtoupper(request('form8843.typeData.student.name1')).' '.strtoupper(request('form8843.typeData.student.address1')).' '.strtoupper(request('form8843.typeData.student.phone1'));
             $data['topmostSubform[0].Page1[0].f1_33[0]'] = '';
             $data['topmostSubform[0].Page1[0].f1_34[0]'] = '';
-            $data['topmostSubform[0].Page1[0].f1_35[0]'] = request('form8843.typeData.student.name2').' '.request('form8843.typeData.student.address2').' '.request('form8843.typeData.student.phone2');
+            $data['topmostSubform[0].Page1[0].f1_35[0]'] = strtoupper(request('form8843.typeData.student.name2')).' '.strtoupper(request('form8843.typeData.student.address2')).' '.strtoupper(request('form8843.typeData.student.phone2'));
             $data['topmostSubform[0].Page1[0].f1_36[0]'] = '';
             $data['topmostSubform[0].Page1[0].f1_37[0]'] = isset(request('form8843.yearDays')[date('Y')-6])? strtoupper(request('form8843.yearDays')[date('Y')-5]['type']) : '';
             $data['topmostSubform[0].Page1[0].f1_38[0]'] = isset(request('form8843.yearDays')[date('Y')-5])? strtoupper(request('form8843.yearDays')[date('Y')-4]['type']) : '';
@@ -86,15 +86,15 @@ class HomeController extends Controller
         }
         if(request('form8843.type') == 'athletes') {
             $data['topmostSubform[0].Page2[0].f2_01[0]'] = '';
-            $data['topmostSubform[0].Page2[0].f2_02[0]'] = request('form8843.typeData.athletes.name').' '.request('form8843.typeData.athletes.date');
+            $data['topmostSubform[0].Page2[0].f2_02[0]'] = strtoupper(request('form8843.typeData.athletes.name')).' '.request('form8843.typeData.athletes.date');
             $data['topmostSubform[0].Page2[0].f2_03[0]'] = '';
-            $data['topmostSubform[0].Page2[0].f2_04[0]'] = request('form8843.typeData.athletes.ID');
+            $data['topmostSubform[0].Page2[0].f2_04[0]'] = strtoupper(request('form8843.typeData.athletes.ID'));
             $data['topmostSubform[0].Page2[0].f2_05[0]'] = '';
             $data['topmostSubform[0].Page2[0].f2_06[0]'] = '';
         }
         if(request('form8843.type') == 'individual') {
             $data['topmostSubform[0].Page2[0].f2_07[0]'] = '';
-            $data['topmostSubform[0].Page2[0].f2_08[0]'] = request('form8843.typeData.individual.description');
+            $data['topmostSubform[0].Page2[0].f2_08[0]'] = strtoupper(request('form8843.typeData.individual.description'));
             $data['topmostSubform[0].Page2[0].f2_09[0]'] = '';
             $data['topmostSubform[0].Page2[0].f2_10[0]'] = '';
             $data['topmostSubform[0].Page2[0].f2_11[0]'] = request('form8843.typeData.individual.date1');
