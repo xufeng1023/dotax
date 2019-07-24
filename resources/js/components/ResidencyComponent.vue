@@ -392,7 +392,7 @@
                         if(this.yearDays[countingYear] === undefined) {
                             this.yearDays[countingYear] = {}
                             this.yearDays[countingYear]['number'] = 0;
-                            this.yearDays[countingYear]['type'] = item.visaType;
+                            this.yearDays[countingYear]['type'] = item.visaType.slice(0, 2);
                         }
                         if(this.visaYearDays[item.visaType] === undefined) this.visaYearDays[item.visaType] = [];
                         if(this.visaYearDays[item.visaType][countingYear] === undefined) {

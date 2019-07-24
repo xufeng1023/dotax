@@ -2834,7 +2834,7 @@ function newData() {
           if (_this3.yearDays[countingYear] === undefined) {
             _this3.yearDays[countingYear] = {};
             _this3.yearDays[countingYear]['number'] = 0;
-            _this3.yearDays[countingYear]['type'] = item.visaType;
+            _this3.yearDays[countingYear]['type'] = item.visaType.slice(0, 2);
           }
 
           if (_this3.visaYearDays[item.visaType] === undefined) _this3.visaYearDays[item.visaType] = [];
