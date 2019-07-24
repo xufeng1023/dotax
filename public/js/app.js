@@ -2780,7 +2780,7 @@ function newData() {
         if (timestamp < now) {
           now = timestamp;
           this.firstEnter.date = this.travelHistories[prop]['enterDate'];
-          this.firstEnter.visa = this.travelHistories[prop]['visaType'];
+          this.firstEnter.visa = this.travelHistories[prop]['visaType'].slice(0, 2);
         }
       }
     },
