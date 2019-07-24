@@ -281,7 +281,6 @@
             },
             determineResidency() {
                 let validDays = 0
-                let totalYears = 0
                 if(this.yearDays[this.currentYear] < 31) {
                     return this.nextUrl = 'none-resident-program'
                 }
@@ -292,7 +291,6 @@
                     }
                     if(['f1','f2','j1s','j2s','m1','q1s','q2s'].includes(prop)) { 
                         let daysPerYearAry = Object.values(this.visaYearDays[prop])
-                        totalYears += daysPerYearAry.length
                         if(daysPerYearAry.length > 5) {
                             validDays = this.get183Days(prop)
                             if(validDays >= 183) return this.isResident = 'yes'
@@ -302,7 +300,6 @@
                         let yearsIn6years = 0
                         let minYear = this.currentYear - 6
                         for(let year in this.visaYearDays[prop]) {
-                            totalYears++
                             if(year >= minYear) yearsIn6years++
                         }
                         if(yearsIn6years > 2) {

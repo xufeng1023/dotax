@@ -2701,7 +2701,6 @@ function newData() {
     },
     determineResidency: function determineResidency() {
       var validDays = 0;
-      var totalYears = 0;
 
       if (this.yearDays[this.currentYear] < 31) {
         return this.nextUrl = 'none-resident-program';
@@ -2715,7 +2714,6 @@ function newData() {
 
         if (['f1', 'f2', 'j1s', 'j2s', 'm1', 'q1s', 'q2s'].includes(prop)) {
           var daysPerYearAry = Object.values(this.visaYearDays[prop]);
-          totalYears += daysPerYearAry.length;
 
           if (daysPerYearAry.length > 5) {
             validDays = this.get183Days(prop);
@@ -2728,7 +2726,6 @@ function newData() {
           var minYear = this.currentYear - 6;
 
           for (var year in this.visaYearDays[prop]) {
-            totalYears++;
             if (year >= minYear) yearsIn6years++;
           }
 
