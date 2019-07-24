@@ -46,7 +46,7 @@ class HomeController extends Controller
             'topmostSubform[0].Page1[0].f1_16[0]' => isset(request('form8843.yearDays')[date('Y')-1])? request('form8843.yearDays')[date('Y')-1]['number'] : 0,
             'topmostSubform[0].Page1[0].f1_17[0]' => isset(request('form8843.yearDays')[date('Y')-2])? request('form8843.yearDays')[date('Y')-2]['number'] : 0,
             'topmostSubform[0].Page1[0].f1_18[0]' => isset(request('form8843.yearDays')[date('Y')])? request('form8843.yearDays')[date('Y')]['number'] : 0
-        }
+        ];
         if(request('form8843.type') == 'teacher' || request('form8843.type') == 'trainee') {
             $data['topmostSubform[0].Page1[0].f1_19[0]'] = '';
             $data['topmostSubform[0].Page1[0].f1_20[0]'] = strtoupper(request('form8843.typeData.teacher.name')).' '.strtoupper(request('form8843.typeData.teacher.address')).' '.strtoupper(request('form8843.typeData.teacher.phone'));
@@ -104,7 +104,7 @@ class HomeController extends Controller
         $data['topmostSubform[0].Page2[0].f2_14[0]'] = '';
         $data['topmostSubform[0].Page2[0].f2_15[0]'] = '';
         $data['topmostSubform[0]'] = '';
-        
+
         $pdf = new PdfForm(public_path('pdf/f8843.pdf'), $data);
 
         $pdf->save(public_path('pdf/f8843-edit.pdf'));
