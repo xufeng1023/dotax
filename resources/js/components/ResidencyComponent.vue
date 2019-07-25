@@ -29,7 +29,7 @@
             </div>
             <div v-show="this.isResident != 'yes'">
                 <div class="form-group">
-                    <label>Have you been a US citizen, by birth or naturalization, on the last day of {{ currentYear }}? (tax year)</label>
+                    <label>Have you been a US citizen, by birth or naturalization, on the last day of {{ $root.currentYear }}? (tax year)</label>
                     <div>
                         <div class="custom-control custom-radio d-inline-block mr-3">
                             <input v-model="r11" type="radio" id="r11-y" name="r11" value="yes" class="custom-control-input">
@@ -43,7 +43,7 @@
                 </div>
                 <div v-show="r11 == 'no'">
                     <div class="form-group">
-                        <label>Have you been a green card holder, on the last day of {{ currentYear }}? (tax year)</label>
+                        <label>Have you been a green card holder, on the last day of {{ $root.currentYear }}? (tax year)</label>
                         <div>
                             <div class="custom-control custom-radio d-inline-block mr-3">
                                 <input v-model="r12" type="radio" id="r12-y" name="r12" value="yes" class="custom-control-input" checked>
@@ -171,12 +171,12 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-12 col-sm-6">
-                                    <label>Current visa held as of 12/31/{{ currentYear }}</label>    
+                                    <label>Current visa held as of 12/31/{{ $root.currentYear }}</label>    
                                     <visa v-model="currentVisa"></visa>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Have you changed your visa within the U.S. in any year, including the tax year {{ currentYear }}?</label>
+                                <label>Have you changed your visa within the U.S. in any year, including the tax year {{ $root.currentYear }}?</label>
                                 <div>
                                     <div class="custom-control custom-radio d-inline-block mr-3">
                                         <input v-model="r19" type="radio" id="r19-y" name="r19" value="yes" class="custom-control-input">
@@ -219,7 +219,6 @@
     export default {
         data() {
             return {
-                currentYear: this.$root.year,
                 showResult: false,
                 isResident: 'yes',
                 nextUrl: 'personal',
@@ -281,7 +280,7 @@
             },
             determineResidency() {
                 let validDays = 0
-                if(this.yearDays[this.currentYear] < 31) {
+                if(this.yearDays[this.$root.currentYear] < 31) {
                     return this.nextUrl = 'none-resident-program'
                 }
                 for(let prop in this.visaYearDays) {
@@ -293,12 +292,13 @@
                         let daysPerYearAry = Object.values(this.visaYearDays[prop])
                         if(daysPerYearAry.length > 5) {
                             validDays = this.get183Days(prop)
+                            console.log(validDays)
                             if(validDays >= 183) return this.isResident = 'yes'
                         }
                     }
                     if(['j1t','j2t','q1t','q2t'].includes(prop)) {
                         let yearsIn6years = 0
-                        let minYear = this.currentYear - 6
+                        let minYear = this.$root.currentYear - 6
                         for(let year in this.visaYearDays[prop]) {
                             if(year >= minYear) yearsIn6years++
                         }
@@ -314,14 +314,14 @@
                 this.r14 = this.r16 = this.r17 = ''
             },
             get183Days(visa) {
-                return (this.visaYearDays[visa][this.currentYear] || 0) +
-                        (this.visaYearDays[visa][this.currentYear - 1] || 0) / 3 +
-                        (this.visaYearDays[visa][this.currentYear - 2] || 0) / 6
+                return (this.visaYearDays[visa][this.$root.currentYear] || 0) +
+                        (this.visaYearDays[visa][this.$root.currentYear - 1] || 0) / 3 +
+                        (this.visaYearDays[visa][this.$root.currentYear - 2] || 0) / 6
             },
             validDays() {
                 return this.travelHistories.every((value, index) => {
                     let invalid;
-                    if(!value.leaveDate) value.leaveDate = '12/31/'+ this.currentYear;
+                    if(!value.leaveDate) value.leaveDate = '12/31/'+ this.$root.taxYear;
 
                     if(!value.enterDate) {invalid = false;}
                     else invalid = this.travelHistories.find((item, ind) => { //if find, not valid
@@ -367,12 +367,17 @@
                 this.visaYearDays = {}
                 this.yearDays = {}
                 this.travelHistories.forEach((item, index) => {
-                    let enter = new Date(item.enterDate);
-                    let leave = new Date(item.leaveDate);
-
-                    let enterYear = enter.getFullYear()
+                    let leave = new Date(item.leaveDate)
                     let leaveYear = leave.getFullYear()
+                    if(!leaveYear || leaveYear > this.$root.taxYear) {
+                        leaveYear = this.$root.taxYear
+                        leave = new Date('12/31/' + leaveYear)
+                    }   
+
+                    let enter = new Date(item.enterDate);
+                    let enterYear = enter.getFullYear()
                     let countingYear = enterYear
+                    if(enterYear > this.$root.taxYear) countingYear = 9999
 
                     let yearType
                     let from = enter
@@ -415,7 +420,7 @@
                 $('.datepicker').datepicker({
                     changeMonth:true,
                     changeYear:true,
-                    yearRange: "-100:" + this.currentYear,
+                    yearRange: "-100:" + this.$root.currentYear,
                     onSelect: (dateText, el) => {
                         let keys = el.id.split('-')
                         try {

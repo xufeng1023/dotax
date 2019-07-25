@@ -31,7 +31,8 @@ new Vue({
     el: '#app',
     router: new VueRouter(routes),
     data: {
-    	year: 2018,//(new Date()).getFullYear(),
+    	currentYear: (new Date()).getFullYear(),
+    	taxYear: (new Date()).getFullYear() - 1,
     	personal: {
     		firstName: '',
     		lastName: '',
@@ -59,7 +60,7 @@ new Vue({
     		$('.datepicker').datepicker({
 	            changeMonth:true,
 	            changeYear:true,
-	            yearRange: "-100:"+this.year,
+	            yearRange: "-100:"+this.currentYear,
 	        })
     	}
     }

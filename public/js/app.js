@@ -2638,7 +2638,6 @@ function newData() {
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      currentYear: this.$root.year,
       showResult: false,
       isResident: 'yes',
       nextUrl: 'personal',
@@ -2702,7 +2701,7 @@ function newData() {
     determineResidency: function determineResidency() {
       var validDays = 0;
 
-      if (this.yearDays[this.currentYear] < 31) {
+      if (this.yearDays[this.$root.currentYear] < 31) {
         return this.nextUrl = 'none-resident-program';
       }
 
@@ -2717,13 +2716,14 @@ function newData() {
 
           if (daysPerYearAry.length > 5) {
             validDays = this.get183Days(prop);
+            console.log(validDays);
             if (validDays >= 183) return this.isResident = 'yes';
           }
         }
 
         if (['j1t', 'j2t', 'q1t', 'q2t'].includes(prop)) {
           var yearsIn6years = 0;
-          var minYear = this.currentYear - 6;
+          var minYear = this.$root.currentYear - 6;
 
           for (var year in this.visaYearDays[prop]) {
             if (year >= minYear) yearsIn6years++;
@@ -2743,14 +2743,14 @@ function newData() {
       this.r14 = this.r16 = this.r17 = '';
     },
     get183Days: function get183Days(visa) {
-      return (this.visaYearDays[visa][this.currentYear] || 0) + (this.visaYearDays[visa][this.currentYear - 1] || 0) / 3 + (this.visaYearDays[visa][this.currentYear - 2] || 0) / 6;
+      return (this.visaYearDays[visa][this.$root.currentYear] || 0) + (this.visaYearDays[visa][this.$root.currentYear - 1] || 0) / 3 + (this.visaYearDays[visa][this.$root.currentYear - 2] || 0) / 6;
     },
     validDays: function validDays() {
       var _this = this;
 
       return this.travelHistories.every(function (value, index) {
         var invalid;
-        if (!value.leaveDate) value.leaveDate = '12/31/' + _this.currentYear;
+        if (!value.leaveDate) value.leaveDate = '12/31/' + _this.$root.taxYear;
 
         if (!value.enterDate) {
           invalid = false;
@@ -2809,11 +2809,18 @@ function newData() {
       this.visaYearDays = {};
       this.yearDays = {};
       this.travelHistories.forEach(function (item, index) {
-        var enter = new Date(item.enterDate);
         var leave = new Date(item.leaveDate);
-        var enterYear = enter.getFullYear();
         var leaveYear = leave.getFullYear();
+
+        if (!leaveYear || leaveYear > _this3.$root.taxYear) {
+          leaveYear = _this3.$root.taxYear;
+          leave = new Date('12/31/' + leaveYear);
+        }
+
+        var enter = new Date(item.enterDate);
+        var enterYear = enter.getFullYear();
         var countingYear = enterYear;
+        if (enterYear > _this3.$root.taxYear) countingYear = 9999;
         var yearType;
         var from = enter;
         var to = leave;
@@ -2863,7 +2870,7 @@ function newData() {
       $('.datepicker').datepicker({
         changeMonth: true,
         changeYear: true,
-        yearRange: "-100:" + this.currentYear,
+        yearRange: "-100:" + this.$root.currentYear,
         onSelect: function onSelect(dateText, el) {
           var keys = el.id.split('-');
 
@@ -42425,7 +42432,7 @@ var render = function() {
               _c("label", [
                 _vm._v(
                   "Have you been a US citizen, by birth or naturalization, on the last day of " +
-                    _vm._s(_vm.currentYear) +
+                    _vm._s(_vm.$root.currentYear) +
                     "? (tax year)"
                 )
               ]),
@@ -42535,7 +42542,7 @@ var render = function() {
                   _c("label", [
                     _vm._v(
                       "Have you been a green card holder, on the last day of " +
-                        _vm._s(_vm.currentYear) +
+                        _vm._s(_vm.$root.currentYear) +
                         "? (tax year)"
                     )
                   ]),
@@ -43504,7 +43511,7 @@ var render = function() {
                               _c("label", [
                                 _vm._v(
                                   "Current visa held as of 12/31/" +
-                                    _vm._s(_vm.currentYear)
+                                    _vm._s(_vm.$root.currentYear)
                                 )
                               ]),
                               _vm._v(" "),
@@ -43526,7 +43533,7 @@ var render = function() {
                           _c("label", [
                             _vm._v(
                               "Have you changed your visa within the U.S. in any year, including the tax year " +
-                                _vm._s(_vm.currentYear) +
+                                _vm._s(_vm.$root.currentYear) +
                                 "?"
                             )
                           ]),
@@ -58828,8 +58835,8 @@ new Vue({
   el: '#app',
   router: new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"](_routes__WEBPACK_IMPORTED_MODULE_1__["default"]),
   data: {
-    year: 2018,
-    //(new Date()).getFullYear(),
+    currentYear: new Date().getFullYear(),
+    taxYear: new Date().getFullYear() - 1,
     personal: {
       firstName: '',
       lastName: '',
@@ -58857,7 +58864,7 @@ new Vue({
       $('.datepicker').datepicker({
         changeMonth: true,
         changeYear: true,
-        yearRange: "-100:" + this.year
+        yearRange: "-100:" + this.currentYear
       });
     }
   }
