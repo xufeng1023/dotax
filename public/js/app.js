@@ -58828,7 +58828,8 @@ new Vue({
   el: '#app',
   router: new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"](_routes__WEBPACK_IMPORTED_MODULE_1__["default"]),
   data: {
-    year: new Date().getFullYear(),
+    year: 2018,
+    //(new Date()).getFullYear(),
     personal: {
       firstName: '',
       lastName: '',

@@ -31,7 +31,7 @@ new Vue({
     el: '#app',
     router: new VueRouter(routes),
     data: {
-    	year: (new Date()).getFullYear(),
+    	year: 2018,//(new Date()).getFullYear(),
     	personal: {
     		firstName: '',
     		lastName: '',
