@@ -6,6 +6,7 @@ use App\PdfForm;
 
 class HomeController extends Controller
 {
+    private $year = 2018;//date('Y');
 
     public function __construct()
     {
@@ -42,10 +43,10 @@ class HomeController extends Controller
             'topmostSubform[0].Page1[0].f1_12[0]' => strtoupper(request('personal.citizen')),
             'topmostSubform[0].Page1[0].f1_13[0]' => strtoupper(request('personal.citizen')),
             'topmostSubform[0].Page1[0].f1_14[0]' => strtoupper(request('personal.passport')),
-            'topmostSubform[0].Page1[0].f1_15[0]' => isset(request('form8843.yearDays')[date('Y')])? request('form8843.yearDays')[date('Y')]['number'] : 0,
-            'topmostSubform[0].Page1[0].f1_16[0]' => isset(request('form8843.yearDays')[date('Y')-1])? request('form8843.yearDays')[date('Y')-1]['number'] : 0,
-            'topmostSubform[0].Page1[0].f1_17[0]' => isset(request('form8843.yearDays')[date('Y')-2])? request('form8843.yearDays')[date('Y')-2]['number'] : 0,
-            'topmostSubform[0].Page1[0].f1_18[0]' => isset(request('form8843.yearDays')[date('Y')])? request('form8843.yearDays')[date('Y')]['number'] : 0
+            'topmostSubform[0].Page1[0].f1_15[0]' => isset(request('form8843.yearDays')[$this->year])? request('form8843.yearDays')[$this->year]['number'] : 0,
+            'topmostSubform[0].Page1[0].f1_16[0]' => isset(request('form8843.yearDays')[$this->year-1])? request('form8843.yearDays')[$this->year-1]['number'] : 0,
+            'topmostSubform[0].Page1[0].f1_17[0]' => isset(request('form8843.yearDays')[$this->year-2])? request('form8843.yearDays')[$this->year-2]['number'] : 0,
+            'topmostSubform[0].Page1[0].f1_18[0]' => isset(request('form8843.yearDays')[$this->year])? request('form8843.yearDays')[$this->year]['number'] : 0
         ];
         if(request('form8843.type') == 'teacher' || request('form8843.type') == 'trainee') {
             $data['topmostSubform[0].Page1[0].f1_19[0]'] = '';
@@ -54,12 +55,12 @@ class HomeController extends Controller
             $data['topmostSubform[0].Page1[0].f1_22[0]'] = '';
             $data['topmostSubform[0].Page1[0].f1_23[0]'] = strtoupper(request('form8843.typeData.trainee.name')).' '.strtoupper(request('form8843.typeData.trainee.address')).' '.strtoupper(request('form8843.typeData.trainee.phone'));
             $data['topmostSubform[0].Page1[0].f1_24[0]'] = '';
-            $data['topmostSubform[0].Page1[0].f1_25[0]'] = $fi_25 = isset(request('form8843.yearDays')[date('Y')-6])? strtoupper(request('form8843.yearDays')[date('Y')-6]['type']) : '';
-            $data['topmostSubform[0].Page1[0].f1_26[0]'] = $fi_26 = isset(request('form8843.yearDays')[date('Y')-5])? strtoupper(request('form8843.yearDays')[date('Y')-5]['type']) : '';
-            $data['topmostSubform[0].Page1[0].f1_27[0]'] = $fi_27 = isset(request('form8843.yearDays')[date('Y')-4])? strtoupper(request('form8843.yearDays')[date('Y')-4]['type']) : '';
-            $data['topmostSubform[0].Page1[0].f1_28[0]'] = $fi_28 = isset(request('form8843.yearDays')[date('Y')-3])? strtoupper(request('form8843.yearDays')[date('Y')-3]['type']) : '';
-            $data['topmostSubform[0].Page1[0].f1_29[0]'] = $fi_29 = isset(request('form8843.yearDays')[date('Y')-2])? strtoupper(request('form8843.yearDays')[date('Y')-2]['type']) : '';
-            $data['topmostSubform[0].Page1[0].f1_30[0]'] = $fi_30 = isset(request('form8843.yearDays')[date('Y')-1])? strtoupper(request('form8843.yearDays')[date('Y')-1]['type']) : '';
+            $data['topmostSubform[0].Page1[0].f1_25[0]'] = $fi_25 = isset(request('form8843.yearDays')[$this->year-6])? strtoupper(request('form8843.yearDays')[$this->year-6]['type']) : '';
+            $data['topmostSubform[0].Page1[0].f1_26[0]'] = $fi_26 = isset(request('form8843.yearDays')[$this->year-5])? strtoupper(request('form8843.yearDays')[$this->year-5]['type']) : '';
+            $data['topmostSubform[0].Page1[0].f1_27[0]'] = $fi_27 = isset(request('form8843.yearDays')[$this->year-4])? strtoupper(request('form8843.yearDays')[$this->year-4]['type']) : '';
+            $data['topmostSubform[0].Page1[0].f1_28[0]'] = $fi_28 = isset(request('form8843.yearDays')[$this->year-3])? strtoupper(request('form8843.yearDays')[$this->year-3]['type']) : '';
+            $data['topmostSubform[0].Page1[0].f1_29[0]'] = $fi_29 = isset(request('form8843.yearDays')[$this->year-2])? strtoupper(request('form8843.yearDays')[$this->year-2]['type']) : '';
+            $data['topmostSubform[0].Page1[0].f1_30[0]'] = $fi_30 = isset(request('form8843.yearDays')[$this->year-1])? strtoupper(request('form8843.yearDays')[$this->year-1]['type']) : '';
             $data['topmostSubform[0].Page1[0].c1_01[0]'] = '';
             $data['topmostSubform[0].Page1[0].c1_01[1]'] = 2;
             $data['topmostSubform[0].Page1[0].f1_31[0]'] = '';
@@ -70,12 +71,12 @@ class HomeController extends Controller
             $data['topmostSubform[0].Page1[0].f1_34[0]'] = '';
             $data['topmostSubform[0].Page1[0].f1_35[0]'] = strtoupper(request('form8843.typeData.student.name2')).' '.strtoupper(request('form8843.typeData.student.address2')).' '.strtoupper(request('form8843.typeData.student.phone2'));
             $data['topmostSubform[0].Page1[0].f1_36[0]'] = '';
-            $data['topmostSubform[0].Page1[0].f1_37[0]'] = isset(request('form8843.yearDays')[date('Y')-6])? strtoupper(request('form8843.yearDays')[date('Y')-6]['type']) : '';
-            $data['topmostSubform[0].Page1[0].f1_38[0]'] = isset(request('form8843.yearDays')[date('Y')-5])? strtoupper(request('form8843.yearDays')[date('Y')-5]['type']) : '';
-            $data['topmostSubform[0].Page1[0].f1_39[0]'] = isset(request('form8843.yearDays')[date('Y')-4])? strtoupper(request('form8843.yearDays')[date('Y')-4]['type']) : '';
-            $data['topmostSubform[0].Page1[0].f1_40[0]'] = isset(request('form8843.yearDays')[date('Y')-3])? strtoupper(request('form8843.yearDays')[date('Y')-3]['type']) : '';
-            $data['topmostSubform[0].Page1[0].f1_41[0]'] = isset(request('form8843.yearDays')[date('Y')-2])? strtoupper(request('form8843.yearDays')[date('Y')-2]['type']) : '';
-            $data['topmostSubform[0].Page1[0].f1_42[0]'] = isset(request('form8843.yearDays')[date('Y')-1])? strtoupper(request('form8843.yearDays')[date('Y')-1]['type']) : '';
+            $data['topmostSubform[0].Page1[0].f1_37[0]'] = isset(request('form8843.yearDays')[$this->year-6])? strtoupper(request('form8843.yearDays')[$this->year-6]['type']) : '';
+            $data['topmostSubform[0].Page1[0].f1_38[0]'] = isset(request('form8843.yearDays')[$this->year-5])? strtoupper(request('form8843.yearDays')[$this->year-5]['type']) : '';
+            $data['topmostSubform[0].Page1[0].f1_39[0]'] = isset(request('form8843.yearDays')[$this->year-4])? strtoupper(request('form8843.yearDays')[$this->year-4]['type']) : '';
+            $data['topmostSubform[0].Page1[0].f1_40[0]'] = isset(request('form8843.yearDays')[$this->year-3])? strtoupper(request('form8843.yearDays')[$this->year-3]['type']) : '';
+            $data['topmostSubform[0].Page1[0].f1_41[0]'] = isset(request('form8843.yearDays')[$this->year-2])? strtoupper(request('form8843.yearDays')[$this->year-2]['type']) : '';
+            $data['topmostSubform[0].Page1[0].f1_42[0]'] = isset(request('form8843.yearDays')[$this->year-1])? strtoupper(request('form8843.yearDays')[$this->year-1]['type']) : '';
             $data['topmostSubform[0].Page1[0].c1_02[0]'] = '';
             $data['topmostSubform[0].Page1[0].c1_02[1]'] = 2;
             $data['topmostSubform[0].Page1[0].c1_03[0]'] = '';
