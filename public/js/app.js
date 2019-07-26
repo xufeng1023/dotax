@@ -2773,7 +2773,7 @@ function changeHistory() {
           if (validDays >= 183) return this.isResident = 'yes';
         }
 
-        if (studentPassed && teacherPassed) return this.isResident = 'yes';
+        if (studentPassed || teacherPassed) return this.isResident = 'yes';
       }
 
       return this.nextUrl = 'none-resident-program';
