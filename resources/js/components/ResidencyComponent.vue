@@ -230,6 +230,7 @@
 </template>
 
 <script>
+    let combinedDays = {}
     function newData() {
         return {
             visaType: '',
@@ -294,7 +295,6 @@
                 if(!this.currentVisa) return alert('invalid current visa')
                 if(!this.validDays()) return alert('invalid days')
                 this.invalidRowId = ''
-                //this.ifVisaChanged();
                 this.getFirstEnter()
                 this.combineDays()
                 this.calcDays()
@@ -313,6 +313,8 @@
             },
             determineResidency() {
                 let validDays = 0
+                let studentPassed = false 
+                let teacherPassed = false
                 if(this.yearDays[this.$root.currentYear] < 31) {
                     return this.nextUrl = 'none-resident-program'
                 }
@@ -324,6 +326,7 @@
                     if(['f1','f2','j1s','j2s','m1','q1s','q2s'].includes(prop)) { 
                         let daysPerYearAry = Object.values(this.visaYearDays[prop])
                         if(daysPerYearAry.length > 5) {
+                            studentPassed = true
                             validDays = this.get183Days(prop)
                             if(validDays >= 183) return this.isResident = 'yes'
                         }
@@ -335,10 +338,12 @@
                             if(year >= minYear) yearsIn6years++
                         }
                         if(yearsIn6years > 2) {
+                            teacherPassed = true
                             validDays = this.get183Days(prop)
                         }
                         if(validDays >= 183) return this.isResident = 'yes'
                     }
+                    if(studentPassed && teacherPassed) return this.isResident = 'yes'
                 }
                 return this.nextUrl = 'none-resident-program'
             },
@@ -377,41 +382,25 @@
                     }
                 }
             },
-            ifVisaChanged() {
-                if(this.preVisa && this.visaChangeDate) {
-                    let changeDate = new Date(this.visaChangeDate)
-                    let changeDateYear = changeDate.getFullYear()
-                    this.travelHistories.forEach((item, index) => {
-                        let enter = new Date(item.enterDate);
-                        let leave = new Date(item.leaveDate);
-                        if(changeDateYear >= enter.getFullYear() && changeDateYear <= leave.getFullYear()) {
-                            this.travelHistories.push({
-                                visaType: this.preVisa,
-                                enterDate: this.visaChangeDate,
-                                leaveDate: item.leaveDate
-                            })
-                            item.leaveDate = this.visaChangeDate
-                        }
-                    })
-                }
+            copyTravelHistory() {
+                return JSON.parse(JSON.stringify(this.travelHistories))
             },
             combineDays() {
-                this.combinedDays = this.travelHistories
+                combinedDays = this.copyTravelHistory()
                 for(let prop in this.changeHistory) {
                     let changeDate = new Date(this.changeHistory[prop].date)
-                    for(let index in this.combinedDays) {
-                        let enterDate = (new Date(this.combinedDays[index].enterDate)).getTime()
-                        let leaveDate = new Date(this.combinedDays[index].leaveDate)
-                        console.log(changeDate.getTime(), enterDate,leaveDate.getTime(),this.changeHistory[prop].from , this.combinedDays[index].visaType)
-                        if(changeDate.getTime() > enterDate && changeDate.getTime() < leaveDate.getTime() && this.changeHistory[prop].from == this.combinedDays[index].visaType) {
+                    for(let index in combinedDays) {
+                        let enterDate = (new Date(combinedDays[index].enterDate)).getTime()
+                        let leaveDate = new Date(combinedDays[index].leaveDate)
+                        if(changeDate.getTime() > enterDate && changeDate.getTime() < leaveDate.getTime() && this.changeHistory[prop].from == combinedDays[index].visaType) {
                             changeDate.setDate(changeDate.getDate() - 1)
                             let cutDate = changeDate.toLocaleDateString()
-                            this.combinedDays.push({
+                            combinedDays.push({
                                 visaType: this.changeHistory[prop].to,
                                 enterDate: this.changeHistory[prop].date,
-                                leaveDate: this.combinedDays[index].leaveDate
+                                leaveDate: combinedDays[index].leaveDate
                             })
-                            this.combinedDays[index].leaveDate = cutDate
+                            combinedDays[index].leaveDate = cutDate
                         }
                     }
                 }
@@ -419,7 +408,7 @@
             calcDays() {
                 this.visaYearDays = {}
                 this.yearDays = {}
-                this.combinedDays.forEach((item, index) => {
+                combinedDays.forEach((item, index) => {
                     let leave = new Date(item.leaveDate)
                     let leaveYear = leave.getFullYear()
                     if(!leaveYear || leaveYear > this.$root.taxYear) {

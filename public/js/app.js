@@ -2649,6 +2649,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+var combinedDays = {};
+
 function newData() {
   return {
     visaType: '',
@@ -2713,8 +2715,7 @@ function changeHistory() {
 
       if (!this.currentVisa) return alert('invalid current visa');
       if (!this.validDays()) return alert('invalid days');
-      this.invalidRowId = ''; //this.ifVisaChanged();
-
+      this.invalidRowId = '';
       this.getFirstEnter();
       this.combineDays();
       this.calcDays();
@@ -2733,6 +2734,8 @@ function changeHistory() {
     },
     determineResidency: function determineResidency() {
       var validDays = 0;
+      var studentPassed = false;
+      var teacherPassed = false;
 
       if (this.yearDays[this.$root.currentYear] < 31) {
         return this.nextUrl = 'none-resident-program';
@@ -2748,6 +2751,7 @@ function changeHistory() {
           var daysPerYearAry = Object.values(this.visaYearDays[prop]);
 
           if (daysPerYearAry.length > 5) {
+            studentPassed = true;
             validDays = this.get183Days(prop);
             if (validDays >= 183) return this.isResident = 'yes';
           }
@@ -2762,11 +2766,14 @@ function changeHistory() {
           }
 
           if (yearsIn6years > 2) {
+            teacherPassed = true;
             validDays = this.get183Days(prop);
           }
 
           if (validDays >= 183) return this.isResident = 'yes';
         }
+
+        if (studentPassed && teacherPassed) return this.isResident = 'yes';
       }
 
       return this.nextUrl = 'none-resident-program';
@@ -2813,70 +2820,50 @@ function changeHistory() {
         }
       }
     },
-    ifVisaChanged: function ifVisaChanged() {
-      var _this2 = this;
-
-      if (this.preVisa && this.visaChangeDate) {
-        var changeDate = new Date(this.visaChangeDate);
-        var changeDateYear = changeDate.getFullYear();
-        this.travelHistories.forEach(function (item, index) {
-          var enter = new Date(item.enterDate);
-          var leave = new Date(item.leaveDate);
-
-          if (changeDateYear >= enter.getFullYear() && changeDateYear <= leave.getFullYear()) {
-            _this2.travelHistories.push({
-              visaType: _this2.preVisa,
-              enterDate: _this2.visaChangeDate,
-              leaveDate: item.leaveDate
-            });
-
-            item.leaveDate = _this2.visaChangeDate;
-          }
-        });
-      }
+    copyTravelHistory: function copyTravelHistory() {
+      return JSON.parse(JSON.stringify(this.travelHistories));
     },
     combineDays: function combineDays() {
-      this.combinedDays = this.travelHistories;
+      combinedDays = this.copyTravelHistory();
 
       for (var prop in this.changeHistory) {
         var changeDate = new Date(this.changeHistory[prop].date);
 
-        for (var index in this.combinedDays) {
-          var enterDate = new Date(this.combinedDays[index].enterDate).getTime();
-          var leaveDate = new Date(this.combinedDays[index].leaveDate);
-          console.log(changeDate.getTime(), enterDate, leaveDate.getTime(), this.changeHistory[prop].from, this.combinedDays[index].visaType);
+        for (var index in combinedDays) {
+          var enterDate = new Date(combinedDays[index].enterDate).getTime();
+          var leaveDate = new Date(combinedDays[index].leaveDate);
 
-          if (changeDate.getTime() > enterDate && changeDate.getTime() < leaveDate.getTime() && this.changeHistory[prop].from == this.combinedDays[index].visaType) {
+          if (changeDate.getTime() > enterDate && changeDate.getTime() < leaveDate.getTime() && this.changeHistory[prop].from == combinedDays[index].visaType) {
             changeDate.setDate(changeDate.getDate() - 1);
             var cutDate = changeDate.toLocaleDateString();
-            this.combinedDays.push({
+            combinedDays.push({
               visaType: this.changeHistory[prop].to,
               enterDate: this.changeHistory[prop].date,
-              leaveDate: this.combinedDays[index].leaveDate
+              leaveDate: combinedDays[index].leaveDate
             });
-            this.combinedDays[index].leaveDate = cutDate;
+            combinedDays[index].leaveDate = cutDate;
           }
         }
       }
     },
     calcDays: function calcDays() {
-      var _this3 = this;
+      var _this2 = this;
 
       this.visaYearDays = {};
       this.yearDays = {};
-      this.combinedDays.forEach(function (item, index) {
+      combinedDays.forEach(function (item, index) {
         var leave = new Date(item.leaveDate);
         var leaveYear = leave.getFullYear();
 
-        if (!leaveYear || leaveYear > _this3.$root.taxYear) {
-          leaveYear = _this3.$root.taxYear;
+        if (!leaveYear || leaveYear > _this2.$root.taxYear) {
+          leaveYear = _this2.$root.taxYear;
           leave = new Date('12/31/' + leaveYear);
         }
 
         var enter = new Date(item.enterDate);
         var enterYear = enter.getFullYear();
         var countingYear = enterYear;
-        if (enterYear > _this3.$root.taxYear) countingYear = 9999;
+        if (enterYear > _this2.$root.taxYear) countingYear = 9999;
         var yearType;
         var from = enter;
         var to = leave;
@@ -2891,20 +2878,20 @@ function changeHistory() {
             if (countingYear == leaveYear) to = leave;
           }
 
-          if (_this3.yearDays[countingYear] === undefined) {
-            _this3.yearDays[countingYear] = {};
-            _this3.yearDays[countingYear]['number'] = 0;
-            _this3.yearDays[countingYear]['type'] = item.visaType.slice(0, 2);
+          if (_this2.yearDays[countingYear] === undefined) {
+            _this2.yearDays[countingYear] = {};
+            _this2.yearDays[countingYear]['number'] = 0;
+            _this2.yearDays[countingYear]['type'] = item.visaType.slice(0, 2);
           }
 
-          if (_this3.visaYearDays[item.visaType] === undefined) _this3.visaYearDays[item.visaType] = [];
+          if (_this2.visaYearDays[item.visaType] === undefined) _this2.visaYearDays[item.visaType] = [];
 
-          if (_this3.visaYearDays[item.visaType][countingYear] === undefined) {
-            _this3.visaYearDays[item.visaType][countingYear] = 0;
+          if (_this2.visaYearDays[item.visaType][countingYear] === undefined) {
+            _this2.visaYearDays[item.visaType][countingYear] = 0;
           }
 
-          _this3.yearDays[countingYear]['number'] += _this3.daysBetweenDays(from, to);
-          _this3.visaYearDays[item.visaType][countingYear] += _this3.daysBetweenDays(from, to);
+          _this2.yearDays[countingYear]['number'] += _this2.daysBetweenDays(from, to);
+          _this2.visaYearDays[item.visaType][countingYear] += _this2.daysBetweenDays(from, to);
           countingYear++;
         }
       });
@@ -2927,7 +2914,7 @@ function changeHistory() {
       return Math.round(Math.abs((leave.getTime() - enter.getTime()) / oneDay)) + 1;
     },
     registerDatepicker: function registerDatepicker() {
-      var _this4 = this;
+      var _this3 = this;
 
       $('.datepicker').datepicker({
         changeMonth: true,
@@ -2937,10 +2924,10 @@ function changeHistory() {
           var keys = el.id.split('-');
 
           try {
-            if (keys[0] == 'change') _this4.changeHistory[keys[1]].date = dateText;else _this4.travelHistories[keys[1]][keys[0]] = dateText;
+            if (keys[0] == 'change') _this3.changeHistory[keys[1]].date = dateText;else _this3.travelHistories[keys[1]][keys[0]] = dateText;
           } catch (error) {
             console.log('error assigning date');
-            _this4.visaChangeDate = dateText;
+            _this3.visaChangeDate = dateText;
           }
         }
       });
