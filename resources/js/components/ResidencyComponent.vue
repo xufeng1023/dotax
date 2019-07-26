@@ -29,7 +29,7 @@
             </div>
             <div v-show="this.isResident != 'yes'">
                 <div class="form-group">
-                    <label>Have you been a US citizen, by birth or naturalization, on the last day of {{ $root.currentYear }}? (tax year)</label>
+                    <label>Have you been a US citizen, by birth or naturalization, on the last day of {{ $root.taxYear }}? (tax year)</label>
                     <div>
                         <div class="custom-control custom-radio d-inline-block mr-3">
                             <input v-model="r11" type="radio" id="r11-y" name="r11" value="yes" class="custom-control-input">
@@ -43,7 +43,7 @@
                 </div>
                 <div v-show="r11 == 'no'">
                     <div class="form-group">
-                        <label>Have you been a green card holder, on the last day of {{ $root.currentYear }}? (tax year)</label>
+                        <label>Have you been a green card holder, on the last day of {{ $root.taxYear }}? (tax year)</label>
                         <div>
                             <div class="custom-control custom-radio d-inline-block mr-3">
                                 <input v-model="r12" type="radio" id="r12-y" name="r12" value="yes" class="custom-control-input" checked>
@@ -150,7 +150,9 @@
                             <div class="form-row" v-for="(item, index) in travelHistories" :key="index">
                                 <div class="form-group col-12 col-sm">
                                     <label :for="'visaType-'+index">Visa type</label>
-                                    <visa v-model="item.visaType"></visa>
+                                    <select class="form-control" v-model="item.visaType">
+                                        <visa></visa>
+                                    </select>
                                 </div>
                                 <div class="form-group col-12 col-sm">
                                     <label :for="'enterDate-'+index">Date entered</label>
@@ -171,8 +173,10 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-12 col-sm-6">
-                                    <label>Current visa held as of 12/31/{{ $root.currentYear }}</label>    
-                                    <visa v-model="currentVisa"></visa>
+                                    <label>Current visa held as of 12/31/{{ $root.taxYear }}</label>   
+                                    <select class="form-control" v-model="currentVisa"> 
+                                        <visa></visa>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -188,14 +192,32 @@
                                     </div>
                                 </div>
                             </div>
-                            <div v-show="r19 == 'yes'" class="form-row">
-                                <div class="form-group col-12 col-sm">
-                                    <label>What was the previous visa?</label>
-                                    <visa v-model="preVisa"></visa>
+                            <div v-show="r19 == 'yes'">
+                                <div class="form-row" v-for="(item, index) in changeHistory" :key="index">
+                                    <div class="form-group col-12 col-sm">
+                                        <label>From Visa</label>
+                                        <select class="form-control" v-model="item.from"> 
+                                            <visa></visa>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-12 col-sm">
+                                        <label>To Visa</label>
+                                        <select class="form-control" v-model="item.to"> 
+                                            <visa></visa>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-12 col-sm">
+                                        <label>Change Date</label>
+                                        <input v-model="item.date" :id="'change-'+index" type="text" class="form-control datepicker">
+                                    </div>
+                                    <div class="form-group col-12 col-sm-1">
+                                        <div class="pt-sm-4 mt-sm-3">
+                                            <a v-if="index !== 0" @click.prevent="remove2(index)" href="#">X</a>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group col-12 col-sm">
-                                    <label>When did it happen?</label>
-                                    <input v-model="visaChangeDate" type="text" class="form-control datepicker">
+                                <div class="form-group">
+                                    <a href="#" @click.prevent="addOneLine2">+ add one line</a>
                                 </div>
                             </div>
                         </div>
@@ -213,6 +235,14 @@
             visaType: '',
             enterDate: '',
             leaveDate: ''
+        }
+    }
+
+    function changeHistory() {
+        return {
+            from: '',
+            to: '',
+            date: ''
         }
     }
     
@@ -237,7 +267,9 @@
                 visaChangeDate: '',
                 yearDays: {},
                 visaYearDays: {},
-                firstEnter: {}
+                firstEnter: {},
+                combinedDays: {},
+                changeHistory: [changeHistory()]
             }
         },
         mounted() {
@@ -264,6 +296,7 @@
                 this.invalidRowId = ''
                 //this.ifVisaChanged();
                 this.getFirstEnter()
+                this.combineDays()
                 this.calcDays()
                 this.determineResidency()
                 this.showResult = true
@@ -292,7 +325,6 @@
                         let daysPerYearAry = Object.values(this.visaYearDays[prop])
                         if(daysPerYearAry.length > 5) {
                             validDays = this.get183Days(prop)
-                            console.log(validDays)
                             if(validDays >= 183) return this.isResident = 'yes'
                         }
                     }
@@ -363,10 +395,31 @@
                     })
                 }
             },
+            combineDays() {
+                this.combinedDays = this.travelHistories
+                for(let prop in this.changeHistory) {
+                    let changeDate = new Date(this.changeHistory[prop].date)
+                    for(let index in this.combinedDays) {
+                        let enterDate = (new Date(this.combinedDays[index].enterDate)).getTime()
+                        let leaveDate = new Date(this.combinedDays[index].leaveDate)
+                        console.log(changeDate.getTime(), enterDate,leaveDate.getTime(),this.changeHistory[prop].from , this.combinedDays[index].visaType)
+                        if(changeDate.getTime() > enterDate && changeDate.getTime() < leaveDate.getTime() && this.changeHistory[prop].from == this.combinedDays[index].visaType) {
+                            changeDate.setDate(changeDate.getDate() - 1)
+                            let cutDate = changeDate.toLocaleDateString()
+                            this.combinedDays.push({
+                                visaType: this.changeHistory[prop].to,
+                                enterDate: this.changeHistory[prop].date,
+                                leaveDate: this.combinedDays[index].leaveDate
+                            })
+                            this.combinedDays[index].leaveDate = cutDate
+                        }
+                    }
+                }
+            },
             calcDays() {
                 this.visaYearDays = {}
                 this.yearDays = {}
-                this.travelHistories.forEach((item, index) => {
+                this.combinedDays.forEach((item, index) => {
                     let leave = new Date(item.leaveDate)
                     let leaveYear = leave.getFullYear()
                     if(!leaveYear || leaveYear > this.$root.taxYear) {
@@ -409,8 +462,14 @@
             addOneLine() {
                 this.travelHistories.push(newData())
             },
+            addOneLine2() {
+                this.changeHistory.push(changeHistory())
+            },
             remove(index) {
                 this.travelHistories.splice(index, 1)
+            },
+            remove2(index) {
+                this.changeHistory.splice(index, 1)
             },
             daysBetweenDays(enter, leave) {
                 let oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
@@ -424,8 +483,10 @@
                     onSelect: (dateText, el) => {
                         let keys = el.id.split('-')
                         try {
-                            this.travelHistories[keys[1]][keys[0]] = dateText
+                            if(keys[0] == 'change') this.changeHistory[keys[1]].date = dateText
+                            else this.travelHistories[keys[1]][keys[0]] = dateText
                         } catch(error) {
+                            console.log('error assigning date')
                             this.visaChangeDate = dateText
                         }
                     }

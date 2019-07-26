@@ -2627,11 +2627,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 function newData() {
   return {
     visaType: '',
     enterDate: '',
     leaveDate: ''
+  };
+}
+
+function changeHistory() {
+  return {
+    from: '',
+    to: '',
+    date: ''
   };
 }
 
@@ -2656,7 +2686,9 @@ function newData() {
       visaChangeDate: '',
       yearDays: {},
       visaYearDays: {},
-      firstEnter: {}
+      firstEnter: {},
+      combinedDays: {},
+      changeHistory: [changeHistory()]
     };
   },
   mounted: function mounted() {
@@ -2684,6 +2716,7 @@ function newData() {
       this.invalidRowId = ''; //this.ifVisaChanged();
 
       this.getFirstEnter();
+      this.combineDays();
       this.calcDays();
       this.determineResidency();
       this.showResult = true;
@@ -2716,7 +2749,6 @@ function newData() {
 
           if (daysPerYearAry.length > 5) {
             validDays = this.get183Days(prop);
-            console.log(validDays);
             if (validDays >= 183) return this.isResident = 'yes';
           }
         }
@@ -2803,12 +2835,36 @@ function newData() {
         });
       }
     },
+    combineDays: function combineDays() {
+      this.combinedDays = this.travelHistories;
+
+      for (var prop in this.changeHistory) {
+        var changeDate = new Date(this.changeHistory[prop].date);
+
+        for (var index in this.combinedDays) {
+          var enterDate = new Date(this.combinedDays[index].enterDate).getTime();
+          var leaveDate = new Date(this.combinedDays[index].leaveDate);
+          console.log(changeDate.getTime(), enterDate, leaveDate.getTime(), this.changeHistory[prop].from, this.combinedDays[index].visaType);
+
+          if (changeDate.getTime() > enterDate && changeDate.getTime() < leaveDate.getTime() && this.changeHistory[prop].from == this.combinedDays[index].visaType) {
+            changeDate.setDate(changeDate.getDate() - 1);
+            var cutDate = changeDate.toLocaleDateString();
+            this.combinedDays.push({
+              visaType: this.changeHistory[prop].to,
+              enterDate: this.changeHistory[prop].date,
+              leaveDate: this.combinedDays[index].leaveDate
+            });
+            this.combinedDays[index].leaveDate = cutDate;
+          }
+        }
+      }
+    },
     calcDays: function calcDays() {
       var _this3 = this;
 
       this.visaYearDays = {};
       this.yearDays = {};
-      this.travelHistories.forEach(function (item, index) {
+      this.combinedDays.forEach(function (item, index) {
         var leave = new Date(item.leaveDate);
         var leaveYear = leave.getFullYear();
 
@@ -2856,8 +2912,14 @@ function newData() {
     addOneLine: function addOneLine() {
       this.travelHistories.push(newData());
     },
+    addOneLine2: function addOneLine2() {
+      this.changeHistory.push(changeHistory());
+    },
     remove: function remove(index) {
       this.travelHistories.splice(index, 1);
+    },
+    remove2: function remove2(index) {
+      this.changeHistory.splice(index, 1);
     },
     daysBetweenDays: function daysBetweenDays(enter, leave) {
       var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
@@ -2875,8 +2937,9 @@ function newData() {
           var keys = el.id.split('-');
 
           try {
-            _this4.travelHistories[keys[1]][keys[0]] = dateText;
+            if (keys[0] == 'change') _this4.changeHistory[keys[1]].date = dateText;else _this4.travelHistories[keys[1]][keys[0]] = dateText;
           } catch (error) {
+            console.log('error assigning date');
             _this4.visaChangeDate = dateText;
           }
         }
@@ -2944,15 +3007,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['visa'],
-  methods: {
-    updateVisa: function updateVisa(visa) {
-      this.$emit('input', visa);
-    }
-  }
-});
+/* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
 
@@ -42432,7 +42487,7 @@ var render = function() {
               _c("label", [
                 _vm._v(
                   "Have you been a US citizen, by birth or naturalization, on the last day of " +
-                    _vm._s(_vm.$root.currentYear) +
+                    _vm._s(_vm.$root.taxYear) +
                     "? (tax year)"
                 )
               ]),
@@ -42542,7 +42597,7 @@ var render = function() {
                   _c("label", [
                     _vm._v(
                       "Have you been a green card holder, on the last day of " +
-                        _vm._s(_vm.$root.currentYear) +
+                        _vm._s(_vm.$root.taxYear) +
                         "? (tax year)"
                     )
                   ]),
@@ -43353,17 +43408,48 @@ var render = function() {
                                     [_vm._v("Visa type")]
                                   ),
                                   _vm._v(" "),
-                                  _c("visa", {
-                                    model: {
-                                      value: item.visaType,
-                                      callback: function($$v) {
-                                        _vm.$set(item, "visaType", $$v)
-                                      },
-                                      expression: "item.visaType"
-                                    }
-                                  })
-                                ],
-                                1
+                                  _c(
+                                    "select",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: item.visaType,
+                                          expression: "item.visaType"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      on: {
+                                        change: function($event) {
+                                          var $$selectedVal = Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function(o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function(o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
+                                          _vm.$set(
+                                            item,
+                                            "visaType",
+                                            $event.target.multiple
+                                              ? $$selectedVal
+                                              : $$selectedVal[0]
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [_c("visa")],
+                                    1
+                                  )
+                                ]
                               ),
                               _vm._v(" "),
                               _c(
@@ -43511,21 +43597,45 @@ var render = function() {
                               _c("label", [
                                 _vm._v(
                                   "Current visa held as of 12/31/" +
-                                    _vm._s(_vm.$root.currentYear)
+                                    _vm._s(_vm.$root.taxYear)
                                 )
                               ]),
                               _vm._v(" "),
-                              _c("visa", {
-                                model: {
-                                  value: _vm.currentVisa,
-                                  callback: function($$v) {
-                                    _vm.currentVisa = $$v
-                                  },
-                                  expression: "currentVisa"
-                                }
-                              })
-                            ],
-                            1
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.currentVisa,
+                                      expression: "currentVisa"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.currentVisa = $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    }
+                                  }
+                                },
+                                [_c("visa")],
+                                1
+                              )
+                            ]
                           )
                         ]),
                         _vm._v(" "),
@@ -43635,61 +43745,201 @@ var render = function() {
                                 value: _vm.r19 == "yes",
                                 expression: "r19 == 'yes'"
                               }
-                            ],
-                            staticClass: "form-row"
+                            ]
                           },
                           [
-                            _c(
-                              "div",
-                              { staticClass: "form-group col-12 col-sm" },
-                              [
-                                _c("label", [
-                                  _vm._v("What was the previous visa?")
-                                ]),
-                                _vm._v(" "),
-                                _c("visa", {
-                                  model: {
-                                    value: _vm.preVisa,
-                                    callback: function($$v) {
-                                      _vm.preVisa = $$v
-                                    },
-                                    expression: "preVisa"
-                                  }
-                                })
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "form-group col-12 col-sm" },
-                              [
-                                _c("label", [_vm._v("When did it happen?")]),
-                                _vm._v(" "),
-                                _c("input", {
-                                  directives: [
+                            _vm._l(_vm.changeHistory, function(item, index) {
+                              return _c(
+                                "div",
+                                { key: index, staticClass: "form-row" },
+                                [
+                                  _c(
+                                    "div",
+                                    { staticClass: "form-group col-12 col-sm" },
+                                    [
+                                      _c("label", [_vm._v("From Visa")]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "select",
+                                        {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: item.from,
+                                              expression: "item.from"
+                                            }
+                                          ],
+                                          staticClass: "form-control",
+                                          on: {
+                                            change: function($event) {
+                                              var $$selectedVal = Array.prototype.filter
+                                                .call(
+                                                  $event.target.options,
+                                                  function(o) {
+                                                    return o.selected
+                                                  }
+                                                )
+                                                .map(function(o) {
+                                                  var val =
+                                                    "_value" in o
+                                                      ? o._value
+                                                      : o.value
+                                                  return val
+                                                })
+                                              _vm.$set(
+                                                item,
+                                                "from",
+                                                $event.target.multiple
+                                                  ? $$selectedVal
+                                                  : $$selectedVal[0]
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [_c("visa")],
+                                        1
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "form-group col-12 col-sm" },
+                                    [
+                                      _c("label", [_vm._v("To Visa")]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "select",
+                                        {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: item.to,
+                                              expression: "item.to"
+                                            }
+                                          ],
+                                          staticClass: "form-control",
+                                          on: {
+                                            change: function($event) {
+                                              var $$selectedVal = Array.prototype.filter
+                                                .call(
+                                                  $event.target.options,
+                                                  function(o) {
+                                                    return o.selected
+                                                  }
+                                                )
+                                                .map(function(o) {
+                                                  var val =
+                                                    "_value" in o
+                                                      ? o._value
+                                                      : o.value
+                                                  return val
+                                                })
+                                              _vm.$set(
+                                                item,
+                                                "to",
+                                                $event.target.multiple
+                                                  ? $$selectedVal
+                                                  : $$selectedVal[0]
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [_c("visa")],
+                                        1
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "form-group col-12 col-sm" },
+                                    [
+                                      _c("label", [_vm._v("Change Date")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: item.date,
+                                            expression: "item.date"
+                                          }
+                                        ],
+                                        staticClass: "form-control datepicker",
+                                        attrs: {
+                                          id: "change-" + index,
+                                          type: "text"
+                                        },
+                                        domProps: { value: item.date },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              item,
+                                              "date",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
                                     {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.visaChangeDate,
-                                      expression: "visaChangeDate"
-                                    }
-                                  ],
-                                  staticClass: "form-control datepicker",
-                                  attrs: { type: "text" },
-                                  domProps: { value: _vm.visaChangeDate },
+                                      staticClass: "form-group col-12 col-sm-1"
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        { staticClass: "pt-sm-4 mt-sm-3" },
+                                        [
+                                          index !== 0
+                                            ? _c(
+                                                "a",
+                                                {
+                                                  attrs: { href: "#" },
+                                                  on: {
+                                                    click: function($event) {
+                                                      $event.preventDefault()
+                                                      return _vm.remove2(index)
+                                                    }
+                                                  }
+                                                },
+                                                [_vm._v("X")]
+                                              )
+                                            : _vm._e()
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
+                            }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "form-group" }, [
+                              _c(
+                                "a",
+                                {
+                                  attrs: { href: "#" },
                                   on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.visaChangeDate = $event.target.value
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.addOneLine2($event)
                                     }
                                   }
-                                })
-                              ]
-                            )
-                          ]
+                                },
+                                [_vm._v("+ add one line")]
+                              )
+                            ])
+                          ],
+                          2
                         )
                       ],
                       2
@@ -43749,20 +43999,14 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "select",
-    {
-      staticClass: "custom-select",
-      domProps: { value: _vm.visa },
-      on: {
-        change: function($event) {
-          return _vm.updateVisa($event.target.value)
-        }
-      }
-    },
-    [
-      _c("option", { attrs: { value: "" } }),
-      _vm._v(" "),
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("optgroup", [
       _c("option", { attrs: { value: "f1" } }, [_vm._v("F1 Student")]),
       _vm._v(" "),
       _c("option", { attrs: { value: "f2" } }, [
@@ -43922,10 +44166,9 @@ var render = function() {
       _c("option", { attrs: { value: "td" } }, [
         _vm._v("TD – Professional businessperson from Canada or Mexico")
       ])
-    ]
-  )
-}
-var staticRenderFns = []
+    ])
+  }
+]
 render._withStripped = true
 
 

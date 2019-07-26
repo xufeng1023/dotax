@@ -1,6 +1,5 @@
 <template>
-	<select :value="visa" @change="updateVisa($event.target.value)" class="custom-select">
-        <option value=""></option>
+	<optgroup>
         <option value="f1">F1 Student</option>
         <option value="f2">F2 Spouse and children of student on F1</option>
         <option value="j1s">J1 Student</option>
@@ -44,16 +43,11 @@
         <option value="tn">TN – Professional businessperson from Canada or Mexico</option>
         <option value="tc">TC – Professional businessperson from Canada or Mexico</option>
         <option value="td">TD – Professional businessperson from Canada or Mexico</option>
-    </select>
+    </optgroup>
 </template>
 
 <script>
 	export default {
-		props: ['visa'],
-		methods: {
-			updateVisa(visa) {
-				this.$emit('input', visa)
-			}
-		}
+
 	}
 </script>
