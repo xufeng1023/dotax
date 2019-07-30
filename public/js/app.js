@@ -3044,6 +3044,67 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
@@ -44233,18 +44294,88 @@ var render = function() {
     _vm._v(" "),
     _c("h3", { staticClass: "my-4" }, [_vm._v("W2")]),
     _vm._v(" "),
+    _c("h5", { staticClass: "my-4" }, [_vm._v("Employer Information")]),
+    _vm._v(" "),
     _vm._m(0),
     _vm._v(" "),
     _vm._m(1),
     _vm._v(" "),
     _vm._m(2),
     _vm._v(" "),
+    _c("h5", { staticClass: "my-4" }, [_vm._v("Federal Tax Information")]),
+    _vm._v(" "),
     _vm._m(3),
     _vm._v(" "),
-    _vm._m(4)
+    _vm._m(4),
+    _vm._v(" "),
+    _vm._m(5),
+    _vm._v(" "),
+    _vm._m(6),
+    _vm._v(" "),
+    _vm._m(7),
+    _vm._v(" "),
+    _vm._m(8),
+    _vm._v(" "),
+    _vm._m(9),
+    _vm._v(" "),
+    _vm._m(10)
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("Box B - Employer Identification Number (EIN):")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("Employer's Name:")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("Employer's Address:")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("Employer's City:")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("Employer's State:")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("Employer's Zip Code:")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -44330,6 +44461,74 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("div", { staticClass: "col-12 col-sm" }, [
         _c("label", [_vm._v("Box 10 - Dependent Care Benefits")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm-6" }, [
+        _c("label", [_vm._v("Box 11 - Nonqualified Plans:")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("Box 12")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("Code:")]),
+        _vm._v(" "),
+        _c("select", { staticClass: "form-control" }, [
+          _c("option", { attrs: { value: "C" } }, [
+            _vm._v("C: Group term life insurance")
+          ]),
+          _vm._v(" "),
+          _c("option", { attrs: { value: "D" } }, [
+            _vm._v("D: 401(k) contributions")
+          ]),
+          _vm._v(" "),
+          _c("option", { attrs: { value: "J" } }, [
+            _vm._v("J: Nontaxable sick pay")
+          ]),
+          _vm._v(" "),
+          _c("option", { attrs: { value: "AA" } }, [
+            _vm._v("AA: Roth 401(k) contributions")
+          ]),
+          _vm._v(" "),
+          _c("option", { attrs: { value: "BB" } }, [
+            _vm._v("BB: Roth 403(b) contributions")
+          ]),
+          _vm._v(" "),
+          _c("option", { attrs: { value: "DD" } }, [
+            _vm._v("DD: Employer health coverage")
+          ]),
+          _vm._v(" "),
+          _c("option", { attrs: { value: "EE" } }, [
+            _vm._v("EE: Roth 457(b) contributions")
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("Amount:")]),
         _vm._v(" "),
         _c("input", { staticClass: "form-control", attrs: { type: "text" } })
       ])
