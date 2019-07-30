@@ -42,6 +42,14 @@
 	    		<input type="text" class="form-control" v-model="$root.personal.passport">
     		</div>
     	</div>
+        <div class="form-group row">
+            <div class="col-12 col-sm-6">
+                <label>Filling Status</label>
+                <select class="form-control" v-model="$root.personal.fillingStatus">
+                    <option value="single">Single</option>
+                </select>
+            </div>
+        </div>
     	<h3 class="my-4">Address in the United States</h3>
     	<div class="form-group row">
     		<div class="col-12 col-sm">
@@ -91,7 +99,7 @@
         </div>
     	<div class="form-group row">
     		<div class="col-12 col-sm">
-    			<label>Were you in the U.S. during the {{ $parent.year }} tax year?</label>
+    			<label>Were you in the U.S. during the {{ $root.taxYear }} tax year?</label>
     		</div>
     		<div class="col-12 col-sm">
                 <div>
@@ -170,10 +178,11 @@ export default {
         },  
         nextPage() {
             this.$root.$data.addressOfResidence = this.addressOfResidence
-            axios.post('/8843', this.$root.$data)
-                .then(data => {
-                    console.log(data)
-                })
+            this.$router.push('income')
+            // axios.post('/8843', this.$root.$data)
+            //     .then(data => {
+            //         console.log(data)
+            //     })
         }
     }
 }
