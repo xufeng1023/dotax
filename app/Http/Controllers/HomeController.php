@@ -107,8 +107,6 @@ class HomeController extends Controller
         $data['topmostSubform[0]'] = '';
 
         $pdf = new PdfForm(public_path('pdf/f8843.pdf'), $data);
-echo '<pre>';
-        echo $pdf->fields(true);
         $pdf->save(public_path('pdf/f8843-edit.pdf'));
 
         //return request()->all();
