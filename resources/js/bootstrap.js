@@ -22,7 +22,7 @@ try {
  */
 
 window.axios = require('axios').create({
-	baseURL: '/dotax/'
+	//baseURL: '/dotax/'
 });
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
