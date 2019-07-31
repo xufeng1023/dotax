@@ -64,21 +64,21 @@
         <div class="form-group row">
             <div class="col-12 col-sm">
                 <label>Employee's Address:</label>
-                <input type="text" class="form-control">
+                <input v-model="$root.address.street" type="text" class="form-control">
             </div>
             <div class="col-12 col-sm">
                 <label>Employee's City:</label>
-                <input type="text" class="form-control">
+                <input v-model="$root.address.city" type="text" class="form-control">
             </div>
         </div>
         <div class="form-group row">
             <div class="col-12 col-sm">
                 <label>Employee's State:</label>
-                <input type="text" class="form-control">
+                <input v-model="$root.address.state" type="text" class="form-control">
             </div>
             <div class="col-12 col-sm">
                 <label>Employee's Zip Code:</label>
-                <input type="text" class="form-control">
+                <input v-model="$root.address.zip" type="text" class="form-control">
             </div>
         </div>
         <h5 class="my-4">Federal Tax Information</h5>

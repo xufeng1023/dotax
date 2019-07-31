@@ -66,10 +66,10 @@ class HomeController extends Controller
             $data['topmostSubform[0].Page1[0].f1_31[0]'] = '';
         }
         if(request('form8843.type') == 'student') {
-            $data['topmostSubform[0].Page1[0].f1_32[0]'] = strtoupper(request('form8843.typeData.student.name1')).' '.strtoupper(request('form8843.typeData.student.address1')).' '.strtoupper(request('form8843.typeData.student.phone1'));
+            $data['topmostSubform[0].Page1[0].f1_32[0]'] = strtoupper(request('form8843.typeData.student.name1')).', '.strtoupper(request('form8843.typeData.student.address1')).', '.strtoupper(request('form8843.typeData.student.city1')).', '.strtoupper(request('form8843.typeData.student.state1')).', '.strtoupper(request('form8843.typeData.student.zip1')).', '.strtoupper(request('form8843.typeData.student.phone1'));
             $data['topmostSubform[0].Page1[0].f1_33[0]'] = '';
             $data['topmostSubform[0].Page1[0].f1_34[0]'] = '';
-            $data['topmostSubform[0].Page1[0].f1_35[0]'] = strtoupper(request('form8843.typeData.student.name2')).' '.strtoupper(request('form8843.typeData.student.address2')).' '.strtoupper(request('form8843.typeData.student.phone2'));
+            $data['topmostSubform[0].Page1[0].f1_35[0]'] = strtoupper(request('form8843.typeData.student.name2')).', '.strtoupper(request('form8843.typeData.student.address2')).', '.strtoupper(request('form8843.typeData.student.city2')).', '.strtoupper(request('form8843.typeData.student.state2')).', '.strtoupper(request('form8843.typeData.student.zip2')).', '.strtoupper(request('form8843.typeData.student.phone2'));
             $data['topmostSubform[0].Page1[0].f1_36[0]'] = '';
             $data['topmostSubform[0].Page1[0].f1_37[0]'] = isset(request('form8843.yearDays')[$this->year-6])? strtoupper(request('form8843.yearDays')[$this->year-6]['type']) : '';
             $data['topmostSubform[0].Page1[0].f1_38[0]'] = isset(request('form8843.yearDays')[$this->year-5])? strtoupper(request('form8843.yearDays')[$this->year-5]['type']) : '';

@@ -2176,6 +2176,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2185,6 +2213,12 @@ __webpack_require__.r(__webpack_exports__);
         name2: '',
         address1: '',
         address2: '',
+        city1: '',
+        city2: '',
+        state1: '',
+        state2: '',
+        zip1: '',
+        zip2: '',
         phone1: '',
         phone2: ''
       },
@@ -41468,7 +41502,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-group row" }, [
-            _c("div", { staticClass: "col-12 col-sm-8" }, [
+            _c("div", { staticClass: "col-12 col-sm-4" }, [
               _c("label", [_vm._v("Address of University")]),
               _vm._v(" "),
               _c("input", {
@@ -41489,6 +41523,86 @@ var render = function() {
                       return
                     }
                     _vm.$set(_vm.student, "address1", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-12 col-sm-4" }, [
+              _c("label", [_vm._v("City of University")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.student.city1,
+                    expression: "student.city1"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.student.city1 },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.student, "city1", $event.target.value)
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group row" }, [
+            _c("div", { staticClass: "col-12 col-sm-4" }, [
+              _c("label", [_vm._v("State of University")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.student.state1,
+                    expression: "student.state1"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.student.state1 },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.student, "state1", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-12 col-sm-4" }, [
+              _c("label", [_vm._v("Zip Code of University")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.student.zip1,
+                    expression: "student.zip1"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.student.zip1 },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.student, "zip1", $event.target.value)
                   }
                 }
               })
@@ -41552,7 +41666,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-group row" }, [
-            _c("div", { staticClass: "col-12 col-sm-8" }, [
+            _c("div", { staticClass: "col-12 col-sm-4" }, [
               _c("label", [_vm._v("Address of Advisor")]),
               _vm._v(" "),
               _c("input", {
@@ -41573,6 +41687,86 @@ var render = function() {
                       return
                     }
                     _vm.$set(_vm.student, "address2", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-12 col-sm-4" }, [
+              _c("label", [_vm._v("City of Advisor")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.student.city2,
+                    expression: "student.city2"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.student.city2 },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.student, "city2", $event.target.value)
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group row" }, [
+            _c("div", { staticClass: "col-12 col-sm-4" }, [
+              _c("label", [_vm._v("State of Advisor")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.student.state2,
+                    expression: "student.state2"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.student.state2 },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.student, "state2", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-12 col-sm-4" }, [
+              _c("label", [_vm._v("Zip Code of Advisor")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.student.zip2,
+                    expression: "student.zip2"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.student.zip2 },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.student, "zip2", $event.target.value)
                   }
                 }
               })
@@ -42335,7 +42529,9 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("h3", { staticClass: "my-4" }, [_vm._v("Address in the United States")]),
+    _c("h3", { staticClass: "my-4" }, [
+      _vm._v("Mailing Address in the United States")
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "form-group row" }, [
       _c("div", { staticClass: "col-12 col-sm" }, [
@@ -44610,11 +44806,119 @@ var render = function() {
       _vm._v(" "),
       _vm._m(4),
       _vm._v(" "),
+      _c("div", { staticClass: "form-group row" }, [
+        _c("div", { staticClass: "col-12 col-sm" }, [
+          _c("label", [_vm._v("Employee's Address:")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.$root.address.street,
+                expression: "$root.address.street"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text" },
+            domProps: { value: _vm.$root.address.street },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.$root.address, "street", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-12 col-sm" }, [
+          _c("label", [_vm._v("Employee's City:")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.$root.address.city,
+                expression: "$root.address.city"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text" },
+            domProps: { value: _vm.$root.address.city },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.$root.address, "city", $event.target.value)
+              }
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group row" }, [
+        _c("div", { staticClass: "col-12 col-sm" }, [
+          _c("label", [_vm._v("Employee's State:")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.$root.address.state,
+                expression: "$root.address.state"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text" },
+            domProps: { value: _vm.$root.address.state },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.$root.address, "state", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-12 col-sm" }, [
+          _c("label", [_vm._v("Employee's Zip Code:")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.$root.address.zip,
+                expression: "$root.address.zip"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text" },
+            domProps: { value: _vm.$root.address.zip },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.$root.address, "zip", $event.target.value)
+              }
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("h5", { staticClass: "my-4" }, [_vm._v("Federal Tax Information")]),
+      _vm._v(" "),
       _vm._m(5),
       _vm._v(" "),
       _vm._m(6),
-      _vm._v(" "),
-      _c("h5", { staticClass: "my-4" }, [_vm._v("Federal Tax Information")]),
       _vm._v(" "),
       _vm._m(7),
       _vm._v(" "),
@@ -44625,10 +44929,6 @@ var render = function() {
       _vm._m(10),
       _vm._v(" "),
       _vm._m(11),
-      _vm._v(" "),
-      _vm._m(12),
-      _vm._v(" "),
-      _vm._m(13),
       _vm._v(" "),
       _vm._l(_vm.box12, function(item, index) {
         return _c("div", { key: index, staticClass: "form-group row" }, [
@@ -44714,11 +45014,11 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
+      _vm._m(12),
+      _vm._v(" "),
+      _vm._m(13),
+      _vm._v(" "),
       _vm._m(14),
-      _vm._v(" "),
-      _vm._m(15),
-      _vm._v(" "),
-      _vm._m(16),
       _vm._v(" "),
       _vm._l(_vm.box14, function(item, index) {
         return _c("div", { staticClass: "form-group row" }, [
@@ -45091,42 +45391,6 @@ var staticRenderFns = [
     return _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-12 col-sm" }, [
         _c("label", [_vm._v("Box F - Employee's Address and Zip Code")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
-      _c("div", { staticClass: "col-12 col-sm" }, [
-        _c("label", [_vm._v("Employee's Address:")]),
-        _vm._v(" "),
-        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-12 col-sm" }, [
-        _c("label", [_vm._v("Employee's City:")]),
-        _vm._v(" "),
-        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
-      _c("div", { staticClass: "col-12 col-sm" }, [
-        _c("label", [_vm._v("Employee's State:")]),
-        _vm._v(" "),
-        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-12 col-sm" }, [
-        _c("label", [_vm._v("Employee's Zip Code:")]),
-        _vm._v(" "),
-        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
       ])
     ])
   },

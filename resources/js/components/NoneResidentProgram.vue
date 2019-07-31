@@ -22,9 +22,23 @@
 				</div>
 			</div>
 			<div class="form-group row">
-				<div class="col-12 col-sm-8">
+				<div class="col-12 col-sm-4">
 					<label>Address of University</label>
 					<input type="text" v-model="student.address1" class="form-control">
+				</div>
+				<div class="col-12 col-sm-4">
+					<label>City of University</label>
+					<input type="text" v-model="student.city1" class="form-control">
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-12 col-sm-4">
+					<label>State of University</label>
+					<input type="text" v-model="student.state1" class="form-control">
+				</div>
+				<div class="col-12 col-sm-4">
+					<label>Zip Code of University</label>
+					<input type="text" v-model="student.zip1" class="form-control">
 				</div>
 			</div>
 			<div class="form-group row">
@@ -40,9 +54,23 @@
 				</div>
 			</div>
 			<div class="form-group row">
-				<div class="col-12 col-sm-8">
+				<div class="col-12 col-sm-4">
 					<label>Address of Advisor</label>
 					<input type="text" v-model="student.address2" class="form-control">
+				</div>
+				<div class="col-12 col-sm-4">
+					<label>City of Advisor</label>
+					<input type="text" v-model="student.city2" class="form-control">
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-12 col-sm-4">
+					<label>State of Advisor</label>
+					<input type="text" v-model="student.state2" class="form-control">
+				</div>
+				<div class="col-12 col-sm-4">
+					<label>Zip Code of Advisor</label>
+					<input type="text" v-model="student.zip2" class="form-control">
 				</div>
 			</div>
 			<div class="form-group row">
@@ -215,6 +243,12 @@
 					name2: '',
 					address1: '',
 					address2: '',
+					city1: '',
+					city2: '',
+					state1: '',
+					state2: '',
+					zip1: '',
+					zip2: '',
 					phone1: '',
 					phone2: ''
 				},

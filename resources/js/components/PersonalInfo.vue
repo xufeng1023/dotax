@@ -50,7 +50,7 @@
                 </select>
             </div>
         </div>
-    	<h3 class="my-4">Address in the United States</h3>
+    	<h3 class="my-4">Mailing Address in the United States</h3>
     	<div class="form-group row">
     		<div class="col-12 col-sm">
 				<label>Street Address</label>
