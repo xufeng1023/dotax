@@ -3126,6 +3126,48 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var Source =
 /*#__PURE__*/
 function () {
@@ -3149,6 +3191,14 @@ function () {
         amount: ''
       };
     }
+  }, {
+    key: "box15",
+    value: function box15() {
+      return {
+        state: '',
+        ID: ''
+      };
+    }
   }]);
 
   return Source;
@@ -3158,10 +3208,19 @@ function () {
   data: function data() {
     return {
       box12: [Source.box12()],
-      box14: [Source.box14()]
+      box14: [Source.box14()],
+      box15: [Source.box15()],
+      box16: [],
+      box17: [],
+      box18: [],
+      box19: [],
+      box20: []
     };
   },
   methods: {
+    nextPage: function nextPage() {
+      console.log(this.box15);
+    },
     addOneLine: function addOneLine(func) {
       this.$data[func].push(Source[func]());
     }
@@ -44562,7 +44621,231 @@ var render = function() {
           },
           [_vm._v("+ add one line")]
         )
-      ])
+      ]),
+      _vm._v(" "),
+      _c("h5", { staticClass: "my-4" }, [
+        _vm._v("State and Local Tax Information")
+      ]),
+      _vm._v(" "),
+      _vm._l(_vm.box15, function(item, index) {
+        return _c("div", [
+          _c("div", { staticClass: "form-group row" }, [
+            _c("div", { staticClass: "col-12 col-sm" }, [
+              _c("label", [_vm._v("Box 15 - State:")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.box15[index].state,
+                    expression: "box15[index].state"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.box15[index].state },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.box15[index], "state", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-12 col-sm" }, [
+              _c("label", [_vm._v("Employer's State ID Number:")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.box15[index].ID,
+                    expression: "box15[index].ID"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.box15[index].ID },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.box15[index], "ID", $event.target.value)
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group row" }, [
+            _c("div", { staticClass: "col-12 col-sm" }, [
+              _c("label", [_vm._v("Box 16 - State Wages, Tips, Etc.:")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.box16[index],
+                    expression: "box16[index]"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.box16[index] },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.box16, index, $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-12 col-sm" }, [
+              _c("label", [_vm._v("Box 17 - State Income Tax:")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.box17[index],
+                    expression: "box17[index]"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.box17[index] },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.box17, index, $event.target.value)
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group row" }, [
+            _c("div", { staticClass: "col-12 col-sm" }, [
+              _c("label", [_vm._v("Box 18 - Local Wages, Tips, Etc.:")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.box18[index],
+                    expression: "box18[index]"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.box18[index] },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.box18, index, $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-12 col-sm" }, [
+              _c("label", [_vm._v("Box 19 - Local Income Tax:")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.box19[index],
+                    expression: "box19[index]"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.box19[index] },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.box19, index, $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-12 col-sm" }, [
+              _c("label", [_vm._v("Box 20 - Locality Name:")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.box20[index],
+                    expression: "box20[index]"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.box20[index] },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.box20, index, $event.target.value)
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("hr")
+        ])
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c(
+          "a",
+          {
+            attrs: { href: "#" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.addOneLine("box15")
+              }
+            }
+          },
+          [_vm._v("+ add one line")]
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary",
+          attrs: { type: "button" },
+          on: { click: _vm.nextPage }
+        },
+        [_vm._v("Next")]
+      )
     ],
     2
   )
