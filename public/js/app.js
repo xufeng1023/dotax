@@ -2987,6 +2987,12 @@ function changeHistory() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 //
 //
 //
@@ -3093,6 +3099,86 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var Source =
+/*#__PURE__*/
+function () {
+  function Source() {
+    _classCallCheck(this, Source);
+  }
+
+  _createClass(Source, null, [{
+    key: "box12",
+    value: function box12() {
+      return {
+        code: '',
+        amount: ''
+      };
+    }
+  }, {
+    key: "box14",
+    value: function box14() {
+      return {
+        desc: '',
+        amount: ''
+      };
+    }
+  }]);
+
+  return Source;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      box12: [Source.box12()],
+      box14: [Source.box14()]
+    };
+  },
+  methods: {
+    addOneLine: function addOneLine(func) {
+      this.$data[func].push(Source[func]());
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/parts/Box12Code.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/parts/Box12Code.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 //
 //
 //
@@ -44277,49 +44363,209 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "a",
-      {
-        attrs: { href: "#" },
-        on: {
-          click: function($event) {
-            $event.preventDefault()
-            return _vm.$router.go(-1)
+  return _c(
+    "div",
+    [
+      _c(
+        "a",
+        {
+          attrs: { href: "#" },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.$router.go(-1)
+            }
           }
-        }
-      },
-      [_vm._v("Back")]
-    ),
-    _vm._v(" "),
-    _c("h3", { staticClass: "my-4" }, [_vm._v("W2")]),
-    _vm._v(" "),
-    _c("h5", { staticClass: "my-4" }, [_vm._v("Employer Information")]),
-    _vm._v(" "),
-    _vm._m(0),
-    _vm._v(" "),
-    _vm._m(1),
-    _vm._v(" "),
-    _vm._m(2),
-    _vm._v(" "),
-    _c("h5", { staticClass: "my-4" }, [_vm._v("Federal Tax Information")]),
-    _vm._v(" "),
-    _vm._m(3),
-    _vm._v(" "),
-    _vm._m(4),
-    _vm._v(" "),
-    _vm._m(5),
-    _vm._v(" "),
-    _vm._m(6),
-    _vm._v(" "),
-    _vm._m(7),
-    _vm._v(" "),
-    _vm._m(8),
-    _vm._v(" "),
-    _vm._m(9),
-    _vm._v(" "),
-    _vm._m(10)
-  ])
+        },
+        [_vm._v("Back")]
+      ),
+      _vm._v(" "),
+      _c("h3", { staticClass: "my-4" }, [_vm._v("W2")]),
+      _vm._v(" "),
+      _c("h5", { staticClass: "my-4" }, [_vm._v("Employer Information")]),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _vm._m(1),
+      _vm._v(" "),
+      _vm._m(2),
+      _vm._v(" "),
+      _c("h5", { staticClass: "my-4" }, [_vm._v("Federal Tax Information")]),
+      _vm._v(" "),
+      _vm._m(3),
+      _vm._v(" "),
+      _vm._m(4),
+      _vm._v(" "),
+      _vm._m(5),
+      _vm._v(" "),
+      _vm._m(6),
+      _vm._v(" "),
+      _vm._m(7),
+      _vm._v(" "),
+      _vm._m(8),
+      _vm._v(" "),
+      _vm._m(9),
+      _vm._v(" "),
+      _vm._l(_vm.box12, function(item, index) {
+        return _c("div", { key: index, staticClass: "form-group row" }, [
+          _c("div", { staticClass: "col-12 col-sm" }, [
+            _c("label", [_vm._v("Code:")]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: item.code,
+                    expression: "item.code"
+                  }
+                ],
+                staticClass: "form-control",
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      item,
+                      "code",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
+              },
+              [_c("box-12-code")],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-12 col-sm" }, [
+            _c("label", [_vm._v("Amount:")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: item.amount,
+                  expression: "item.amount"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: item.amount },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(item, "amount", $event.target.value)
+                }
+              }
+            })
+          ])
+        ])
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c(
+          "a",
+          {
+            attrs: { href: "#" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.addOneLine("box12")
+              }
+            }
+          },
+          [_vm._v("+ add one line")]
+        )
+      ]),
+      _vm._v(" "),
+      _vm._m(10),
+      _vm._v(" "),
+      _vm._l(_vm.box14, function(item, index) {
+        return _c("div", { staticClass: "form-group row" }, [
+          _c("div", { staticClass: "col-12 col-sm" }, [
+            _c("label", [_vm._v("Description:")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: item.desc,
+                  expression: "item.desc"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: item.desc },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(item, "desc", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-12 col-sm" }, [
+            _c("label", [_vm._v("Amount:")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: item.amount,
+                  expression: "item.amount"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: item.amount },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(item, "amount", $event.target.value)
+                }
+              }
+            })
+          ])
+        ])
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c(
+          "a",
+          {
+            attrs: { href: "#" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.addOneLine("box14")
+              }
+            }
+          },
+          [_vm._v("+ add one line")]
+        )
+      ])
+    ],
+    2
+  )
 }
 var staticRenderFns = [
   function() {
@@ -44482,7 +44728,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
+    return _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-12 col-sm" }, [
         _c("label", [_vm._v("Box 12")])
       ])
@@ -44492,45 +44738,68 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
+    return _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-12 col-sm" }, [
-        _c("label", [_vm._v("Code:")]),
-        _vm._v(" "),
-        _c("select", { staticClass: "form-control" }, [
-          _c("option", { attrs: { value: "C" } }, [
-            _vm._v("C: Group term life insurance")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "D" } }, [
-            _vm._v("D: 401(k) contributions")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "J" } }, [
-            _vm._v("J: Nontaxable sick pay")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "AA" } }, [
-            _vm._v("AA: Roth 401(k) contributions")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "BB" } }, [
-            _vm._v("BB: Roth 403(b) contributions")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "DD" } }, [
-            _vm._v("DD: Employer health coverage")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "EE" } }, [
-            _vm._v("EE: Roth 457(b) contributions")
-          ])
-        ])
+        _c("label", [_vm._v("Box 14 - Other")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/parts/Box12Code.vue?vue&type=template&id=0fb69fa2&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/parts/Box12Code.vue?vue&type=template&id=0fb69fa2& ***!
+  \******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("optgroup", [
+      _c("option", { attrs: { value: "C" } }, [
+        _vm._v("C: Group term life insurance")
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-12 col-sm" }, [
-        _c("label", [_vm._v("Amount:")]),
-        _vm._v(" "),
-        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      _c("option", { attrs: { value: "D" } }, [
+        _vm._v("D: 401(k) contributions")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "J" } }, [
+        _vm._v("J: Nontaxable sick pay")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "AA" } }, [
+        _vm._v("AA: Roth 401(k) contributions")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "BB" } }, [
+        _vm._v("BB: Roth 403(b) contributions")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "DD" } }, [
+        _vm._v("DD: Employer health coverage")
+      ]),
+      _vm._v(" "),
+      _c("option", { attrs: { value: "EE" } }, [
+        _vm._v("EE: Roth 457(b) contributions")
       ])
     ])
   }
@@ -59566,6 +59835,7 @@ var map = {
 	"./components/PersonalInfo.vue": "./resources/js/components/PersonalInfo.vue",
 	"./components/ResidencyComponent.vue": "./resources/js/components/ResidencyComponent.vue",
 	"./components/W2.vue": "./resources/js/components/W2.vue",
+	"./components/parts/Box12Code.vue": "./resources/js/components/parts/Box12Code.vue",
 	"./components/parts/Visa.vue": "./resources/js/components/parts/Visa.vue"
 };
 
@@ -60148,6 +60418,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/parts/Box12Code.vue":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/parts/Box12Code.vue ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Box12Code_vue_vue_type_template_id_0fb69fa2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Box12Code.vue?vue&type=template&id=0fb69fa2& */ "./resources/js/components/parts/Box12Code.vue?vue&type=template&id=0fb69fa2&");
+/* harmony import */ var _Box12Code_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Box12Code.vue?vue&type=script&lang=js& */ "./resources/js/components/parts/Box12Code.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Box12Code_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Box12Code_vue_vue_type_template_id_0fb69fa2___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Box12Code_vue_vue_type_template_id_0fb69fa2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/parts/Box12Code.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/parts/Box12Code.vue?vue&type=script&lang=js&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/parts/Box12Code.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Box12Code_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Box12Code.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/parts/Box12Code.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Box12Code_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/parts/Box12Code.vue?vue&type=template&id=0fb69fa2&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/parts/Box12Code.vue?vue&type=template&id=0fb69fa2& ***!
+  \************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Box12Code_vue_vue_type_template_id_0fb69fa2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Box12Code.vue?vue&type=template&id=0fb69fa2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/parts/Box12Code.vue?vue&type=template&id=0fb69fa2&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Box12Code_vue_vue_type_template_id_0fb69fa2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Box12Code_vue_vue_type_template_id_0fb69fa2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/parts/Visa.vue":
 /*!************************************************!*\
   !*** ./resources/js/components/parts/Visa.vue ***!
@@ -60237,7 +60576,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  base: '/dotax',
+  base: '/',
   mode: 'history',
   routes: [{
     path: '/',

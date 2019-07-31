@@ -5,7 +5,7 @@ import Income from './components/Income'
 import W2 from './components/W2'
 
 export default {
-    base: '/dotax',
+    base: '/',
     mode: 'history',
     routes: [
         {

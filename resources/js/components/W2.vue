@@ -90,34 +90,74 @@
                 <input type="text" class="form-control">
             </div>
         </div>
-        <div class="form-group row">
+        <div class="row">
             <div class="col-12 col-sm">
                 <label>Box 12</label>
             </div>
         </div>
-        <div class="form-group row">
+        <div v-for="(item, index) in box12" :key="index" class="form-group row">
             <div class="col-12 col-sm">
                 <label>Code:</label>
-                <select class="form-control">
-                    <option value="C">C: Group term life insurance</option>
-                    <option value="D">D: 401(k) contributions</option>
-                    <option value="J">J: Nontaxable sick pay</option>
-                    <option value="AA">AA: Roth 401(k) contributions</option>
-                    <option value="BB">BB: Roth 403(b) contributions</option>
-                    <option value="DD">DD: Employer health coverage</option>
-                    <option value="EE">EE: Roth 457(b) contributions</option>
+                <select v-model="item.code" class="form-control">
+                    <box-12-code></box-12-code>
                 </select>
             </div>
             <div class="col-12 col-sm">
                 <label>Amount:</label>
-                <input type="text" class="form-control">
+                <input v-model="item.amount" type="text" class="form-control">
             </div>
+        </div>
+        <div class="form-group">
+            <a href="#" @click.prevent="addOneLine('box12')">+ add one line</a>
+        </div>
+        <div class="row">
+            <div class="col-12 col-sm">
+                <label>Box 14 - Other</label>
+            </div>
+        </div>
+        <div v-for="(item, index) in box14" class="form-group row">
+            <div class="col-12 col-sm">
+                <label>Description:</label>
+                <input v-model="item.desc" type="text" class="form-control">
+            </div>
+            <div class="col-12 col-sm">
+                <label>Amount:</label>
+                <input v-model="item.amount" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <a href="#" @click.prevent="addOneLine('box14')">+ add one line</a>
         </div>
     </div>
 </template>
 
 <script>
-export default {
+    class Source {
+        static box12() {
+            return {
+                code: '',
+                amount: ''
+            }
+        }
+        static box14() {
+            return {
+                desc: '',
+                amount: ''
+            }
+        }
+    }
 
+export default {
+    data() {
+        return {
+            box12: [Source.box12()],
+            box14: [Source.box14()]
+        }
+    },
+    methods: {
+        addOneLine(func) {
+            this.$data[func].push(Source[func]())
+        }
+    }
 }
 </script>
