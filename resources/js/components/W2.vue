@@ -1,35 +1,83 @@
 <template>
     <div>
         <a href="#" @click.prevent="$router.go(-1)">Back</a>
-        <h3 class="my-4">W2</h3>
+        <h3 class="mt-4">W2</h3>
+        <div class="text-muted mb-4">Enter your information as it appears on your W-2 form.</div>
         <h5 class="my-4">Employer Information</h5>
         <div class="form-group row">
-            <div class="col-12 col-sm">
+            <div class="col-12 col-sm-6">
                 <label>Box B - Employer Identification Number (EIN):</label>
                 <input type="text" class="form-control">
             </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-sm">
+                <label>Box C - Employer's Name, Address, and Zip Code</label>
+            </div>
+        </div>
+        <div class="form-group row">
             <div class="col-12 col-sm">
                 <label>Employer's Name:</label>
                 <input type="text" class="form-control">
             </div>
-        </div>
-        <div class="form-group row">
             <div class="col-12 col-sm">
                 <label>Employer's Address:</label>
                 <input type="text" class="form-control">
             </div>
+        </div>
+        <div class="form-group row">
             <div class="col-12 col-sm">
                 <label>Employer's City:</label>
                 <input type="text" class="form-control">
             </div>
-        </div>
-        <div class="form-group row">
             <div class="col-12 col-sm">
                 <label>Employer's State:</label>
                 <input type="text" class="form-control">
             </div>
             <div class="col-12 col-sm">
                 <label>Employer's Zip Code:</label>
+                <input type="text" class="form-control">
+            </div>
+        </div>
+        <h5 class="my-4">Employee Information</h5>
+        <div class="form-group row">
+            <div class="col-12 col-sm-6">
+                <label>Box A - Employee's Social Security Number:</label>
+                <input v-model="$root.personal.ssn" type="text" class="form-control" readonly>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-12 col-sm">
+                <label>Box E - Employee's First Name and Initial:</label>
+                <input v-model="$root.personal.firstName" type="text" class="form-control" readonly>
+            </div>
+            <div class="col-12 col-sm">
+                <label>Employee's Last Name and Suffix:</label>
+                <input v-model="$root.personal.lastName" type="text" class="form-control" readonly>
+            </div>
+        </div>
+         <div class="row">
+            <div class="col-12 col-sm">
+                <label>Box F - Employee's Address and Zip Code</label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-12 col-sm">
+                <label>Employee's Address:</label>
+                <input type="text" class="form-control">
+            </div>
+            <div class="col-12 col-sm">
+                <label>Employee's City:</label>
+                <input type="text" class="form-control">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-12 col-sm">
+                <label>Employee's State:</label>
+                <input type="text" class="form-control">
+            </div>
+            <div class="col-12 col-sm">
+                <label>Employee's Zip Code:</label>
                 <input type="text" class="form-control">
             </div>
         </div>
@@ -109,6 +157,25 @@
         </div>
         <div class="form-group">
             <a href="#" @click.prevent="addOneLine('box12')">+ add one line</a>
+        </div>
+        <div class="row">
+            <div class="col-12 col-sm">
+                <label>Box 13</label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-12 col-sm text-center">
+                <label>Statutory Employee</label>
+                <div>N/A</div>
+            </div>
+            <div class="col-12 col-sm text-center">
+                <label>Retirement Plan</label>
+                <input type="radio" class="form-control" name="box13">
+            </div>
+            <div class="col-12 col-sm text-center">
+                <label>Third-Party Sick Pay</label>
+                <input type="radio" class="form-control" name="box13">
+            </div>
         </div>
         <div class="row">
             <div class="col-12 col-sm">
@@ -207,6 +274,9 @@ export default {
             box19: [],
             box20: []
         }
+    },
+    mounted() {
+        console.log(this.$root.$data)
     },
     methods: {
         nextPage() {

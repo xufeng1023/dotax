@@ -179,10 +179,10 @@ export default {
         nextPage() {
             this.$root.$data.addressOfResidence = this.addressOfResidence
             this.$router.push('income')
-            // axios.post('/8843', this.$root.$data)
-            //     .then(data => {
-            //         console.log(data)
-            //     })
+            axios.post('/8843', this.$root.$data)
+                .then(data => {
+                    // console.log(data)
+                })
         }
     }
 }

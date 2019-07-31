@@ -2440,10 +2440,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     nextPage: function nextPage() {
       this.$root.$data.addressOfResidence = this.addressOfResidence;
-      this.$router.push('income'); // axios.post('/8843', this.$root.$data)
-      //     .then(data => {
-      //         console.log(data)
-      //     })
+      this.$router.push('income');
+      axios.post('/8843', this.$root.$data).then(function (data) {// console.log(data)
+      });
     }
   }
 });
@@ -3168,6 +3167,73 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var Source =
 /*#__PURE__*/
 function () {
@@ -3216,6 +3282,9 @@ function () {
       box19: [],
       box20: []
     };
+  },
+  mounted: function mounted() {
+    console.log(this.$root.$data);
   },
   methods: {
     nextPage: function nextPage() {
@@ -44439,7 +44508,11 @@ var render = function() {
         [_vm._v("Back")]
       ),
       _vm._v(" "),
-      _c("h3", { staticClass: "my-4" }, [_vm._v("W2")]),
+      _c("h3", { staticClass: "mt-4" }, [_vm._v("W2")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "text-muted mb-4" }, [
+        _vm._v("Enter your information as it appears on your W-2 form.")
+      ]),
       _vm._v(" "),
       _c("h5", { staticClass: "my-4" }, [_vm._v("Employer Information")]),
       _vm._v(" "),
@@ -44449,9 +44522,91 @@ var render = function() {
       _vm._v(" "),
       _vm._m(2),
       _vm._v(" "),
-      _c("h5", { staticClass: "my-4" }, [_vm._v("Federal Tax Information")]),
-      _vm._v(" "),
       _vm._m(3),
+      _vm._v(" "),
+      _c("h5", { staticClass: "my-4" }, [_vm._v("Employee Information")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group row" }, [
+        _c("div", { staticClass: "col-12 col-sm-6" }, [
+          _c("label", [_vm._v("Box A - Employee's Social Security Number:")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.$root.personal.ssn,
+                expression: "$root.personal.ssn"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", readonly: "" },
+            domProps: { value: _vm.$root.personal.ssn },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.$root.personal, "ssn", $event.target.value)
+              }
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group row" }, [
+        _c("div", { staticClass: "col-12 col-sm" }, [
+          _c("label", [_vm._v("Box E - Employee's First Name and Initial:")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.$root.personal.firstName,
+                expression: "$root.personal.firstName"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", readonly: "" },
+            domProps: { value: _vm.$root.personal.firstName },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.$root.personal, "firstName", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-12 col-sm" }, [
+          _c("label", [_vm._v("Employee's Last Name and Suffix:")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.$root.personal.lastName,
+                expression: "$root.personal.lastName"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", readonly: "" },
+            domProps: { value: _vm.$root.personal.lastName },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.$root.personal, "lastName", $event.target.value)
+              }
+            }
+          })
+        ])
+      ]),
       _vm._v(" "),
       _vm._m(4),
       _vm._v(" "),
@@ -44459,11 +44614,21 @@ var render = function() {
       _vm._v(" "),
       _vm._m(6),
       _vm._v(" "),
+      _c("h5", { staticClass: "my-4" }, [_vm._v("Federal Tax Information")]),
+      _vm._v(" "),
       _vm._m(7),
       _vm._v(" "),
       _vm._m(8),
       _vm._v(" "),
       _vm._m(9),
+      _vm._v(" "),
+      _vm._m(10),
+      _vm._v(" "),
+      _vm._m(11),
+      _vm._v(" "),
+      _vm._m(12),
+      _vm._v(" "),
+      _vm._m(13),
       _vm._v(" "),
       _vm._l(_vm.box12, function(item, index) {
         return _c("div", { key: index, staticClass: "form-group row" }, [
@@ -44549,7 +44714,11 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm._m(10),
+      _vm._m(14),
+      _vm._v(" "),
+      _vm._m(15),
+      _vm._v(" "),
+      _vm._m(16),
       _vm._v(" "),
       _vm._l(_vm.box14, function(item, index) {
         return _c("div", { staticClass: "form-group row" }, [
@@ -44856,34 +45025,38 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "form-group row" }, [
-      _c("div", { staticClass: "col-12 col-sm" }, [
+      _c("div", { staticClass: "col-12 col-sm-6" }, [
         _c("label", [_vm._v("Box B - Employer Identification Number (EIN):")]),
         _vm._v(" "),
         _c("input", { staticClass: "form-control", attrs: { type: "text" } })
-      ]),
-      _vm._v(" "),
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("Box C - Employer's Name, Address, and Zip Code")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
       _c("div", { staticClass: "col-12 col-sm" }, [
         _c("label", [_vm._v("Employer's Name:")]),
         _vm._v(" "),
         _c("input", { staticClass: "form-control", attrs: { type: "text" } })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
+      ]),
+      _vm._v(" "),
       _c("div", { staticClass: "col-12 col-sm" }, [
         _c("label", [_vm._v("Employer's Address:")]),
         _vm._v(" "),
         _c("input", { staticClass: "form-control", attrs: { type: "text" } })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-12 col-sm" }, [
-        _c("label", [_vm._v("Employer's City:")]),
-        _vm._v(" "),
-        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
       ])
     ])
   },
@@ -44892,6 +45065,12 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("Employer's City:")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ]),
+      _vm._v(" "),
       _c("div", { staticClass: "col-12 col-sm" }, [
         _c("label", [_vm._v("Employer's State:")]),
         _vm._v(" "),
@@ -44900,6 +45079,52 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("div", { staticClass: "col-12 col-sm" }, [
         _c("label", [_vm._v("Employer's Zip Code:")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("Box F - Employee's Address and Zip Code")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("Employee's Address:")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("Employee's City:")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("Employee's State:")]),
+        _vm._v(" "),
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("Employee's Zip Code:")]),
         _vm._v(" "),
         _c("input", { staticClass: "form-control", attrs: { type: "text" } })
       ])
@@ -45014,6 +45239,46 @@ var staticRenderFns = [
     return _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-12 col-sm" }, [
         _c("label", [_vm._v("Box 12")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12 col-sm" }, [
+        _c("label", [_vm._v("Box 13")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-12 col-sm text-center" }, [
+        _c("label", [_vm._v("Statutory Employee")]),
+        _vm._v(" "),
+        _c("div", [_vm._v("N/A")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12 col-sm text-center" }, [
+        _c("label", [_vm._v("Retirement Plan")]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { type: "radio", name: "box13" }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12 col-sm text-center" }, [
+        _c("label", [_vm._v("Third-Party Sick Pay")]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { type: "radio", name: "box13" }
+        })
       ])
     ])
   },
