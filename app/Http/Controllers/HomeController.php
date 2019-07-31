@@ -116,6 +116,6 @@ class HomeController extends Controller
     public function fields()
     {
         $pdf = new PdfForm(public_path('pdf/f8843.pdf'));
-        return $pdf->fields(true);
+        echo $pdf->fields(true);
     }
 }
