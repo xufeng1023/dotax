@@ -56,6 +56,9 @@ new Vue({
     	this.registerDatepicker()
     },
     methods: {
+    	nextPage(uri) {
+    		this.$router.push(uri)
+    	},
     	registerDatepicker() {
     		$('.datepicker').datepicker({
 	            changeMonth:true,

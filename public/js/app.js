@@ -1754,6 +1754,101 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FilingStatus.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FilingStatus.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      q1: '',
+      q2: '',
+      q3: '',
+      q4: '',
+      q5: ''
+    };
+  },
+  methods: {}
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Income.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Income.vue?vue&type=script&lang=js& ***!
@@ -2474,7 +2569,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     nextPage: function nextPage() {
       this.$root.$data.addressOfResidence = this.addressOfResidence;
-      this.$router.push('income');
+      this.$router.push('filing-status');
       axios.post('/8843', this.$root.$data).then(function (data) {// console.log(data)
       });
     }
@@ -40904,6 +40999,451 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FilingStatus.vue?vue&type=template&id=01aaf214&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FilingStatus.vue?vue&type=template&id=01aaf214& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "a",
+      {
+        attrs: { href: "#" },
+        on: {
+          click: function($event) {
+            $event.preventDefault()
+            return _vm.$router.go(-1)
+          }
+        }
+      },
+      [_vm._v("Back")]
+    ),
+    _vm._v(" "),
+    _c("h3", { staticClass: "my-4" }, [_vm._v("Filing Status")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", [
+        _vm._v("Did you earn any income in " + _vm._s(_vm.$root.taxYear) + "?")
+      ]),
+      _vm._v(" "),
+      _c("div", [
+        _c(
+          "div",
+          { staticClass: "custom-control custom-radio d-inline-block mr-3" },
+          [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.q1,
+                  expression: "q1"
+                }
+              ],
+              staticClass: "custom-control-input",
+              attrs: { type: "radio", id: "q1-y", name: "q1", value: "yes" },
+              domProps: { checked: _vm._q(_vm.q1, "yes") },
+              on: {
+                change: function($event) {
+                  _vm.q1 = "yes"
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "custom-control-label", attrs: { for: "q1-y" } },
+              [_vm._v("Yes")]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "custom-control custom-radio d-inline-block mr-3" },
+          [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.q1,
+                  expression: "q1"
+                }
+              ],
+              staticClass: "custom-control-input",
+              attrs: { type: "radio", id: "q1-n", name: "q1", value: "no" },
+              domProps: { checked: _vm._q(_vm.q1, "no") },
+              on: {
+                change: function($event) {
+                  _vm.q1 = "no"
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "custom-control-label", attrs: { for: "q1-n" } },
+              [_vm._v("No")]
+            )
+          ]
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _vm.q1 == "yes"
+      ? _c("div", [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", [
+              _vm._v(
+                "Can you be claimed as a dependent on someone else's US tax return?"
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", [
+              _c(
+                "div",
+                {
+                  staticClass: "custom-control custom-radio d-inline-block mr-3"
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.q2,
+                        expression: "q2"
+                      }
+                    ],
+                    staticClass: "custom-control-input",
+                    attrs: {
+                      type: "radio",
+                      id: "q2-y",
+                      name: "q2",
+                      value: "yes"
+                    },
+                    domProps: { checked: _vm._q(_vm.q2, "yes") },
+                    on: {
+                      change: function($event) {
+                        _vm.q2 = "yes"
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "custom-control-label",
+                      attrs: { for: "q2-y" }
+                    },
+                    [_vm._v("Yes")]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "custom-control custom-radio d-inline-block mr-3"
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.q2,
+                        expression: "q2"
+                      }
+                    ],
+                    staticClass: "custom-control-input",
+                    attrs: {
+                      type: "radio",
+                      id: "q2-n",
+                      name: "q2",
+                      value: "no"
+                    },
+                    domProps: { checked: _vm._q(_vm.q2, "no") },
+                    on: {
+                      change: function($event) {
+                        _vm.q2 = "no"
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "custom-control-label",
+                      attrs: { for: "q2-n" }
+                    },
+                    [_vm._v("No")]
+                  )
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", [_vm._v("Are you legally Blind?")]),
+            _vm._v(" "),
+            _c("div", [
+              _c(
+                "div",
+                {
+                  staticClass: "custom-control custom-radio d-inline-block mr-3"
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.q3,
+                        expression: "q3"
+                      }
+                    ],
+                    staticClass: "custom-control-input",
+                    attrs: {
+                      type: "radio",
+                      id: "q3-y",
+                      name: "q3",
+                      value: "yes"
+                    },
+                    domProps: { checked: _vm._q(_vm.q3, "yes") },
+                    on: {
+                      change: function($event) {
+                        _vm.q3 = "yes"
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "custom-control-label",
+                      attrs: { for: "q3-y" }
+                    },
+                    [_vm._v("Yes")]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "custom-control custom-radio d-inline-block mr-3"
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.q3,
+                        expression: "q3"
+                      }
+                    ],
+                    staticClass: "custom-control-input",
+                    attrs: {
+                      type: "radio",
+                      id: "q3-n",
+                      name: "q3",
+                      value: "no"
+                    },
+                    domProps: { checked: _vm._q(_vm.q3, "no") },
+                    on: {
+                      change: function($event) {
+                        _vm.q3 = "no"
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "custom-control-label",
+                      attrs: { for: "q3-n" }
+                    },
+                    [_vm._v("No")]
+                  )
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group row" }, [
+            _c("div", { staticClass: "col-12 col-sm-6" }, [
+              _c("label", [
+                _vm._v(
+                  "On the date of 12/31/" + _vm._s(_vm.$root.taxYear) + ", I am"
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.q4,
+                      expression: "q4"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.q4 = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "single" } }, [
+                    _vm._v("Single")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "mfj" } }, [
+                    _vm._v("Maried filing jointly")
+                  ])
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", [_vm._v("Do you have any dependent?")]),
+            _vm._v(" "),
+            _c("div", [
+              _c(
+                "div",
+                {
+                  staticClass: "custom-control custom-radio d-inline-block mr-3"
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.q5,
+                        expression: "q5"
+                      }
+                    ],
+                    staticClass: "custom-control-input",
+                    attrs: {
+                      type: "radio",
+                      id: "q5-y",
+                      name: "q5",
+                      value: "yes"
+                    },
+                    domProps: { checked: _vm._q(_vm.q5, "yes") },
+                    on: {
+                      change: function($event) {
+                        _vm.q5 = "yes"
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "custom-control-label",
+                      attrs: { for: "q5-y" }
+                    },
+                    [_vm._v("Yes")]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "custom-control custom-radio d-inline-block mr-3"
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.q5,
+                        expression: "q5"
+                      }
+                    ],
+                    staticClass: "custom-control-input",
+                    attrs: {
+                      type: "radio",
+                      id: "q5-n",
+                      name: "q5",
+                      value: "no"
+                    },
+                    domProps: { checked: _vm._q(_vm.q5, "no") },
+                    on: {
+                      change: function($event) {
+                        _vm.q5 = "no"
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "custom-control-label",
+                      attrs: { for: "q5-n" }
+                    },
+                    [_vm._v("No")]
+                  )
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  return _vm.$root.nextPage("income")
+                }
+              }
+            },
+            [_vm._v("Next")]
+          )
+        ])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Income.vue?vue&type=template&id=3da65354&":
 /*!*********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Income.vue?vue&type=template&id=3da65354& ***!
@@ -60641,6 +61181,7 @@ module.exports = function(module) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
+	"./components/FilingStatus.vue": "./resources/js/components/FilingStatus.vue",
 	"./components/Income.vue": "./resources/js/components/Income.vue",
 	"./components/LoginComponent.vue": "./resources/js/components/LoginComponent.vue",
 	"./components/NoneResidentProgram.vue": "./resources/js/components/NoneResidentProgram.vue",
@@ -60744,6 +61285,9 @@ new Vue({
     this.registerDatepicker();
   },
   methods: {
+    nextPage: function nextPage(uri) {
+      this.$router.push(uri);
+    },
     registerDatepicker: function registerDatepicker() {
       $('.datepicker').datepicker({
         changeMonth: true,
@@ -60811,6 +61355,75 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/FilingStatus.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/components/FilingStatus.vue ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _FilingStatus_vue_vue_type_template_id_01aaf214___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FilingStatus.vue?vue&type=template&id=01aaf214& */ "./resources/js/components/FilingStatus.vue?vue&type=template&id=01aaf214&");
+/* harmony import */ var _FilingStatus_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FilingStatus.vue?vue&type=script&lang=js& */ "./resources/js/components/FilingStatus.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _FilingStatus_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _FilingStatus_vue_vue_type_template_id_01aaf214___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _FilingStatus_vue_vue_type_template_id_01aaf214___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/FilingStatus.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/FilingStatus.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/FilingStatus.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FilingStatus_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./FilingStatus.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FilingStatus.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FilingStatus_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/FilingStatus.vue?vue&type=template&id=01aaf214&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/FilingStatus.vue?vue&type=template&id=01aaf214& ***!
+  \*********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FilingStatus_vue_vue_type_template_id_01aaf214___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./FilingStatus.vue?vue&type=template&id=01aaf214& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FilingStatus.vue?vue&type=template&id=01aaf214&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FilingStatus_vue_vue_type_template_id_01aaf214___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FilingStatus_vue_vue_type_template_id_01aaf214___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
@@ -61378,9 +61991,11 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_ResidencyComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/ResidencyComponent */ "./resources/js/components/ResidencyComponent.vue");
 /* harmony import */ var _components_PersonalInfo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/PersonalInfo */ "./resources/js/components/PersonalInfo.vue");
-/* harmony import */ var _components_NoneResidentProgram__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/NoneResidentProgram */ "./resources/js/components/NoneResidentProgram.vue");
-/* harmony import */ var _components_Income__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Income */ "./resources/js/components/Income.vue");
-/* harmony import */ var _components_W2__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/W2 */ "./resources/js/components/W2.vue");
+/* harmony import */ var _components_FilingStatus__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/FilingStatus */ "./resources/js/components/FilingStatus.vue");
+/* harmony import */ var _components_NoneResidentProgram__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/NoneResidentProgram */ "./resources/js/components/NoneResidentProgram.vue");
+/* harmony import */ var _components_Income__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Income */ "./resources/js/components/Income.vue");
+/* harmony import */ var _components_W2__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/W2 */ "./resources/js/components/W2.vue");
+
 
 
 
@@ -61394,16 +62009,19 @@ __webpack_require__.r(__webpack_exports__);
     component: _components_ResidencyComponent__WEBPACK_IMPORTED_MODULE_0__["default"]
   }, {
     path: '/none-resident-program',
-    component: _components_NoneResidentProgram__WEBPACK_IMPORTED_MODULE_2__["default"]
+    component: _components_NoneResidentProgram__WEBPACK_IMPORTED_MODULE_3__["default"]
   }, {
     path: '/personal',
     component: _components_PersonalInfo__WEBPACK_IMPORTED_MODULE_1__["default"]
   }, {
     path: '/income',
-    component: _components_Income__WEBPACK_IMPORTED_MODULE_3__["default"]
+    component: _components_Income__WEBPACK_IMPORTED_MODULE_4__["default"]
+  }, {
+    path: '/filing-status',
+    component: _components_FilingStatus__WEBPACK_IMPORTED_MODULE_2__["default"]
   }, {
     path: '/income/w2',
-    component: _components_W2__WEBPACK_IMPORTED_MODULE_4__["default"]
+    component: _components_W2__WEBPACK_IMPORTED_MODULE_5__["default"]
   }]
 });
 
