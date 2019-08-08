@@ -234,7 +234,7 @@
             <hr>
         </div>
         <div class="form-group">
-            <a href="#" @click.prevent="addOneLine('box15')">+ add one line</a>
+            <a href="#" @click.prevent="addOneLine('box15')">+ add a state</a>
         </div>
         <button type="button" class="btn btn-primary" @click="nextPage">Next</button>
     </div>

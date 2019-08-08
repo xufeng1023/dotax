@@ -45842,7 +45842,7 @@ var render = function() {
               }
             }
           },
-          [_vm._v("+ add one line")]
+          [_vm._v("+ add a state")]
         )
       ]),
       _vm._v(" "),
