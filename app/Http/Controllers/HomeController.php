@@ -114,7 +114,7 @@ class HomeController extends Controller
     public function generate1040nr()
     {
         $data = [
-            'form1040-NR[0].Page1[0].f1_26[0]' => round($_POST['box1']),
+            'form1040-NR[0].Page1[0].f1_26[0]' => round(request('box1')),
             'form1040-NR[0].Page1[0].f1_91[0]' => 33
         ];
         $pdf = new PdfForm(public_path('pdf/f1040nr.pdf'), $data);
