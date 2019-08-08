@@ -3402,6 +3402,7 @@ function () {
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      box1: '',
       box12: [Source.box12()],
       box14: [Source.box14()],
       box15: [Source.box15()],
@@ -3418,6 +3419,8 @@ function () {
   methods: {
     nextPage: function nextPage() {
       console.log(this.box15);
+      axios.post('/1040nr', this.$data).then(function (data) {// console.log(data)
+      });
     },
     addOneLine: function addOneLine(func) {
       this.$data[func].push(Source[func]());
@@ -45456,7 +45459,35 @@ var render = function() {
       _vm._v(" "),
       _c("h5", { staticClass: "my-4" }, [_vm._v("Federal Tax Information")]),
       _vm._v(" "),
-      _vm._m(5),
+      _c("div", { staticClass: "form-group row" }, [
+        _c("div", { staticClass: "col-12 col-sm" }, [
+          _c("label", [_vm._v("Box 1 - Wages and Tips")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.box1,
+                expression: "box1"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "number" },
+            domProps: { value: _vm.box1 },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.box1 = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _vm._m(5)
+      ]),
       _vm._v(" "),
       _vm._m(6),
       _vm._v(" "),
@@ -45938,18 +45969,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
-      _c("div", { staticClass: "col-12 col-sm" }, [
-        _c("label", [_vm._v("Box 1 - Wages and Tips")]),
-        _vm._v(" "),
-        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
-      ]),
+    return _c("div", { staticClass: "col-12 col-sm" }, [
+      _c("label", [_vm._v("Box 2 - Federal Income Tax Withheld")]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-12 col-sm" }, [
-        _c("label", [_vm._v("Box 2 - Federal Income Tax Withheld")]),
-        _vm._v(" "),
-        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
-      ])
+      _c("input", { staticClass: "form-control", attrs: { type: "text" } })
     ])
   },
   function() {

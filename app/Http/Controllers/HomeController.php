@@ -6,10 +6,11 @@ use App\PdfForm;
 
 class HomeController extends Controller
 {
-    private $year = 2018;//date('Y');
+    private $year;
 
     public function __construct()
     {
+        $this->year = now()->subyear()->format('Y');
         $this->middleware('auth');
     }
 
@@ -27,7 +28,7 @@ class HomeController extends Controller
         );
     }
 
-    function generate8843()
+    public function generate8843()
     {
         $data = [
             'topmostSubform[0].Page1[0].Pg1Header[0].f1_01[0]' => '',
@@ -108,8 +109,16 @@ class HomeController extends Controller
 
         $pdf = new PdfForm(public_path('pdf/f8843.pdf'), $data);
         $pdf->save(public_path('pdf/f8843-edit.pdf'));
+    }
 
-        //return request()->all();
+    public function generate1040nr()
+    {
+        $data = [
+            'form1040-NR[0].Page1[0].f1_26[0]' => 22,
+            'form1040-NR[0].Page1[0].f1_27[0]' => 33
+        ];
+        $pdf = new PdfForm(public_path('pdf/f1040nr.pdf'), $data);
+        $pdf->save(public_path('pdf/f1040nr-edit.pdf'));
     }
 
     public function fields()

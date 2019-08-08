@@ -85,7 +85,7 @@
         <div class="form-group row">
             <div class="col-12 col-sm">
                 <label>Box 1 - Wages and Tips</label>
-                <input type="text" class="form-control">
+                <input v-model="box1" type="number" class="form-control">
             </div>
             <div class="col-12 col-sm">
                 <label>Box 2 - Federal Income Tax Withheld</label>
@@ -265,6 +265,7 @@
 export default {
     data() {
         return {
+            box1: '',
             box12: [Source.box12()],
             box14: [Source.box14()],
             box15: [Source.box15()],
@@ -281,6 +282,10 @@ export default {
     methods: {
         nextPage() {
             console.log(this.box15)
+            axios.post('/1040nr', this.$data)
+            .then(data => {
+                // console.log(data)
+            })
         },
         addOneLine(func) {
             this.$data[func].push(Source[func]())
