@@ -3403,6 +3403,7 @@ function () {
   data: function data() {
     return {
       box1: '',
+      box2: '',
       box12: [Source.box12()],
       box14: [Source.box14()],
       box15: [Source.box15()],
@@ -45486,8 +45487,34 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _vm._m(5)
+        _c("div", { staticClass: "col-12 col-sm" }, [
+          _c("label", [_vm._v("Box 2 - Federal Income Tax Withheld")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.box2,
+                expression: "box2"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text" },
+            domProps: { value: _vm.box2 },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.box2 = $event.target.value
+              }
+            }
+          })
+        ])
       ]),
+      _vm._v(" "),
+      _vm._m(5),
       _vm._v(" "),
       _vm._m(6),
       _vm._v(" "),
@@ -45498,8 +45525,6 @@ var render = function() {
       _vm._m(9),
       _vm._v(" "),
       _vm._m(10),
-      _vm._v(" "),
-      _vm._m(11),
       _vm._v(" "),
       _vm._l(_vm.box12, function(item, index) {
         return _c("div", { key: index, staticClass: "form-group row" }, [
@@ -45585,11 +45610,11 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
+      _vm._m(11),
+      _vm._v(" "),
       _vm._m(12),
       _vm._v(" "),
       _vm._m(13),
-      _vm._v(" "),
-      _vm._m(14),
       _vm._v(" "),
       _vm._l(_vm.box14, function(item, index) {
         return _c("div", { staticClass: "form-group row" }, [
@@ -45963,16 +45988,6 @@ var staticRenderFns = [
       _c("div", { staticClass: "col-12 col-sm" }, [
         _c("label", [_vm._v("Box F - Employee's Address and Zip Code")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-12 col-sm" }, [
-      _c("label", [_vm._v("Box 2 - Federal Income Tax Withheld")]),
-      _vm._v(" "),
-      _c("input", { staticClass: "form-control", attrs: { type: "text" } })
     ])
   },
   function() {

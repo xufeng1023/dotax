@@ -89,7 +89,7 @@
             </div>
             <div class="col-12 col-sm">
                 <label>Box 2 - Federal Income Tax Withheld</label>
-                <input type="text" class="form-control">
+                <input v-model="box2" type="text" class="form-control">
             </div>
         </div>
         <div class="form-group row">
@@ -266,6 +266,7 @@ export default {
     data() {
         return {
             box1: '',
+            box2: '',
             box12: [Source.box12()],
             box14: [Source.box14()],
             box15: [Source.box15()],

@@ -115,8 +115,8 @@ class HomeController extends Controller
     {
         $data = [
             'form1040-NR[0].Page1[0].f1_26[0]' => round(request('box1')),
-            'form1040-NR[0].Page1[0].f1_91[0]' => 33,
-            'form1040-NR[0].Page2[0].f2_50[0]' => 44
+            'form1040-NR[0].Page1[0].f1_91[0]' => round(array_sum(request('box17')) + array_sum(request('box19'))),
+            'form1040-NR[0].Page2[0].f2_50[0]' => round(request('box2'))
         ];
         $pdf = new PdfForm(public_path('pdf/f1040nr.pdf'), $data);
         $pdf->save(public_path('pdf/f1040nr-edit.pdf'));
