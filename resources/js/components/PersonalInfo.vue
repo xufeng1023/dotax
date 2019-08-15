@@ -19,7 +19,7 @@
     		</div>
     		<div class="col-12 col-sm">
 				<label>Occupation</label>
-	    		<input type="text" class="form-control">
+	    		<input v-model="$root.personal.job" type="text" class="form-control">
     		</div>
     	</div>
     	<div class="form-group row">

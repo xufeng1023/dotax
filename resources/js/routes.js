@@ -4,6 +4,7 @@ import FilingStatus from './components/FilingStatus'
 import NoneResidentProgram from './components/NoneResidentProgram'
 import Income from './components/Income'
 import W2 from './components/W2'
+import TaxTreaty from './components/TaxTreaty'
 
 export default {
     base: '/',
@@ -32,6 +33,10 @@ export default {
         {
             path: '/income/w2',
             component: W2
+        },
+        {
+            path: '/income/tax-treaty',
+            component: TaxTreaty
         }
     ]
 }

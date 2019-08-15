@@ -40,7 +40,8 @@ new Vue({
     		citizen: '',
     		phone: '',
     		ssn: '',
-    		birthday: ''
+    		birthday: '',
+    		job: ''
     	},
     	address: {
     		street: '',

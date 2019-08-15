@@ -282,11 +282,8 @@ export default {
     },
     methods: {
         nextPage() {
-            console.log(this.box15)
-            axios.post('/1040nr', this.$data)
-            .then(data => {
-                // console.log(data)
-            })
+            this.$router.push('tax-treaty')
+            // axios.post('/1040nr', this.$data)
         },
         addOneLine(func) {
             this.$data[func].push(Source[func]())
