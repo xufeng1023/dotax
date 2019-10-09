@@ -2568,9 +2568,10 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     nextPage: function nextPage() {
-      this.$root.$data.addressOfResidence = this.addressOfResidence;
-      this.$router.push('filing-status');
-      axios.post('/8843', this.$root.$data).then(function (data) {// console.log(data)
+      this.$root.$data.addressOfResidence = this.addressOfResidence; // this.$router.push('filing-status')
+
+      axios.post('/8843', this.$root.$data).then(function (data) {
+        location.assign(data.data);
       });
     }
   }

@@ -108,7 +108,9 @@ class HomeController extends Controller
         $data['topmostSubform[0]'] = '';
 
         $pdf = new PdfForm(public_path('pdf/f8843.pdf'), $data);
-        $pdf->save(public_path('pdf/f8843-edit.pdf'));
+        $fileName = 'pdf/f8843-'.str_random(6).'.pdf';
+        $pdf->save(public_path($fileName));
+        return $fileName;
     }
 
     public function generate1040nr()

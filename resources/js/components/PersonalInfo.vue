@@ -178,10 +178,10 @@ export default {
         },  
         nextPage() {
             this.$root.$data.addressOfResidence = this.addressOfResidence
-            this.$router.push('filing-status')
+            // this.$router.push('filing-status')
             axios.post('/8843', this.$root.$data)
                 .then(data => {
-                    // console.log(data)
+                    location.assign(data.data)
                 })
         }
     }
